@@ -8,15 +8,26 @@
 import SwiftUI
 
 struct PokedexView: View {
-    //@StateObject var vm = PokemonViewModel()
+    @StateObject var vm = PokemonViewModel()
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView{
+            LazyVStack {
+                ForEach(vm.filteredPokemon) { pokemon in
+                    NavigationLink(destination: PokemonDetailsView(vm: vm, pokemon: pokemon)) {
+                        PokedexCellView(vm: vm, pokemon: pokemon)
+                    }
+                }
+            }
+        }
+        .searchable(text: $vm.searchText)
     }
 }
 
 struct PokedexView_Previews: PreviewProvider {
     static var previews: some View {
-        PokedexView()
+        NavigationStack{
+            PokedexView()
+        }
     }
 }

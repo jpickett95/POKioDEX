@@ -4,6 +4,7 @@
 //
 //  Created by Jonah Pickett on 3/20/23.
 //
+// front_default sprite url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(id#).png"
 
 import SwiftUI
 

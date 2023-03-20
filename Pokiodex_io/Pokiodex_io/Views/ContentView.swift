@@ -12,9 +12,11 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
+            NavigationLink(destination: PokedexView()) {
+                Image("PokedexImage")
+                    .resizable()
+                    .scaledToFit()
+            }
             Text("Hello, world!")
         }
         .padding()
