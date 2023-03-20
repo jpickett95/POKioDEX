@@ -4,6 +4,7 @@
 //
 //  Created by Jonah Pickett on 3/20/23.
 //
+// https://pokeapi.co/api/v2/pokemon?limit=151 - api endpoint for first 151 pokemon
 
 import Foundation
 
