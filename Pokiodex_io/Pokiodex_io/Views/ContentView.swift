@@ -11,13 +11,14 @@ struct ContentView: View {
     @StateObject var vm = PokemonViewModel()
 
     var body: some View {
-        VStack {
+        NavigationStack {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
             Text("Hello, world!")
         }
         .padding()
+        .environmentObject(vm)
     }
 }
 

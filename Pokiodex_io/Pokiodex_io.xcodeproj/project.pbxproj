@@ -13,6 +13,7 @@
 		CF473F4D29C8C849001F6934 /* APIHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F4C29C8C849001F6934 /* APIHelpers.swift */; };
 		CF473F5029C8CC7E001F6934 /* PokemonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F4F29C8CC7E001F6934 /* PokemonManager.swift */; };
 		CF473F5229C8CE9F001F6934 /* PokedexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F5129C8CE9F001F6934 /* PokedexView.swift */; };
+		CF473F5429C8D108001F6934 /* PokemonDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F5329C8D108001F6934 /* PokemonDetailsView.swift */; };
 		CFEF8ECC29C8221800C8F134 /* Pokiodex_ioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF8ECB29C8221800C8F134 /* Pokiodex_ioApp.swift */; };
 		CFEF8ECE29C8221800C8F134 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF8ECD29C8221800C8F134 /* ContentView.swift */; };
 		CFEF8ED029C8221900C8F134 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFEF8ECF29C8221900C8F134 /* Assets.xcassets */; };
@@ -27,6 +28,7 @@
 		CF473F4C29C8C849001F6934 /* APIHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHelpers.swift; sourceTree = "<group>"; };
 		CF473F4F29C8CC7E001F6934 /* PokemonManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonManager.swift; sourceTree = "<group>"; };
 		CF473F5129C8CE9F001F6934 /* PokedexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexView.swift; sourceTree = "<group>"; };
+		CF473F5329C8D108001F6934 /* PokemonDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailsView.swift; sourceTree = "<group>"; };
 		CFEF8EC829C8221800C8F134 /* Pokiodex_io.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokiodex_io.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFEF8ECB29C8221800C8F134 /* Pokiodex_ioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokiodex_ioApp.swift; sourceTree = "<group>"; };
 		CFEF8ECD29C8221800C8F134 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -52,6 +54,7 @@
 				CFEF8ECD29C8221800C8F134 /* ContentView.swift */,
 				CFEF8ED929C8C05700C8F134 /* PokedexCellView.swift */,
 				CF473F5129C8CE9F001F6934 /* PokedexView.swift */,
+				CF473F5329C8D108001F6934 /* PokemonDetailsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 				CFEF8ECC29C8221800C8F134 /* Pokiodex_ioApp.swift in Sources */,
 				CF473F4D29C8C849001F6934 /* APIHelpers.swift in Sources */,
 				CF473F4429C8C644001F6934 /* PokemonModel.swift in Sources */,
+				CF473F5429C8D108001F6934 /* PokemonDetailsView.swift in Sources */,
 				CF473F5229C8CE9F001F6934 /* PokedexView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
