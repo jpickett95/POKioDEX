@@ -17,7 +17,6 @@ struct ContentView: View {
                     .resizable()
                     .scaledToFit()
             }
-            Text("Hello, world!")
         }
         .padding()
         .environmentObject(vm)

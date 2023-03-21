@@ -21,6 +21,8 @@ struct PokedexView: View {
             }
         }
         .searchable(text: $vm.searchText)
+        .navigationTitle("Pokedex")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

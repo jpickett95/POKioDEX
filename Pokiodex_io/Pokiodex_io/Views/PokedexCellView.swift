@@ -14,11 +14,10 @@ struct PokedexCellView: View {
     var body: some View {
         ZStack {
             HStack {
-                VStack (alignment: .leading) {
+                VStack (alignment: .center, spacing: 30) {
                     Text(pokemon.name.capitalized)
                         .font(.headline)
                         .foregroundColor(.white)
-                        .padding(.top, 8)
                         .padding(.leading)
                         .padding(.trailing)
                     
@@ -30,15 +29,12 @@ struct PokedexCellView: View {
                         .overlay (
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(Color.white.opacity(0.25))
-                                
                         )
-                        
-                        .frame(width: 200, height: 14)
-                        
-                        
+                        .frame(width: 200, height: 24)
                 }
                 PokemonImageView(vm: vm, pokemon: pokemon)
-                    .padding([.bottom, .trailing, .top], 8)
+                    .padding([.bottom, .trailing, .top], 10)
+                
             }
             
         }

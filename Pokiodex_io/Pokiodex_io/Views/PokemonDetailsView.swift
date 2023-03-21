@@ -15,14 +15,16 @@ struct PokemonDetailsView: View {
         VStack {
             PokemonImageView(vm:vm, pokemon: pokemon)
             
-            VStack(spacing: 10) {
+            VStack(alignment: .leading, spacing: 10) {
                 Text("**Name**: \(pokemon.name.capitalized)")
-                Text("**ID**: \(vm.pokemonDetails?.id ?? 0)")
+                Text("**No**: \(vm.pokemonDetails?.id ?? 0)")
                 Text("**Height**: \(vm.formatHW(value: vm.pokemonDetails?.height ?? 0)) m")
                 Text("**Weight**: \(vm.formatHW(value: vm.pokemonDetails?.weight ?? 0)) kg")
             }
+            
         }
         .onAppear{vm.getDetails(pokemon: pokemon)}
+        .navigationTitle("\(pokemon.name.capitalized)'s Details")
     }
 }
 
