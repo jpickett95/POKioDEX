@@ -25,6 +25,29 @@ struct PokemonDetails: Codable {
     let id: Int
     let height: Int
     let weight: Int
+    let stats: [PokemonStats]
+    let types: [PokemonTypes]
     
-    static var sampleDetails = PokemonDetails(id: 1, height: 7, weight: 69)
+    static var sampleDetails = PokemonDetails(id: 1, height: 7, weight: 69, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat(name: "", url: ""))], types: [PokemonTypes(slot: 0, type: SpecificType(name: "", url: ""))])
+}
+
+struct PokemonStats: Codable {
+    let base_stat: Int
+    let effort: Int
+    let stat: SpecificStat
+}
+
+struct SpecificStat: Codable {
+    let name: String
+    let url: String
+}
+
+struct PokemonTypes: Codable {
+    let slot: Int
+    let type: SpecificType
+}
+
+struct SpecificType: Codable {
+    let name: String
+    let url: String
 }
