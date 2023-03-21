@@ -13,6 +13,8 @@ final class PokemonViewModel: ObservableObject {
     
     @Published var pokemonList = [Pokemon]()
     @Published var pokemonDetails: PokemonDetails?
+    @Published var pokemonStats: SpecificStat?
+    @Published var pokemonTypes: SpecificType?
     @Published var searchText = ""
     
     var filteredPokemon: [Pokemon] {
@@ -36,11 +38,25 @@ final class PokemonViewModel: ObservableObject {
     func getDetails(pokemon: Pokemon) {
         let id = getPokemonID(pokemon: pokemon)
         
-        self.pokemonDetails = PokemonDetails(id: 0, height: 0, weight: 0)
+        self.pokemonDetails = PokemonDetails(id: 0, height: 0, weight: 0, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat(name: "", url: ""))], types: [PokemonTypes(slot: 0, type: SpecificType(name: "", url: ""))])
+        self.pokemonStats = SpecificStat(name: "", url: "")
+        self.pokemonTypes = SpecificType(name: "", url: "")
         
         pokemonManager.getDetailedPokemon(id: id) { data in
             DispatchQueue.main.async {
                 self.pokemonDetails = data
+            }
+        }
+        
+        pokemonManager.getPokemonStats(id: id) { data in
+            DispatchQueue.main.async {
+                self.pokemonStats = data
+            }
+        }
+        
+        pokemonManager.getPokemonTypes(id: id) { data in
+            DispatchQueue.main.async {
+                self.pokemonTypes = data
             }
         }
     }
