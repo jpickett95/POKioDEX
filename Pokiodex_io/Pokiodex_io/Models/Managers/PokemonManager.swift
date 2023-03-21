@@ -6,6 +6,7 @@
 //
 // https://pokeapi.co/api/v2/pokemon?limit=151 - api endpoint for first 151 pokemon
 // Pokemon details url: "https://pokeapi.co/api/v2/pokemon/\(id#)/"
+// https://pokeapi.co/api/v2/move?limit=9999/ - api endpoint for all moves
 
 import Foundation
 
