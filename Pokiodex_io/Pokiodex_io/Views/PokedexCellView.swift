@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PokedexCellView: View {
     @ObservedObject var vm: PokemonViewModel
+    private let manager = PokemonManager()
     let pokemon: Pokemon
     
     var body: some View {
@@ -21,7 +22,7 @@ struct PokedexCellView: View {
                         .padding(.leading)
                         .padding(.trailing)
                     
-                    Text("Poison")
+                    Text("type")
                         .font(.subheadline).bold()
                         .foregroundColor(.white)
                         .padding(.horizontal, 16)
@@ -32,14 +33,16 @@ struct PokedexCellView: View {
                         )
                         .frame(width: 200, height: 24)
                 }
+                .onAppear{vm.getDetails(pokemon: pokemon)}
                 PokemonImageView(vm: vm, pokemon: pokemon)
                     .padding([.bottom, .trailing, .top], 10)
                 
             }
             
         }
-        .background(Color.green)
+        .background(Color.gray)
         .cornerRadius(12)
+        
     }
 }
 

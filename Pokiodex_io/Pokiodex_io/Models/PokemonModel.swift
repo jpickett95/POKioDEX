@@ -50,4 +50,6 @@ struct PokemonTypes: Codable {
 struct SpecificType: Codable {
     let name: String
     let url: String
+    
+    static var sample = SpecificType(name: "grass", url: "https://pokeapi.co/api/v2/type/12/")
 }

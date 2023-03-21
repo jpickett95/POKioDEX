@@ -65,5 +65,47 @@ final class PokemonViewModel: ObservableObject {
         let dValue = Double(value)
         let string = String(format: "%.2f", dValue / 10)
         return string
+    } 
+    
+    func switchType(type: SpecificType) -> String {
+        let typeString = type.name.uppercased()
+        switch typeString {
+        case "WATER":
+            return "water"
+        case "GRASS":
+            return "grass"
+        case "FIRE":
+            return "fire"
+        case "ROCK":
+            return "rock"
+        case "GROUND":
+            return "ground"
+        case "STEEL":
+            return "steel"
+        case "BUG":
+            return "bug"
+        case "PSYCHIC":
+            return "psychic"
+        case "DARK":
+            return "dark"
+        case "FIGHTING":
+            return "fighting"
+        case "ICE":
+            return "ice"
+        case "DRAGON":
+            return "dragon"
+        case "FAIRY":
+            return "fairy"
+        case "FLYING":
+            return "flying"
+        case "ELECTRIC":
+            return "electric"
+        case "GHOST":
+            return "ghost"
+        case "NORMAL":
+            return "normal"
+        default:
+            return ""
+        }
     }
 }

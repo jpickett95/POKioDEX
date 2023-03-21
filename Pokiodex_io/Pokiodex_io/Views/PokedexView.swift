@@ -17,6 +17,7 @@ struct PokedexView: View {
                     NavigationLink(destination: PokemonDetailsView(vm: vm, pokemon: pokemon)) {
                         PokedexCellView(vm: vm, pokemon: pokemon)
                     }
+                    
                 }
             }
         }
