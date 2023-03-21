@@ -9,8 +9,8 @@ import Foundation
 
 struct MovesList: Codable {
     let count: Int
-    let next: String
-    let previous: String
+    //let next: String
+    //let previous: String
     let results: [PokemonMove]
 }
 
@@ -30,5 +30,5 @@ struct MoveDetails: Codable {
     let pp: Int
     let priority: Int
     let power: Int
-    let learned_by_pokemon: [Pokemon]
+    //let learned_by_pokemon: [Pokemon]
 }
