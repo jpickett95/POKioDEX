@@ -67,10 +67,10 @@
 		CF473F4029C8C5BB001F6934 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CFEF8ECD29C8221800C8F134 /* ContentView.swift */,
 				CF473F6929CBEFB1001F6934 /* TMsdexViews */,
 				CF473F6829CBEF9B001F6934 /* MovesdexViews */,
 				CF473F6729CBEF68001F6934 /* PokedexViews */,
-				CFEF8ECD29C8221800C8F134 /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

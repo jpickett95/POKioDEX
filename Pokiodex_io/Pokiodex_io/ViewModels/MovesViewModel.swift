@@ -45,5 +45,6 @@ final class MovesViewModel: ObservableObject {
                 self.moveDetails = data
             }
         }
+        print(self.$moveDetails)
     }
 }
