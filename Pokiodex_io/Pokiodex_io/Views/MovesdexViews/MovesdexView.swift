@@ -11,13 +11,14 @@ struct MovesdexView: View {
     @StateObject var vm = MovesViewModel()
     
     var body: some View {
-        ScrollView{
-            List{
-                ForEach(vm.filteredMoves) { move in
-                    Text(move.name)
-                }
+        
+        List(vm.filteredMoves){ move in
+            NavigationLink(destination: MoveDetailsView(vm: vm, move: move)) {
+                Text(move.name)
             }
-        }.searchable(text: $vm.searchText)
+        }
+        
+        .searchable(text: $vm.searchText)
     }
 }
 

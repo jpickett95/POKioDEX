@@ -17,6 +17,21 @@ struct ContentView: View {
                     .resizable()
                     .scaledToFit()
             }
+            HStack{
+                NavigationLink(destination: MovesdexView()) {
+                    Image("MovesImage")
+                        .resizable()
+                        .scaledToFit()
+                }
+                
+                NavigationLink(destination: TMsdexView()) {
+                    Image("TMsImage")
+                        .resizable()
+                        .scaledToFit()
+                }
+
+            }
+            .padding(5)
         }
         .padding()
         .environmentObject(vm)

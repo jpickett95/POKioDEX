@@ -28,7 +28,9 @@ final class MovesViewModel: ObservableObject {
     
     func getMoveID(move: PokemonMove) -> Int {
         if let id = self.movesList.firstIndex(of: move) {
-            return id + 1
+            if id >= 901 {
+                return id + 9100
+            } else { return id + 1 }
         }
         return 0
     }
@@ -43,7 +45,5 @@ final class MovesViewModel: ObservableObject {
                 self.moveDetails = data
             }
         }
-        
-        
     }
 }
