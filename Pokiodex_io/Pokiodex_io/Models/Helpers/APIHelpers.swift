@@ -47,3 +47,7 @@ extension Bundle {
         }.resume()
     }
 }
+
+extension Data {
+    func parseData
+}
