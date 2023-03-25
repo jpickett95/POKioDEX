@@ -86,3 +86,21 @@ struct PokemonSpecies: Codable {
     let varieties: [PokemonSpeciesVariety]      // list of Pokemon that exist within this species
     */
 }
+
+struct Pokedex: Codable {
+    let id: Int                             // identifier
+    let name: String                        // resource name
+    let is_main_series: Bool                // whether or not this Pokedex orginated in the main series of the video games
+    let descriptions: [Description]         //description of this resource listed in different languages
+    let names: [Name]                        // name of this resource liste din different languages
+    let pokemon_entries: [PokemonEntry]     // list of Pokemon catalogues in this Pokedex and their indexes
+    let region: Region                      // region this Pokedex catalogues Pokemon for
+    let verion_groups: [VersionGroup]       // list of version groups this Pokedex belongs to
+}
+
+struct PokemonEntry: Codable {
+    let entry_number: Int                   // index of this Pokemon species entry within the Pokedex
+    let pokemon_species: PokemonSpecies     // the Pokemon species being encountered
+}
+
+

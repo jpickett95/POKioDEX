@@ -109,7 +109,7 @@ struct VersionGameIndex: Codable {
     let version: Version        // version relevant to this game index
 }
 
-struct Generation: Codable {
+class Generation: Codable {                     // 'class' because contains recursive properties
     let id: Int                                 // identifier
     let name: String                            // resource name
     let abilities: [Ability]                    // list of abilities that were introduced in this generation
@@ -126,14 +126,6 @@ struct GenerationGameIndex: Codable {
     let generation: Generation      // generation relevant to this game index
 }
 
-struct Pokedex: Codable {
-    
-}
 
-struct Region: Codable {
-    
-}
 
-struct Ability: Codable {
-    
-}
+

@@ -7,9 +7,40 @@
 
 import Foundation
 
-struct Item: Codable {
-    let id: Int     // identifier
-    let name: String    // resource name
-    let cost: Int       // price of this item in stores
-    let fling_power: Int    // power of the move Fling when used with this item
+class Item: Codable {
+    let id: Int                                         // identifier
+    let name: String                                    // resource name
+    let cost: Int                                       // price of this item in stores
+    let fling_power: Int                                // power of the move Fling when used with this item
+    let fling_effect: ItemFlingEffect                   // effect of the move Fling when used with this item
+    let attributes: [ItemAttribute]                     // list of attributes this item has
+    let category: ItemCategory                          // category of items this item falls into
+    let effect_entries: [VerboseEffect]                 // effect of this ability listed in different languages
+    let flavor_text_entries: [VersionGroupFlavorText]   // flavor text of this ability listed in different languages
+    let game_indices: [GenerationGameIndex]             // list of game indices relevant to this item by generation
+    let names: [Name]                                   // resource name listed in different languages
+    let sprites: ItemSprites                            // set of sprites used to depict this item in game
+    let held_by_pokemon: [ItemHolderPokemon]            // list of pokemon that might be found in the wild holding this item
+    let baby_trigger_for: EvolutionChain                // an evolution chain this item requires to produce a baby during mating
+    let machines: [MachineVersionDetail]                // list of machines related to this item
+}
+
+struct ItemFlingEffect: Codable {
+    
+}
+
+struct ItemAttribute: Codable {
+    
+}
+
+struct ItemCategory: Codable {
+    
+}
+
+struct ItemSprites: Codable {
+    
+}
+
+struct ItemHolderPokemon: Codable {
+    
 }
