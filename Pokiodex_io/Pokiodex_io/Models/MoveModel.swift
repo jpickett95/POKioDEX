@@ -62,3 +62,18 @@ struct MoveDetails: Codable {
         } else {self.effect_chance = 0}
     }
 }
+
+struct MoveDamageClass: Codable {
+    let id: Int
+    let name: String
+    let move: [PokemonMove]
+}
+
+struct MoveLearnMethod: Codable {
+    let id: Int                             // identifier
+    let name: String                        // resource name
+    let descriptions: [Description]         // descriptions for this resource in different languages
+    let names: [Name]                       // names for this resource in different languages
+    let version_groups: [VersionGroup]      // list of version groups where moves can be learned through this method
+}
+

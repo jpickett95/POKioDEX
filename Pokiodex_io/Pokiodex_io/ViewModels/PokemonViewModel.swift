@@ -36,27 +36,30 @@ final class PokemonViewModel: ObservableObject {
     }
     
     func getDetails(pokemon: Pokemon) {
+        
         let id = getPokemonID(pokemon: pokemon)
         
         self.pokemonDetails = PokemonDetails(id: 0, height: 0, weight: 0, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat(name: "", url: ""))], types: [PokemonTypes(slot: 0, type: SpecificType(name: "", url: ""))])
         self.pokemonStats = SpecificStat(name: "", url: "")
         self.pokemonTypes = SpecificType(name: "", url: "")
         
-        pokemonManager.getDetailedPokemon(id: id) { data in
-            DispatchQueue.main.async {
-                self.pokemonDetails = data
+        DispatchQueue.global().async {
+            self.pokemonManager.getDetailedPokemon(id: id) { data in
+                DispatchQueue.main.async {
+                    self.pokemonDetails = data
+                }
             }
-        }
-        
-        pokemonManager.getPokemonStats(id: id) { data in
-            DispatchQueue.main.async {
-                self.pokemonStats = data
+            
+            self.pokemonManager.getPokemonStats(id: id) { data in
+                DispatchQueue.main.async {
+                    self.pokemonStats = data
+                }
             }
-        }
-        
-        pokemonManager.getPokemonTypes(id: id) { data in
-            DispatchQueue.main.async {
-                self.pokemonTypes = data
+            
+            self.pokemonManager.getPokemonTypes(id: id) { data in
+                DispatchQueue.main.async {
+                    self.pokemonTypes = data
+                }
             }
         }
     }
