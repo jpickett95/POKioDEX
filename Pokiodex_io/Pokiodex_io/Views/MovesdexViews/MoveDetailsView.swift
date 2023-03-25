@@ -15,6 +15,7 @@ struct MoveDetailsView: View {
         VStack {
             VStack(alignment: .leading, spacing: 10) {
                 Text("**Name**: \(move.name.capitalized)")
+                Text("**ID**: \(vm.getMoveID(move: move))")
                 Text("**Accuracy**: \(vm.moveDetails?.accuracy ?? 0)")
                 Text("**Effect Chance**: \(vm.moveDetails?.effect_chance ?? 0)")
                 Text("**PP**: \(vm.moveDetails?.pp ?? 0)")

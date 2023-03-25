@@ -38,7 +38,7 @@ final class MovesViewModel: ObservableObject {
     func getDetails(move: PokemonMove) {
         let id = getMoveID(move: move)
         
-        self.moveDetails = MoveDetails(id: 0, name: "", accuracy: 0, effect_chance: 0, pp: 0, priority: 0, power: 0/*, learned_by_pokemon: [Pokemon]()*/)
+//        self.moveDetails = MoveDetails(id: 0, name: "", accuracy: 0, effect_chance: 0, pp: 0, priority: 0, power: 0/*, learned_by_pokemon: [Pokemon]()*/)
         
         moveManager.getMoveDetails(id: id) { data in
             DispatchQueue.main.async {
