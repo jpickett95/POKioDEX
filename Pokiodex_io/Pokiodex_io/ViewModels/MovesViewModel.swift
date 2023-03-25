@@ -23,7 +23,7 @@ final class MovesViewModel: ObservableObject {
     
     init() {
         self.movesList = moveManager.getMoves()
-        print(self.movesList)
+        //print(self.movesList)
     }
     
     func getMoveID(move: PokemonMove) -> Int {
@@ -38,13 +38,13 @@ final class MovesViewModel: ObservableObject {
     func getDetails(move: PokemonMove) {
         let id = getMoveID(move: move)
         
-//        self.moveDetails = MoveDetails(id: 0, name: "", accuracy: 0, effect_chance: 0, pp: 0, priority: 0, power: 0/*, learned_by_pokemon: [Pokemon]()*/)
+        //self.moveDetails = MoveDetails(id: 0, name: "", accuracy: 0, effect_chance: 0, pp: 0, priority: 0, power: 0, learned_by_pokemon: [Pokemon]()) //- not necessary since decoded in struct initializer
         
         moveManager.getMoveDetails(id: id) { data in
             DispatchQueue.main.async {
                 self.moveDetails = data
             }
         }
-        print(self.$moveDetails)
+        //print(self.$moveDetails)
     }
 }
