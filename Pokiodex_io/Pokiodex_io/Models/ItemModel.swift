@@ -26,21 +26,45 @@ class Item: Codable {
 }
 
 struct ItemFlingEffect: Codable {
-    
+    let id: Int                         // identifier
+    let name: String                    // resource name
+    let effect_entries: [Effect]        // result of this fling effect listed in different languages
+    let items: [Item]                   // list of items that have this fling effect
 }
 
 struct ItemAttribute: Codable {
-    
+    let id: Int                         //identifier
+    let name: String                    // resource name
+    let items: [Item]                   // list of items that have this attribute
+    let names: [Name]                   // resource name listed in different languages
+    let descriptions: [Description]     // description of this item attribute listed in different languages
 }
 
 struct ItemCategory: Codable {
-    
+    let id: Int                 // identifier
+    let name: String            // resource name
+    let items: [Item]           // list of items that are a part of this category
+    let names: [Name]           // resource name listed in different languages
+    let pocket: ItemPocket      // the pocket items in this category would be put in
+}
+
+struct ItemPocket: Codable {
+    let id: Int                         // identifier
+    let name: String                    // resource name
+    let categories: [ItemCategory]      // list of items categories that are relevant to this item pocket
+    let names: [Name]                   // resource name listed in different languages
 }
 
 struct ItemSprites: Codable {
-    
+    let default_depiction: String     // default depiction of this item
 }
 
 struct ItemHolderPokemon: Codable {
-    
+    let pokemon: PokemonDetails                                 // the pokemon that holds this item
+    let version_details: [ItemHolderPokemonVersionDetail]       // the details for the version that this item is held in by the pokemon
+}
+
+struct ItemHolderPokemonVersionDetail: Codable {
+    let rarity: Int         // how often this pokemon holds this item in this version
+    let version: Version    // version that this item is held by the pokemon
 }
