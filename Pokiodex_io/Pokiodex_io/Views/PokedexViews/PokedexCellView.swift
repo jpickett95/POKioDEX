@@ -34,6 +34,7 @@ struct PokedexCellView: View {
                         .frame(width: 200, height: 24)
                 }
                 .onAppear{vm.getDetails(pokemon: pokemon)}
+                
                 PokemonImageView(vm: vm, pokemon: pokemon)
                     .padding([.bottom, .trailing, .top], 10)
                 
