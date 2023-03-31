@@ -15,7 +15,7 @@ struct PokemonDetailsView: View {
         
         
         VStack {
-            PokemonImageView(vm:vm, pokemon: pokemon)
+            PokemonImageView(vm:vm, pokemon: pokemon, dimensions: 140)
             
             VStack(alignment: .leading, spacing: 10) {
                 Text("**Name**: \(pokemon.name.capitalized)")
@@ -25,7 +25,7 @@ struct PokemonDetailsView: View {
                 // Check if pokemon has more than one type
                 let typeCount = (vm.pokemonDetails?.types.count) ?? 1
                 if(typeCount > 1){
-                    Text("**Type 2**: \(vm.pokemonDetails?.types.last?.type.name.capitalized ?? "")")
+                    Text("**Type**: \(vm.pokemonDetails?.types.last?.type.name.capitalized ?? "")")
                 }
                 
                 Text("**Height**: \(vm.formatHW(value: vm.pokemonDetails?.height ?? 0)) m")

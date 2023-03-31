@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PokemonList: Codable {
+struct PokemonList: Codable {   // paginated list returned from enpoint https://pokeapi.co/api/v2/pokemon/
     let count: Int
     let next: String
     let results: [Pokemon]
@@ -21,37 +21,128 @@ struct Pokemon: Codable, Identifiable, Equatable {
     static var samplePokemon = Pokemon(name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/1/")
 }
 
-struct PokemonDetails: Codable {
-    let id: Int
-    let height: Int
-    let weight: Int
-    let stats: [PokemonStats]
-    let types: [PokemonTypes]
+struct PokemonDetails: Codable, Identifiable {  // API NamedResource: "Pokemon"
+    // API endpoint: https://pokeapi.co/api/v2/pokemon/{id or name}/
+    let id: Int                     // resource identifier
+    let name: String                // resource name
+    let height: Int                 // Pokemon height in decimeters
+    let weight: Int                 // Pokemon weight in hectograms
+    let stats: [PokemonStats]       // list of base stat vaalues for this Pokemon
+    let types: [PokemonTypes]       // list of details showing types this Pokemon has
     
-    static var sampleDetails = PokemonDetails(id: 1, height: 7, weight: 69, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat(name: "", url: ""))], types: [PokemonTypes(slot: 0, type: SpecificType(name: "", url: ""))])
+    static var sampleDetails = PokemonDetails(id: 1, name: "Bulbasaur", height: 7, weight: 69, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat.sample)], types: [PokemonTypes(slot: 0, type: SpecificType.sample)])
 }
 
-struct PokemonStats: Codable {
-    let base_stat: Int
-    let effort: Int
-    let stat: SpecificStat
+struct PokemonStats: Codable {      // Named API Resource: "PokemonStat"
+    let base_stat: Int              // base value of the stat
+    let effort: Int                 // the effort points (EV) the Pokemon has in the stat
+    let stat: SpecificStat          // the stat the Pokemon has
 }
 
-struct SpecificStat: Codable {
-    let name: String
+struct SpecificStat: Codable {      // Named API Resource: "Stat"
+    let id: Int                     // resource identifier
+    let name: String                // resource number
+    let game_index: Int             // ID the game uses for this stat
+    let is_battle_only: Bool        // whether this stat only exists within a battle
+    let names: [Name]               // resource name listed in different languages
     let url: String
+    static var sample = SpecificStat(name: "", url: "", id: 0, game_index: 0, is_battle_only: false)
+    
+    
+    enum CodingKeys: String, CodingKey {
+        case name = "name"
+        case url = "url"
+        case id = "id"
+        case game_index = "game_index"
+        case is_battle_only = "is_battle_only"
+        case names = "names"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        // Api may return 'null' for effect_chance
+        if let name = try values.decodeIfPresent(String.self, forKey: .name){
+            self.name = name
+        } else {self.name = ""}
+        if let id = try values.decodeIfPresent(Int.self, forKey: .id){
+            self.id = id
+        } else {self.id = 0}
+        if let game_index = try values.decodeIfPresent(Int.self, forKey: .game_index){
+            self.game_index = game_index
+        } else {self.game_index = 0}
+        if let is_battle_only = try values.decodeIfPresent(Bool.self, forKey: .is_battle_only){
+            self.is_battle_only = is_battle_only
+        } else {self.is_battle_only = false}
+        if let names = try values.decodeIfPresent([Name].self, forKey: .names){
+            self.names = names
+        } else {self.names = [Name]()}
+        if let url = try values.decodeIfPresent(String.self, forKey: .url){
+            self.url = url
+        } else {self.url = ""}
+    }
+    
+    init(name: String, url: String, id: Int, game_index: Int, is_battle_only: Bool) {
+        self.name = name
+        self.url = url
+        self.id = id
+        self.game_index = game_index
+        self.is_battle_only = is_battle_only
+        self.names = [Name]()
+    }
+    
 }
 
-struct PokemonTypes: Codable {
-    let slot: Int
-    let type: SpecificType
+struct PokemonTypes: Codable {  // API Name: "PokemonType"
+    let slot: Int               // order the Pokemon's types are listed in
+    let type: SpecificType      // type of referenced Pokemon
 }
 
-struct SpecificType: Codable {
-    let name: String
+struct SpecificType: Codable {  // Named API Resource: "Type"
+    let id: Int                         // resource identifier
+    let name: String                    // resource name
+    let names: [Name]                   // resource name listed in different languages
+    let moves: [MoveDetails]            // list of moves that have this type
     let url: String
     
-    static var sample = SpecificType(name: "grass", url: "https://pokeapi.co/api/v2/type/12/")
+    static var sample = SpecificType(name: "grass", url: "https://pokeapi.co/api/v2/type/12/", id: 12)
+    
+    enum CodingKeys: String, CodingKey {
+        case name = "name"
+        case url = "url"
+        case id = "id"
+        case names = "names"
+        case moves = "moves"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        // Api may return 'null' for effect_chance
+        if let name = try values.decodeIfPresent(String.self, forKey: .name){
+            self.name = name
+        } else {self.name = ""}
+        if let url = try values.decodeIfPresent(String.self, forKey: .url){
+            self.url = url
+        } else {self.url = ""}
+        if let id = try values.decodeIfPresent(Int.self, forKey: .id){
+            self.id = id
+        } else {self.id = 0}
+        if let names = try values.decodeIfPresent([Name].self, forKey: .names){
+            self.names = names
+        } else {self.names = [Name]()}
+        if let moves = try values.decodeIfPresent([MoveDetails].self, forKey: .moves){
+            self.moves = moves
+        } else {self.moves = [MoveDetails]()}
+    }
+    
+    init(name: String, url: String, id: Int) {
+        self.name = name
+        self.url = url
+        self.id = id
+        self.names = [Name]()
+        self.moves = [MoveDetails]()
+    }
 }
 
 struct PokemonSpecies: Codable {

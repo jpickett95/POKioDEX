@@ -18,11 +18,19 @@ class PokemonManager{
         return pokemon
     }
     
+    func getPokemonAPI(completion:@escaping (PokemonList) -> ()) {
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon?limit=151/", model: PokemonList.self) { data in
+            completion(data)
+        } failure: { error in
+            print("getPokemonAPI: \(error)")
+        }
+    }
+    
     func getDetailedPokemon(id: Int, completion:@escaping (PokemonDetails) -> ()) {
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: PokemonDetails.self) { data in
             completion(data)
         } failure: { error in
-            print(error) 
+            print("getDetailedPokemon: \(error)")
         }
     }
     
@@ -30,7 +38,7 @@ class PokemonManager{
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: SpecificStat.self) { data in
             completion(data)
         } failure: { error in
-            print(error)
+            print("getPokemonStats: \(error)")
         }
     }
     
@@ -38,7 +46,11 @@ class PokemonManager{
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: SpecificType.self) { data in
             completion(data)
         } failure: { error in
-            print(error)
+            print("getPokemonTypes: \(error)")
         }
+    }
+    
+    func getDetailsObject() {
+        
     }
 }

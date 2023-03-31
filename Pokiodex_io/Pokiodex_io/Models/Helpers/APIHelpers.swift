@@ -34,6 +34,7 @@ extension Bundle {
             guard let data = data else {
                 if let error = error {
                     failure(error)
+                    
                 }
                 return
             }
@@ -43,6 +44,7 @@ extension Bundle {
                 completion(serverData)
             } catch {
                 failure(error)
+                
             }
         }.resume()
     }

@@ -15,7 +15,7 @@ struct MovesList: Codable {
     //let previous: String      // not valid
 }
 
-struct PokemonMove: Codable, Identifiable, Equatable {
+struct PokemonMove: Codable, Identifiable, Equatable, Hashable {
     let id = UUID()
     let name: String
     let url: String
@@ -32,6 +32,8 @@ struct MoveDetails: Codable {
     let priority: Int
     let power: Int
     let learned_by_pokemon: [Pokemon]
+    static var sample = MoveDetails(id: 0, name: "", accuracy: 0, effect_chance: 0, pp: 0, priority: 0, power: 0) 
+    
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -50,16 +52,35 @@ struct MoveDetails: Codable {
         
         id = try values.decode(Int.self, forKey: .id)
         name = try values.decode(String.self, forKey: .name)
-        accuracy = try values.decode(Int.self, forKey: .accuracy)
-        pp = try values.decode(Int.self, forKey: .pp)
+        //accuracy = try values.decode(Int.self, forKey: .accuracy)
+        //pp = try values.decode(Int.self, forKey: .pp)
         priority = try values.decode(Int.self, forKey: .priority)
-        power = try values.decode(Int.self, forKey: .power)
+        //power = try values.decode(Int.self, forKey: .power)
         learned_by_pokemon = try values.decode([Pokemon].self, forKey: .learned_by_pokemon)
         
         // Api may return 'null' for effect_chance
         if let chance = try values.decodeIfPresent(Int.self, forKey: .effect_chance){
             self.effect_chance = chance
         } else {self.effect_chance = 0}
+        if let power = try values.decodeIfPresent(Int.self, forKey: .power){
+            self.power = power
+        } else {self.power = 0}
+        if let accuracy = try values.decodeIfPresent(Int.self, forKey: .accuracy){
+            self.accuracy = accuracy
+        } else {self.accuracy = 0}
+        if let pp = try values.decodeIfPresent(Int.self, forKey: .pp){
+            self.pp = pp
+        } else {self.pp = 0}
+    }
+    init(id: Int, name: String, accuracy: Int, effect_chance: Int, pp: Int, priority: Int, power: Int) {
+        self.id = id
+        self.name = name
+        self.accuracy = accuracy
+        self.effect_chance = effect_chance
+        self.pp = pp
+        self.priority = priority
+        self.power = power
+        self.learned_by_pokemon = [Pokemon.samplePokemon]
     }
 }
 

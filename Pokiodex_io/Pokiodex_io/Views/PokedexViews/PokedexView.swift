@@ -14,6 +14,7 @@ struct PokedexView: View {
         ScrollView{
             LazyVStack {
                 ForEach(vm.filteredPokemon) { pokemon in
+                    
                     NavigationLink(destination: PokemonDetailsView(vm: vm, pokemon: pokemon)) {
                         PokedexCellView(vm: vm, pokemon: pokemon)
                     }

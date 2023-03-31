@@ -15,8 +15,10 @@ struct MovesdexView: View {
             LazyVStack{
                 ForEach(vm.filteredMoves){ move in
                     NavigationLink(destination: MoveDetailsView(vm: vm, move: move)) {
-                        MovesdexCellView(vm: vm, move: move)
-                    }
+                        if let details = vm.moveDetails {
+                            MovesdexCellView(vm: vm, move: move, details: details)
+                        }
+                    }.onAppear{vm.getDetails(move: move)}
                 }
                 
                 

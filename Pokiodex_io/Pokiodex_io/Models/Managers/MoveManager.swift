@@ -22,4 +22,12 @@ class MoveManager {
             print(error)
         }
     }
+    
+    func getDetails(completion:@escaping ([PokemonMove: MoveDetails]) -> ()) {
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/move/", model: [PokemonMove: MoveDetails].self) { data in
+            completion(data)    
+        } failure: { error in
+            print(error)
+        }
+    }
 }

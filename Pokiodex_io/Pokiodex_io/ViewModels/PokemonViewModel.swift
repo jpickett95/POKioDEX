@@ -12,6 +12,7 @@ final class PokemonViewModel: ObservableObject {
     private let pokemonManager = PokemonManager()
     
     @Published var pokemonList = [Pokemon]()
+    //@Published var detailsList = [PokemonDetails]()
     @Published var pokemonDetails: PokemonDetails?
     @Published var pokemonStats: SpecificStat?
     @Published var pokemonTypes: SpecificType?
@@ -24,9 +25,24 @@ final class PokemonViewModel: ObservableObject {
     }
     
     init() {
-        self.pokemonList = pokemonManager.getPokemon()
-        //print(self.pokemonList)
+        DispatchQueue.global().async {
+            self.pokemonManager.getPokemonAPI() { data in
+                DispatchQueue.main.async {
+                    self.pokemonList = data.results
+                    //print(self.pokemonList)
+                }
+            }
+        }
+
     }
+    
+//    func populateDetailsList(pokemon: Pokemon) {
+//        self.getDetails(pokemon: pokemon)
+//        if let details = self.pokemonDetails {
+//            self.detailsList.append(details)
+//            print(detailsList)
+//        }
+//    }
     
     func getPokemonID(pokemon: Pokemon) -> Int {
         if let id = self.pokemonList.firstIndex(of: pokemon) {
@@ -39,14 +55,15 @@ final class PokemonViewModel: ObservableObject {
         
         let id = getPokemonID(pokemon: pokemon)
         
-        self.pokemonDetails = PokemonDetails(id: 0, height: 0, weight: 0, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat(name: "", url: ""))], types: [PokemonTypes(slot: 0, type: SpecificType(name: "", url: ""))])
-        self.pokemonStats = SpecificStat(name: "", url: "")
-        self.pokemonTypes = SpecificType(name: "", url: "")
+        self.pokemonDetails = PokemonDetails(id: 0, name: "Bulbasaur", height: 0, weight: 0, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat(name: "", url: "", id: 0, game_index: 0, is_battle_only: false))], types: [PokemonTypes(slot: 0, type: SpecificType(name: "", url: "", id: 0))])
+        self.pokemonStats = SpecificStat(name: "", url: "", id: 0, game_index: 0, is_battle_only: false)
+        self.pokemonTypes = SpecificType(name: "", url: "", id: 0)
         
         DispatchQueue.global().async {
             self.pokemonManager.getDetailedPokemon(id: id) { data in
                 DispatchQueue.main.async {
                     self.pokemonDetails = data
+                    
                 }
             }
             
@@ -64,15 +81,21 @@ final class PokemonViewModel: ObservableObject {
         }
     }
     
+    func copyDetails() -> PokemonDetails {
+        if let details = self.pokemonDetails {
+            return details
+        }
+        return PokemonDetails.sampleDetails
+    }
+    
     func formatHW(value: Int) -> String {
         let dValue = Double(value)
         let string = String(format: "%.2f", dValue / 10)
         return string
     } 
     
-    func switchType(type: SpecificType) -> String {
-        let typeString = type.name.uppercased()
-        switch typeString {
+    func switchType() -> String {
+        switch self.pokemonDetails?.types.first?.type.name.uppercased() {
         case "WATER":
             return "water"
         case "GRASS":
@@ -111,4 +134,6 @@ final class PokemonViewModel: ObservableObject {
             return ""
         }
     }
+    
+    
 }

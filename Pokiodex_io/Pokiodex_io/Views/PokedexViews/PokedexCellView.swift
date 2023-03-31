@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct PokedexCellView: View {
-    @ObservedObject var vm: PokemonViewModel
-    private let manager = PokemonManager()
+    @StateObject var vm: PokemonViewModel
     let pokemon: Pokemon
     
     var body: some View {
         ZStack {
             HStack {
-                VStack (alignment: .center, spacing: 30) {
+                VStack (alignment: .center, spacing: 20) {
                     Text(pokemon.name.capitalized)
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding(.leading)
                         .padding(.trailing)
+                
                     
                     Text("type")
                         .font(.subheadline).bold()
@@ -33,14 +33,16 @@ struct PokedexCellView: View {
                         )
                         .frame(width: 200, height: 24)
                 }
-                .onAppear{vm.getDetails(pokemon: pokemon)}
+                //.task {vm.getDetails(pokemon: pokemon)}
                 
-                PokemonImageView(vm: vm, pokemon: pokemon)
+                PokemonImageView(vm:vm, pokemon: pokemon, dimensions: 75)
                     .padding([.bottom, .trailing, .top], 10)
                 
             }
             
         }
+        //.onAppear{vm.getDetails(pokemon: pokemon)}
+        .frame(width: 350, height: 100)
         .background(Color.gray)
         .cornerRadius(12)
         

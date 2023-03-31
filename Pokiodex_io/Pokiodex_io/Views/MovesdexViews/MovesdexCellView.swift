@@ -10,12 +10,13 @@ import SwiftUI
 struct MovesdexCellView: View {
     @ObservedObject var vm: MovesViewModel
     let move: PokemonMove
+    let details: MoveDetails
     
     var body: some View {
        
         HStack(spacing: 15) {
                 VStack(alignment: .leading) {
-                    Text("#999")                    // Move index #
+                    Text("# \(vm.getMoveID(move: move))")     // Move index #
                         .font(Font.caption)
                     Text(move.name.capitalized)     // Move name
                         .font(Font.title3)
@@ -26,9 +27,11 @@ struct MovesdexCellView: View {
                 .padding(.leading, 5)
                 .frame(width: 125)
                 
+                
                 // Block with (ATK## | ACC##)
                 HStack{
-                    Text("\(vm.moveDetails?.power ?? 0)")  // Attack Power
+                    
+                    Text("\(details.power)")  // Attack Power
                     Divider()
                     Text("\(vm.moveDetails?.accuracy ?? 0)") // Accuracy
                 }
@@ -66,10 +69,12 @@ struct MovesdexCellView: View {
         
         
     }
+    
+    
 }
 
 struct MovesdexCellView_Previews: PreviewProvider {
     static var previews: some View {
-        MovesdexCellView(vm: MovesViewModel(), move: PokemonMove.sample )
+        MovesdexCellView(vm: MovesViewModel(), move: PokemonMove.sample, details: MoveDetails.sample)
     }
 }

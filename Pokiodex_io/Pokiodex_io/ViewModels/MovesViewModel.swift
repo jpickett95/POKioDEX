@@ -10,7 +10,6 @@ import SwiftUI
 
 final class MovesViewModel: ObservableObject {
     private let moveManager = MoveManager()
-    
     @Published var movesList = [PokemonMove]()
     @Published var moveDetails: MoveDetails?
     @Published var searchText = ""
@@ -23,8 +22,9 @@ final class MovesViewModel: ObservableObject {
     
     init() {
         self.movesList = moveManager.getMoves()
-        //print(self.movesList)
     }
+    
+
     
     func getMoveID(move: PokemonMove) -> Int {
         if let id = self.movesList.firstIndex(of: move) {
@@ -47,4 +47,6 @@ final class MovesViewModel: ObservableObject {
         }
         //print(self.$moveDetails)
     }
+    
+    
 }

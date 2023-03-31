@@ -11,7 +11,7 @@ import SwiftUI
 struct PokemonImageView: View {
     @ObservedObject var vm: PokemonViewModel
     let pokemon: Pokemon
-    let dimensions: Double = 140
+    let dimensions: Double
     
     var body: some View {
         AsyncImage(url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(vm.getPokemonID(pokemon: pokemon)).png")) { image in
@@ -32,6 +32,6 @@ struct PokemonImageView: View {
 
 struct PokemonImageView_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonImageView(vm: PokemonViewModel(), pokemon: Pokemon.samplePokemon)
+        PokemonImageView(vm: PokemonViewModel(), pokemon: Pokemon.samplePokemon, dimensions: 140)
     }
 }
