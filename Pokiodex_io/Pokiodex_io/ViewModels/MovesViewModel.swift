@@ -14,18 +14,19 @@ final class MovesViewModel: ObservableObject {
     @Published var moveDetails: MoveDetails?
     @Published var searchText = ""
     
+    // Filtered list of 'PokemonMove's for searchbar
     var filteredMoves: [PokemonMove] {
         return searchText == "" ? movesList : movesList.filter {
             $0.name.contains(searchText.lowercased())
         }
     }
     
+    // initializer to populate self.movesList
     init() {
         self.movesList = moveManager.getMoves()
     }
     
-
-    
+    // Returns id# of 'PokemonMove' input
     func getMoveID(move: PokemonMove) -> Int {
         if let id = self.movesList.firstIndex(of: move) {
             if id >= 901 {
@@ -36,13 +37,16 @@ final class MovesViewModel: ObservableObject {
     }
     
     func getDetails(move: PokemonMove) {
-        let id = getMoveID(move: move)
+        let id = getMoveID(move: move)  // get id#
         
         //self.moveDetails = MoveDetails(id: 0, name: "", accuracy: 0, effect_chance: 0, pp: 0, priority: 0, power: 0, learned_by_pokemon: [Pokemon]()) //- not necessary since decoded in struct initializer
         
-        moveManager.getMoveDetails(id: id) { data in
-            DispatchQueue.main.async {
-                self.moveDetails = data
+        DispatchQueue.global().async {
+            // get 'MoveDetails'
+            self.moveManager.getMoveDetails(id: id) { data in
+                DispatchQueue.main.async {
+                    self.moveDetails = data
+                }
             }
         }
         //print(self.$moveDetails)

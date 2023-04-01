@@ -18,12 +18,14 @@ final class PokemonViewModel: ObservableObject {
     @Published var pokemonTypes: SpecificType?
     @Published var searchText = ""
     
+    // Filtered pokemonList for searchbar
     var filteredPokemon: [Pokemon] {
         return searchText == "" ? pokemonList : pokemonList.filter {
             $0.name.contains(searchText.lowercased())
         }
     }
     
+    // initializer which populates pokemonList with 'Pokemon' from PokeAPI
     init() {
         DispatchQueue.global().async {
             self.pokemonManager.getPokemonAPI() { data in
@@ -33,7 +35,6 @@ final class PokemonViewModel: ObservableObject {
                 }
             }
         }
-
     }
     
 //    func populateDetailsList(pokemon: Pokemon) {
@@ -44,6 +45,7 @@ final class PokemonViewModel: ObservableObject {
 //        }
 //    }
     
+    // Returns Pokedex id# of input 'Pokemon'
     func getPokemonID(pokemon: Pokemon) -> Int {
         if let id = self.pokemonList.firstIndex(of: pokemon) {
             return id + 1
@@ -51,28 +53,31 @@ final class PokemonViewModel: ObservableObject {
         return 0
     }
     
+    // Uses manager to populate self.pokemonDetails with 'PokemonDetails' from PokeAPI
     func getDetails(pokemon: Pokemon) {
+        let id = getPokemonID(pokemon: pokemon) // get id#
         
-        let id = getPokemonID(pokemon: pokemon)
-        
+        // instantiate variables
         self.pokemonDetails = PokemonDetails(id: 0, name: "Bulbasaur", height: 0, weight: 0, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat(name: "", url: "", id: 0, game_index: 0, is_battle_only: false))], types: [PokemonTypes(slot: 0, type: SpecificType(name: "", url: "", id: 0))])
         self.pokemonStats = SpecificStat(name: "", url: "", id: 0, game_index: 0, is_battle_only: false)
         self.pokemonTypes = SpecificType(name: "", url: "", id: 0)
         
         DispatchQueue.global().async {
+            // get 'PokemonDetails'
             self.pokemonManager.getDetailedPokemon(id: id) { data in
                 DispatchQueue.main.async {
                     self.pokemonDetails = data
-                    
                 }
             }
             
+            // get 'SpecificStat'
             self.pokemonManager.getPokemonStats(id: id) { data in
                 DispatchQueue.main.async {
                     self.pokemonStats = data
                 }
             }
             
+            // get 'SpecificType'
             self.pokemonManager.getPokemonTypes(id: id) { data in
                 DispatchQueue.main.async {
                     self.pokemonTypes = data
@@ -88,6 +93,7 @@ final class PokemonViewModel: ObservableObject {
         return PokemonDetails.sampleDetails
     }
     
+    // Returns formatted data as a string
     func formatHW(value: Int) -> String {
         let dValue = Double(value)
         let string = String(format: "%.2f", dValue / 10)

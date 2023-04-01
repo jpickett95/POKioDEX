@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovesList: Codable {
+struct MovesList: Codable {     // API endpoint: https://pokeapi.co/api/v2/move/ ; returns paginated list
     let count: Int
     let results: [PokemonMove]
     
@@ -23,16 +23,17 @@ struct PokemonMove: Codable, Identifiable, Equatable, Hashable {
     static var sample = PokemonMove(name: "pound", url:"https://pokeapi.co/api/v2/move/1/")
 }
 
-struct MoveDetails: Codable {
-    let id: Int
-    let name: String
-    let accuracy: Int
-    let effect_chance: Int
-    let pp: Int
-    let priority: Int
-    let power: Int
-    let learned_by_pokemon: [Pokemon]
-    static var sample = MoveDetails(id: 0, name: "", accuracy: 0, effect_chance: 0, pp: 0, priority: 0, power: 0) 
+struct MoveDetails: Codable {   // Named API Resource: "Move"
+    let id: Int                                     // resource identifier
+    let name: String                                // resource name
+    let accuracy: Int                               // percent value of how likely this move is to be successful
+    let effect_chance: Int                          // the percent value of how likely it is this move's effect will happen
+    let pp: Int                                     // power points; number of times this move can be used
+    let priority: Int                               // a value between -8 & 8; Sets the order in which move are executed during battle
+    let power: Int                                  // base power of this move, with a value of 0 if it does not have a base value
+    let learned_by_pokemon: [PokemonDetails]        // list of pokemon that can learn this move
+    
+    static var sample = MoveDetails(id: 0, name: "", accuracy: 0, effect_chance: 0, pp: 0, priority: 0, power: 0)
     
     
     enum CodingKeys: String, CodingKey {
@@ -52,11 +53,8 @@ struct MoveDetails: Codable {
         
         id = try values.decode(Int.self, forKey: .id)
         name = try values.decode(String.self, forKey: .name)
-        //accuracy = try values.decode(Int.self, forKey: .accuracy)
-        //pp = try values.decode(Int.self, forKey: .pp)
         priority = try values.decode(Int.self, forKey: .priority)
-        //power = try values.decode(Int.self, forKey: .power)
-        learned_by_pokemon = try values.decode([Pokemon].self, forKey: .learned_by_pokemon)
+        learned_by_pokemon = try values.decode([PokemonDetails].self, forKey: .learned_by_pokemon)
         
         // Api may return 'null' for effect_chance
         if let chance = try values.decodeIfPresent(Int.self, forKey: .effect_chance){
@@ -72,6 +70,8 @@ struct MoveDetails: Codable {
             self.pp = pp
         } else {self.pp = 0}
     }
+    
+    // initializer for 'sample' variable
     init(id: Int, name: String, accuracy: Int, effect_chance: Int, pp: Int, priority: Int, power: Int) {
         self.id = id
         self.name = name
@@ -80,18 +80,20 @@ struct MoveDetails: Codable {
         self.pp = pp
         self.priority = priority
         self.power = power
-        self.learned_by_pokemon = [Pokemon.samplePokemon]
+        self.learned_by_pokemon = [PokemonDetails.sampleDetails]
     }
 }
 
 struct MoveDamageClass: Codable {
-    let id: Int
-    let name: String
-    let move: [PokemonMove]
+    let id: Int                         // resource identifier
+    let name: String                    // resource name
+    let descriptions: [Description]     // resource decription listed in different languages
+    let names: [Name]                   // resource name listed in different languages
+    let move: [PokemonMove]             // list of moves that fall into this damage class
 }
 
 struct MoveLearnMethod: Codable {
-    let id: Int                             // identifier
+    let id: Int                             // resource identifier
     let name: String                        // resource name
     let descriptions: [Description]         // descriptions for this resource in different languages
     let names: [Name]                       // names for this resource in different languages

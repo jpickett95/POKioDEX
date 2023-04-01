@@ -9,6 +9,7 @@ import Foundation
 
 extension Bundle {
     
+    // Decodes a file
     func decode<T: Decodable> (file: String) -> T {
         guard let url = self.url(forResource: file, withExtension: nil) else {
             fatalError("Could not find \(file) in bundle.")
@@ -27,6 +28,7 @@ extension Bundle {
         return loadedData
     }
     
+    // Fetches data from API
     func fetchData<T: Decodable> (url: String, model: T.Type, completion:@escaping(T) -> (), failure:@escaping(Error) -> ()) {
         guard let url = URL(string: url) else {return}
         
@@ -34,7 +36,6 @@ extension Bundle {
             guard let data = data else {
                 if let error = error {
                     failure(error)
-                    
                 }
                 return
             }
@@ -50,6 +51,8 @@ extension Bundle {
     }
 }
 
+
+// NOT IN USE
 extension Data {
     func parseData(removeString string: String) -> Data? {
         let dataAsString = String(data: self, encoding: .utf8)

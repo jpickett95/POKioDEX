@@ -11,6 +11,8 @@
 import Foundation
 
 class PokemonManager{
+    
+    // Retrieves list of 'Pokemon' from internal .json
     func getPokemon() -> [Pokemon] {
         let data: PokemonList = Bundle.main.decode(file: "pokemon.json")
         let pokemon: [Pokemon] = data.results
@@ -18,35 +20,39 @@ class PokemonManager{
         return pokemon
     }
     
+    // Retrieves paginated list of 'Pokemon' from PokeAPI
     func getPokemonAPI(completion:@escaping (PokemonList) -> ()) {
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon?limit=151/", model: PokemonList.self) { data in
             completion(data)
         } failure: { error in
-            print("getPokemonAPI: \(error)")
+            print("getPokemonAPI func: \(error)")
         }
     }
     
+    // Retrieves 'PokemonDetails' struct from PokeAPI
     func getDetailedPokemon(id: Int, completion:@escaping (PokemonDetails) -> ()) {
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: PokemonDetails.self) { data in
             completion(data)
         } failure: { error in
-            print("getDetailedPokemon: \(error)")
+            print("getDetailedPokemon func: \(error)")
         }
     }
     
+    // Retrieves 'SpecificStat' data from PokeAPI
     func getPokemonStats(id: Int, completion:@escaping (SpecificStat) -> ()) {
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: SpecificStat.self) { data in
             completion(data)
         } failure: { error in
-            print("getPokemonStats: \(error)")
+            print("getPokemonStats func: \(error)")
         }
     }
     
+    // Retrieves 'SpecificType' data from PokeAPI
     func getPokemonTypes(id: Int, completion:@escaping (SpecificType) -> ()) {
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: SpecificType.self) { data in
             completion(data)
         } failure: { error in
-            print("getPokemonTypes: \(error)")
+            print("getPokemonTypes func: \(error)")
         }
     }
     

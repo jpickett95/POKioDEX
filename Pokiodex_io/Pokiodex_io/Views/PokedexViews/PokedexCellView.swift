@@ -15,13 +15,14 @@ struct PokedexCellView: View {
         ZStack {
             HStack {
                 VStack (alignment: .center, spacing: 20) {
+                    // Pokemon Name
                     Text(pokemon.name.capitalized)
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding(.leading)
                         .padding(.trailing)
                 
-                    
+                    // Pokemon Type
                     Text("type")
                         .font(.subheadline).bold()
                         .foregroundColor(.white)
