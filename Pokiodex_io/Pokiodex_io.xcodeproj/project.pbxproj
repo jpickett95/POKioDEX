@@ -30,6 +30,7 @@
 		CF473F7529CF92E3001F6934 /* EvolutionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F7429CF92E3001F6934 /* EvolutionModel.swift */; };
 		CF473F7729CFA8B2001F6934 /* MovesdexCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F7629CFA8B2001F6934 /* MovesdexCellView.swift */; };
 		CF473F7929D68C3B001F6934 /* PokedexCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F7829D68C3B001F6934 /* PokedexCellViewModel.swift */; };
+		CF473F7B29FEFD97001F6934 /* TypeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F7A29FEFD97001F6934 /* TypeColor.swift */; };
 		CFEF8ECC29C8221800C8F134 /* Pokiodex_ioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF8ECB29C8221800C8F134 /* Pokiodex_ioApp.swift */; };
 		CFEF8ECE29C8221800C8F134 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF8ECD29C8221800C8F134 /* ContentView.swift */; };
 		CFEF8ED029C8221900C8F134 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFEF8ECF29C8221900C8F134 /* Assets.xcassets */; };
@@ -61,6 +62,7 @@
 		CF473F7429CF92E3001F6934 /* EvolutionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolutionModel.swift; sourceTree = "<group>"; };
 		CF473F7629CFA8B2001F6934 /* MovesdexCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovesdexCellView.swift; sourceTree = "<group>"; };
 		CF473F7829D68C3B001F6934 /* PokedexCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexCellViewModel.swift; sourceTree = "<group>"; };
+		CF473F7A29FEFD97001F6934 /* TypeColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeColor.swift; sourceTree = "<group>"; };
 		CFEF8EC829C8221800C8F134 /* Pokiodex_io.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokiodex_io.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFEF8ECB29C8221800C8F134 /* Pokiodex_ioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokiodex_ioApp.swift; sourceTree = "<group>"; };
 		CFEF8ECD29C8221800C8F134 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				CF473F7029CF8476001F6934 /* AbilityModel.swift */,
 				CF473F7229CF87FC001F6934 /* LocationModel.swift */,
 				CF473F7429CF92E3001F6934 /* EvolutionModel.swift */,
+				CF473F7A29FEFD97001F6934 /* TypeColor.swift */,
 				CF473F4E29C8CC6A001F6934 /* Managers */,
 				CF473F4A29C8C81C001F6934 /* Helpers */,
 				CF473F4929C8C809001F6934 /* Data */,
@@ -296,6 +299,7 @@
 				CFEF8ECC29C8221800C8F134 /* Pokiodex_ioApp.swift in Sources */,
 				CF473F4D29C8C849001F6934 /* APIHelpers.swift in Sources */,
 				CF473F5A29C99993001F6934 /* MoveModel.swift in Sources */,
+				CF473F7B29FEFD97001F6934 /* TypeColor.swift in Sources */,
 				CF473F6229CA2029001F6934 /* MovesdexView.swift in Sources */,
 				CF473F6629CBED8E001F6934 /* TMsdexView.swift in Sources */,
 				CF473F4429C8C644001F6934 /* PokemonModel.swift in Sources */,
