@@ -82,6 +82,8 @@ struct FlavorText: Codable {
                                 // more info at:    github.com/veekun/pokedex/issues/218#issuecomment-339841781
     let language: Language      // language this resource is in
     let version: Version        // game version this flavor text is extracted from
+    
+    static var sample = FlavorText(flavor_text: "lorem ipsult....", language: Language.sample, version: Version.sample)
 }
 
 struct VersionGroupFlavorText: Codable {
@@ -95,6 +97,8 @@ struct Version: Codable {
     let name: String                    // resource name
     let names: [Name]                   // name of this resource listed in different languages
     let version_group: VersionGroup     // version group this version belongs to
+    
+    static var sample = Version(id: 0, name: "", names: [Name](), version_group: VersionGroup.sample)
 }
 
 struct VersionGroup: Codable {

@@ -17,6 +17,7 @@ final class PokemonViewModel: ObservableObject {
     @Published var pokemonStats: SpecificStat?
     @Published var pokemonTypes: SpecificType?
     @Published var pokemonAbilities: Ability?
+    @Published var pokemonSpecies: PokemonSpecies?
     @Published var searchText = ""
     
     // Filtered pokemonList for searchbar
@@ -59,7 +60,7 @@ final class PokemonViewModel: ObservableObject {
         let id = getPokemonID(pokemon: pokemon) // get id#
         
         // instantiate variables
-        self.pokemonDetails = PokemonDetails(id: 0, name: "Bulbasaur", height: 0, weight: 0, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat(name: "", url: "", id: 0, game_index: 0, is_battle_only: false))], types: [PokemonTypes(slot: 0, type: SpecificType(name: "", url: "", id: 0))], abilities: [PokemonAbility(is_hidden: false, slot: 0, ability: Ability(id: 0, name: "", is_main_series: true, effect_entries: [VerboseEffect(effect: "", short_effect: "", language: Language.sample)], effect_changes: [AbilityEffectChange(effect_entries: [Effect(effect: "", language: Language.sample)], version_group: VersionGroup(id: 0, name: "", order: 0))], flavor_text_entries: [AbilityFlavorText(flavor_text: "", language: Language.sample, version_group: VersionGroup(id: 0, name: "", order: 0))]))])
+        self.pokemonDetails = PokemonDetails(id: 0, name: "Bulbasaur", height: 0, weight: 0, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat(name: "", url: "", id: 0, game_index: 0, is_battle_only: false))], types: [PokemonTypes(slot: 0, type: SpecificType(name: "", url: "", id: 0))], abilities: [PokemonAbility(is_hidden: false, slot: 0, ability: Ability(id: 0, name: "", is_main_series: true, effect_entries: [VerboseEffect(effect: "", short_effect: "", language: Language.sample)], effect_changes: [AbilityEffectChange(effect_entries: [Effect(effect: "", language: Language.sample)], version_group: VersionGroup(id: 0, name: "", order: 0))], flavor_text_entries: [AbilityFlavorText(flavor_text: "", language: Language.sample, version_group: VersionGroup(id: 0, name: "", order: 0))]))], species: PokemonSpecies(id: 0, name: "", order: 0, gender_rate: 0, capture_rate: 0, base_happiness: 0, is_baby: false, is_legendary: false, is_mythical: false, hatch_counter: 0, has_gender_differences: false, forms_switchable: false, flavor_text_entries: [FlavorText(flavor_text: "", language: Language.sample, version: Version(id: 0, name: "", names: [Name(name: "", language: Language.sample)], version_group: VersionGroup.sample))]))
         self.pokemonStats = SpecificStat(name: "", url: "", id: 0, game_index: 0, is_battle_only: false)
         self.pokemonTypes = SpecificType(name: "", url: "", id: 0)
         
@@ -89,6 +90,13 @@ final class PokemonViewModel: ObservableObject {
             self.pokemonManager.getPokemonAbilities(id: id) { data in
                 DispatchQueue.main.async {
                     self.pokemonAbilities = data
+                }
+            }
+            
+            // get 'PokemonSpecies'
+            self.pokemonManager.getPokemonSpecies(id: id) { data in
+                DispatchQueue.main.async {
+                    self.pokemonSpecies = data
                 }
             }
         }
@@ -149,5 +157,22 @@ final class PokemonViewModel: ObservableObject {
         }
     }
     
-    
+    func switchStatName(stat: String) -> String {
+        switch(stat){
+        case "hp":
+            return "HP  "
+        case "attack":
+            return "ATK  "
+        case "defense":
+            return "DEF  "
+        case "speed":
+            return"SPD  "
+        case "special-attack":
+            return "SpATK"
+        case "special-defense":
+            return "SpDEF"
+        default:
+            return "N/A"
+        }
+    }
 }

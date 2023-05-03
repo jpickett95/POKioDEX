@@ -152,8 +152,34 @@ struct PokemonDetailsView: View {
                     
                 }.scaledToFit()
                 
+                // Description
+                Text("\(vm.pokemonDetails?.species.flavor_text_entries.first?.flavor_text ?? "No description available...")")
+                
+                // Stats Section
+                Text("Stats")   // Title
+                    .font(.title2).bold()
+                
+                // Progress Bar created for each stat
+                ForEach(vm.pokemonDetails?.stats ?? [PokemonStats]()) { stat in
+                    HStack {
+                        HStack{
+                            Text(vm.switchStatName(stat: stat.stat.name)).bold()
+                            Divider()
+                            Text("\(stat.base_stat)")
+                        }
+                        .frame(width: 100)
+                            
+                        ProgressView(value: Float(stat.base_stat), total: Float(255))
+                            .accentColor(Color("Type_\(type)"))
+                            .scaleEffect(x: 1, y: 4, anchor: .center)
+                            
+                    }
+                    .padding([.leading, .trailing],30)
+                }
+                
+                
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("**Name**: \(pokemon.name.capitalized)")
+                    
                     Text("**No**: \(vm.pokemonDetails?.id ?? 0)")
                     Text("**Height**: \(vm.formatHW(value: vm.pokemonDetails?.height ?? 0)) m")
                     Text("**Weight**: \(vm.formatHW(value: vm.pokemonDetails?.weight ?? 0)) kg")

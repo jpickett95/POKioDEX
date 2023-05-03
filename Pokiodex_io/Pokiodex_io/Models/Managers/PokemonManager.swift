@@ -65,6 +65,15 @@ class PokemonManager{
         }
     }
     
+    // Retrieves 'PokemonSpecies' data from PokeAPI
+    func getPokemonSpecies(id: Int, completion:@escaping (PokemonSpecies) -> ()) {
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon-species/\(id)/", model: PokemonSpecies.self) { data in
+            completion(data)
+        } failure: { error in
+            print("getPokemonSpecies func: \(error)")
+        }
+    }
+    
     func getDetailsObject() {
         
     }
