@@ -10,6 +10,8 @@ import Foundation
 struct Description: Codable {
     let description: String     // localized description for an API resource in a specific language
     let language: Language      // language this desscription is in
+    
+    static var sample = Description(description: "", language: Language.sample)
 }
 
 struct Language: Codable {
@@ -18,23 +20,31 @@ struct Language: Codable {
     let official: Bool      // whether or not games are published in this language
     let iso639: String      // two-letter code of the country where this language is spoken (NOT unique)
     let iso3166: String     // two-letter code of the language (NOT unique)
-    let names: [Name]       // name of this resource listed in different languages
+    //let names: [Name]       // name of this resource listed in different languages
+    
+    static var sample = Language(id: 0, name: "English", official: true, iso639: "", iso3166: "")
 }
 
 struct Name: Codable {
     let name: String            // localized name for an API resource in a specific language
     let language: Language      // language this name is in
+    
+    static var sample = Name(name: "", language: Language.sample)
 }
 
 struct Effect: Codable {
     let effect: String          // localized effect text for an API resource in a specific language
     let language: Language      // language this effect is in
+    
+    static var sample = Effect(effect: "", language: Language.sample)
 }
 
 struct VerboseEffect: Codable {
     let effect: String          // localized effect text for an API resource in a specific language
     let short_effect: String    // localized effect text in brief
     let language: Language      // language this effect is in
+    
+    static var sample = VerboseEffect(effect: "", short_effect: "", language: Language.sample)
 }
 
 struct Encounter: Codable {
@@ -91,11 +101,13 @@ struct VersionGroup: Codable {
     let id: Int                                     // identifier
     let name: String                                // resource name
     let order: Int                                  // order for sorting (almost be date of release, except similar versions are grouped together)
-    let generation: Generation                      // generation this version belongs to
-    let move_learn_methods: [MoveLearnMethod]       // list of methods in which Pokemon can larn moves in this version group
-    let pokedexes: [Pokedex]                        // list of pokedexes introduced in this version group
-    let regions: [Region]                           // a list of regions that can be visited in this version group
-    let versions: [Version]                         // list of versions this version group owns
+    //let generation: Generation                      // generation this version belongs to
+    //let move_learn_methods: [MoveLearnMethod]       // list of methods in which Pokemon can larn moves in this version group
+    //let pokedexes: [Pokedex]                        // list of pokedexes introduced in this version group
+    //let regions: [Region]                           // a list of regions that can be visited in this version group
+    //let versions: [Version]                         // list of versions this version group owns
+    
+    static var sample = VersionGroup(id: 0, name: "", order: 0)
 }
 
 struct VersionEncounterDetail: Codable {

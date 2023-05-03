@@ -51,12 +51,15 @@ struct MoveDetails: Codable {   // Named API Resource: "Move"
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
-        id = try values.decode(Int.self, forKey: .id)
+        //id = try values.decode(Int.self, forKey: .id)
         name = try values.decode(String.self, forKey: .name)
         priority = try values.decode(Int.self, forKey: .priority)
         learned_by_pokemon = try values.decode([PokemonDetails].self, forKey: .learned_by_pokemon)
         
         // Api may return 'null' for effect_chance
+        if let id = try values.decodeIfPresent(Int.self, forKey: .id){
+            self.id = id
+        } else {self.id = 0}
         if let chance = try values.decodeIfPresent(Int.self, forKey: .effect_chance){
             self.effect_chance = chance
         } else {self.effect_chance = 0}

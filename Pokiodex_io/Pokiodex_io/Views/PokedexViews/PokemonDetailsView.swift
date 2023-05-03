@@ -139,7 +139,7 @@ struct PokemonDetailsView: View {
                     // Abilities
                     VStack(spacing: 10){
                         Label {
-                            Text("Overgrow")
+                            Text("\(vm.pokemonDetails?.abilities.first?.ability.name.capitalized ?? "Overgrow")")
                                 .font(.headline)
                                 .foregroundColor(Color("Type_\(type)"))
                         } icon: {

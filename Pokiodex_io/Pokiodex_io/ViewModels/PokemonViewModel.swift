@@ -16,6 +16,7 @@ final class PokemonViewModel: ObservableObject {
     @Published var pokemonDetails: PokemonDetails?
     @Published var pokemonStats: SpecificStat?
     @Published var pokemonTypes: SpecificType?
+    @Published var pokemonAbilities: Ability?
     @Published var searchText = ""
     
     // Filtered pokemonList for searchbar
@@ -58,7 +59,7 @@ final class PokemonViewModel: ObservableObject {
         let id = getPokemonID(pokemon: pokemon) // get id#
         
         // instantiate variables
-        self.pokemonDetails = PokemonDetails(id: 0, name: "Bulbasaur", height: 0, weight: 0, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat(name: "", url: "", id: 0, game_index: 0, is_battle_only: false))], types: [PokemonTypes(slot: 0, type: SpecificType(name: "", url: "", id: 0))])
+        self.pokemonDetails = PokemonDetails(id: 0, name: "Bulbasaur", height: 0, weight: 0, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat(name: "", url: "", id: 0, game_index: 0, is_battle_only: false))], types: [PokemonTypes(slot: 0, type: SpecificType(name: "", url: "", id: 0))], abilities: [PokemonAbility(is_hidden: false, slot: 0, ability: Ability(id: 0, name: "", is_main_series: true, effect_entries: [VerboseEffect(effect: "", short_effect: "", language: Language.sample)], effect_changes: [AbilityEffectChange(effect_entries: [Effect(effect: "", language: Language.sample)], version_group: VersionGroup(id: 0, name: "", order: 0))], flavor_text_entries: [AbilityFlavorText(flavor_text: "", language: Language.sample, version_group: VersionGroup(id: 0, name: "", order: 0))]))])
         self.pokemonStats = SpecificStat(name: "", url: "", id: 0, game_index: 0, is_battle_only: false)
         self.pokemonTypes = SpecificType(name: "", url: "", id: 0)
         
@@ -81,6 +82,13 @@ final class PokemonViewModel: ObservableObject {
             self.pokemonManager.getPokemonTypes(id: id) { data in
                 DispatchQueue.main.async {
                     self.pokemonTypes = data
+                }
+            }
+            
+            // get 'Abilities'
+            self.pokemonManager.getPokemonAbilities(id: id) { data in
+                DispatchQueue.main.async {
+                    self.pokemonAbilities = data
                 }
             }
         }

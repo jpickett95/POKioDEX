@@ -56,6 +56,15 @@ class PokemonManager{
         }
     }
     
+    // Retrieves 'Ability' data from PokeAPI
+    func getPokemonAbilities(id: Int, completion:@escaping (Ability) -> ()) {
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: Ability.self) { data in
+            completion(data)
+        } failure: { error in
+            print("getPokemonAbilities func: \(error)")
+        }
+    }
+    
     func getDetailsObject() {
         
     }

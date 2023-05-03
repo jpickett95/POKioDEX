@@ -29,8 +29,9 @@ struct PokemonDetails: Codable, Identifiable {  // API NamedResource: "Pokemon"
     let weight: Int                 // Pokemon weight in hectograms
     let stats: [PokemonStats]       // list of base stat vaalues for this Pokemon
     let types: [PokemonTypes]       // list of details showing types this Pokemon has
+    let abilities: [PokemonAbility]
     
-    static var sampleDetails = PokemonDetails(id: 1, name: "Bulbasaur", height: 7, weight: 69, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat.sample)], types: [PokemonTypes(slot: 0, type: SpecificType.sample)])
+    static var sampleDetails = PokemonDetails(id: 1, name: "Bulbasaur", height: 7, weight: 69, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat.sample)], types: [PokemonTypes(slot: 0, type: SpecificType.sample)], abilities: [PokemonAbility.sample])
 }
 
 struct PokemonStats: Codable {      // Named API Resource: "PokemonStat"
@@ -194,4 +195,10 @@ struct PokemonEntry: Codable {
     let pokemon_species: PokemonSpecies     // the Pokemon species being encountered
 }
 
-
+struct PokemonAbility: Codable {
+    let is_hidden: Bool             // Whether or not this is a hidden ability.
+    let slot: Int                   // The slot this ability occupies in this Pokémon species.
+    let ability: Ability            // The ability the Pokémon may have.
+    
+    static var sample = PokemonAbility(is_hidden: false, slot: 1, ability: Ability.sample)
+}
