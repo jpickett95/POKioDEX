@@ -163,12 +163,15 @@ struct PokemonDetailsView: View {
                 ForEach(vm.pokemonDetails?.stats ?? [PokemonStats]()) { stat in
                     HStack {
                         HStack{
-                            Text(vm.switchStatName(stat: stat.stat.name)).bold()
+                            Text(vm.switchStatName(stat: stat.stat.name)).bold()    // stat name
                             Divider()
-                            Text("\(stat.base_stat)")
+                                .frame(width: 1.5)
+                                .overlay(Color("Type_\(type)"))
+                            Text("\(stat.base_stat)")       // stat value
                         }
                         .frame(width: 100)
                             
+                        // Progress Bar
                         ProgressView(value: Float(stat.base_stat), total: Float(255))
                             .accentColor(Color("Type_\(type)"))
                             .scaleEffect(x: 1, y: 4, anchor: .center)
@@ -179,15 +182,18 @@ struct PokemonDetailsView: View {
                 
                 
                 VStack(alignment: .leading, spacing: 10) {
+                    let femalePercentage = vm.pokemonDetails?.species.gender_rate
+                    if femalePercentage == -1 {
+                        Text("This Pokemon is genderless.")
+                    } else {
+                        Label("\((femalePercentage ?? 0) * 100)% Female | \((1 - (femalePercentage ?? 0)) * 100)% Male", systemImage: "figure.dress.line.vertical.figure")
+                    }
                     
-                    Text("**No**: \(vm.pokemonDetails?.id ?? 0)")
-                    Text("**Height**: \(vm.formatHW(value: vm.pokemonDetails?.height ?? 0)) m")
-                    Text("**Weight**: \(vm.formatHW(value: vm.pokemonDetails?.weight ?? 0)) kg")
                 }
                 
             }
             .onAppear{vm.getDetails(pokemon: pokemon)}
-            .navigationTitle("\(pokemon.name.capitalized)'s Details")
+            .navigationTitle("\(pokemon.name.capitalized)")
         }
     }
 }
