@@ -153,7 +153,9 @@ struct PokemonDetailsView: View {
                 }.scaledToFit()
                 
                 // Description
-                Text("\(vm.pokemonDetails?.species.flavor_text_entries.first?.flavor_text ?? "No description available...")")
+                var flavorText = vm.formatFlavorText(string: (vm.pokemonSpecies?.flavor_text_entries.first?.flavor_text ?? "N/A"))
+                Text(flavorText)
+                    .padding([.leading, .trailing], 5)
                 
                 // Stats Section
                 Text("Stats")   // Title
@@ -182,11 +184,13 @@ struct PokemonDetailsView: View {
                 
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    let femalePercentage = vm.pokemonDetails?.species.gender_rate
-                    if femalePercentage == -1 {
+                    let genderRate = vm.pokemonSpecies?.gender_rate ?? 0
+                    if genderRate == -1 {
                         Text("This Pokemon is genderless.")
                     } else {
-                        Label("\((femalePercentage ?? 0) * 100)% Female | \((1 - (femalePercentage ?? 0)) * 100)% Male", systemImage: "figure.dress.line.vertical.figure")
+                        var female = vm.formatGenderRate(value: genderRate).female
+                        let male = vm.formatGenderRate(value: genderRate).male
+                        Label("\(female)% Female | \(male)% Male", systemImage: "figure.dress.line.vertical.figure")
                     }
                     
                 }

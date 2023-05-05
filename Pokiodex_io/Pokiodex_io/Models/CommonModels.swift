@@ -15,14 +15,14 @@ struct Description: Codable {
 }
 
 struct Language: Codable {
-    let id: Int             // identifier
+    let id: Int?             // identifier
     let name: String        // resource name
-    let official: Bool      // whether or not games are published in this language
-    let iso639: String      // two-letter code of the country where this language is spoken (NOT unique)
-    let iso3166: String     // two-letter code of the language (NOT unique)
+    let official: Bool?      // whether or not games are published in this language
+    let iso639: String?      // two-letter code of the country where this language is spoken (NOT unique)
+    let iso3166: String?     // two-letter code of the language (NOT unique)
     //let names: [Name]       // name of this resource listed in different languages
     
-    static var sample = Language(id: 0, name: "English", official: true, iso639: "", iso3166: "")
+    static var sample = Language(id: 0, name: "", official: true, iso639: "", iso3166: "")
 }
 
 struct Name: Codable {
@@ -83,7 +83,35 @@ struct FlavorText: Codable {
     let language: Language      // language this resource is in
     let version: Version        // game version this flavor text is extracted from
     
+    
     static var sample = FlavorText(flavor_text: "lorem ipsult....", language: Language.sample, version: Version.sample)
+    
+    enum CodingKeys: String, CodingKey {
+        case flavor_text = "flavor_text"
+        case language = "language"
+        case version = "version"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        // Api may return 'null' for effect_chance
+        if let flavor_text = try values.decodeIfPresent(String.self, forKey: .flavor_text){
+            self.flavor_text = flavor_text
+        } else {self.flavor_text = ""}
+        if let language = try values.decodeIfPresent(Language.self, forKey: .language){
+            self.language = language
+        } else {self.language = Language.sample}
+        if let version = try values.decodeIfPresent(Version.self, forKey: .version){
+            self.version = version
+        } else {self.version = Version.sample}
+    }
+    
+    init(flavor_text: String, language: Language, version: Version){
+        self.flavor_text = flavor_text
+        self.language = language
+        self.version = version
+    }
 }
 
 struct VersionGroupFlavorText: Codable {
@@ -93,10 +121,10 @@ struct VersionGroupFlavorText: Codable {
 }
 
 struct Version: Codable {
-    let id: Int                         // identifier
+    let id: Int?                         // identifier
     let name: String                    // resource name
-    let names: [Name]                   // name of this resource listed in different languages
-    let version_group: VersionGroup     // version group this version belongs to
+    let names: [Name]?                   // name of this resource listed in different languages
+    let version_group: VersionGroup?     // version group this version belongs to
     
     static var sample = Version(id: 0, name: "", names: [Name](), version_group: VersionGroup.sample)
 }

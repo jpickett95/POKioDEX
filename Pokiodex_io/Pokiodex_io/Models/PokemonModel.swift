@@ -35,7 +35,7 @@ struct PokemonDetails: Codable, Identifiable {  // API NamedResource: "Pokemon"
     static var sampleDetails = PokemonDetails(id: 1, name: "Bulbasaur", height: 7, weight: 69, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat.sample)], types: [PokemonTypes(slot: 0, type: SpecificType.sample)], abilities: [PokemonAbility.sample], species: PokemonSpecies.sample)
 }
 
-struct PokemonStats: Codable, Identifiable {      // Named API Resource: "PokemonStat"
+struct PokemonStats: Codable, Identifiable {      // Named API Resource: "PokemonStat"; 'Identifiable' because of stat ForEach loop in PokemonDetailsView
     let id = UUID()
     let base_stat: Int              // base value of the stat
     let effort: Int                 // the effort points (EV) the Pokemon has in the stat
@@ -105,7 +105,7 @@ struct SpecificType: Codable {  // Named API Resource: "Type"
     let id: Int                         // resource identifier
     let name: String                    // resource name
     let names: [Name]                   // resource name listed in different languages
-    let moves: [MoveDetails]            // list of moves that have this type
+    let moves: [MoveDetails]?            // list of moves that have this type
     let url: String
     
     static var sample = SpecificType(name: "grass", url: "https://pokeapi.co/api/v2/type/12/", id: 12)
@@ -149,7 +149,7 @@ struct SpecificType: Codable {  // Named API Resource: "Type"
 }
 
 struct PokemonSpecies: Codable {
-    let id: Int                                 // identifier
+    //let id: Int                                 // identifier
     let name: String                            // resource name
     let order: Int                              // order species should be sorted. Based on National dex order, except families are grouped together and sorted by stage
     let gender_rate: Int                        // chances of this Pokemon being female, in eights; or -1 for genderless
@@ -182,9 +182,9 @@ struct PokemonSpecies: Codable {
     */
     
     enum CodingKeys: String, CodingKey {
+        //case id = "id"
         case name = "name"
         case order = "order"
-        case id = "id"
         case gender_rate = "gender_rate"
         case capture_rate = "capture_rate"
         case base_happiness = "base_happiness"
@@ -200,15 +200,15 @@ struct PokemonSpecies: Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
+//        if let id = try values.decodeIfPresent(Int.self, forKey: .id){
+//            self.id = id
+//        } else {self.id = 0}
         if let name = try values.decodeIfPresent(String.self, forKey: .name){
             self.name = name
         } else {self.name = ""}
         if let order = try values.decodeIfPresent(Int.self, forKey: .order){
             self.order = order
         } else {self.order = 0}
-        if let id = try values.decodeIfPresent(Int.self, forKey: .id){
-            self.id = id
-        } else {self.id = 0}
         if let gender_rate = try values.decodeIfPresent(Int.self, forKey: .gender_rate){
             self.gender_rate = gender_rate
         } else {self.gender_rate = 0}
@@ -241,8 +241,8 @@ struct PokemonSpecies: Codable {
         } else {self.flavor_text_entries = [FlavorText]()}
     }
     
-    init(id: Int, name: String, order: Int, gender_rate: Int, capture_rate: Int, base_happiness: Int, is_baby: Bool, is_legendary: Bool, is_mythical: Bool, hatch_counter: Int, has_gender_differences: Bool, forms_switchable: Bool, flavor_text_entries: [FlavorText]) {
-        self.id = id
+    init(/*id: Int,*/ name: String, order: Int, gender_rate: Int, capture_rate: Int, base_happiness: Int, is_baby: Bool, is_legendary: Bool, is_mythical: Bool, hatch_counter: Int, has_gender_differences: Bool, forms_switchable: Bool, flavor_text_entries: [FlavorText]) {
+        //self.id = id
         self.name = name
         self.order = order
         self.gender_rate = gender_rate
@@ -257,7 +257,7 @@ struct PokemonSpecies: Codable {
         self.flavor_text_entries = flavor_text_entries
     }
     
-    static var sample = PokemonSpecies(id: 0, name: "", order: 0, gender_rate: 0, capture_rate: 0, base_happiness: 0, is_baby: true, is_legendary: false, is_mythical: false, hatch_counter: 0, has_gender_differences: false, forms_switchable: false, flavor_text_entries: [FlavorText]())
+    static var sample = PokemonSpecies(/*id: 0,*/ name: "", order: 0, gender_rate: 0, capture_rate: 0, base_happiness: 0, is_baby: true, is_legendary: false, is_mythical: false, hatch_counter: 0, has_gender_differences: false, forms_switchable: false, flavor_text_entries: [FlavorText]())
 }
 
 struct Pokedex: Codable {

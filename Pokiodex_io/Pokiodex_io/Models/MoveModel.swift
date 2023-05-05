@@ -25,7 +25,7 @@ struct PokemonMove: Codable, Identifiable, Equatable, Hashable {
 
 struct MoveDetails: Codable {   // Named API Resource: "Move"
     let id: Int                                     // resource identifier
-    let name: String                                // resource name
+    let name: String?                                // resource name
     let accuracy: Int                               // percent value of how likely this move is to be successful
     let effect_chance: Int                          // the percent value of how likely it is this move's effect will happen
     let pp: Int                                     // power points; number of times this move can be used
