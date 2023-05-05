@@ -182,17 +182,73 @@ struct PokemonDetailsView: View {
                     .padding([.leading, .trailing],30)
                 }
                 
+                // Characteristics Section
+                Text("Characteristics")   // Title
+                    .font(.title2).bold()
                 
                 VStack(alignment: .leading, spacing: 10) {
+                    // Gender Rate
                     let genderRate = vm.pokemonSpecies?.gender_rate ?? 0
                     if genderRate == -1 {
                         Text("This Pokemon is genderless.")
                     } else {
                         var female = vm.formatGenderRate(value: genderRate).female
                         let male = vm.formatGenderRate(value: genderRate).male
-                        Label("\(female)% Female | \(male)% Male", systemImage: "figure.dress.line.vertical.figure")
+                        //Label("\(female)% Female | \(male)% Male", systemImage: "figure.dress.line.vertical.figure")
+                        Label {
+                            Text("\(female)% Female | \(male)% Male")
+                        } icon: {
+                            Image(systemName: "figure.dress.line.vertical.figure").foregroundColor(Color("Type_\(type)"))
+                        }
                     }
                     
+                    // Capture Rate
+                    Label {
+                        Text("Capture Rate: \(vm.pokemonSpecies?.capture_rate ?? 0)")
+                    } icon: {
+                        Image(systemName: "circle.circle.fill").foregroundColor(Color("Type_\(type)"))
+                    }
+                    
+                    // Base Happiness
+                    Label {
+                        Text("Base Happiness: \(vm.pokemonSpecies?.base_happiness ?? 0)")
+                    } icon: {
+                        Image(systemName: "face.smiling.fill").foregroundColor(Color("Type_\(type)"))
+                    }
+                    
+                    // Hatch Counter
+                    Label {
+                        Text("Hatch Counter: \(vm.pokemonSpecies?.hatch_counter ?? 0)")
+                    } icon: {
+                        Image(systemName: "figure.walk.motion").foregroundColor(Color("Type_\(type)"))
+                    }
+                    
+                    // Is Baby Pokemon
+                    if vm.pokemonSpecies?.is_baby == true {
+                        Label {
+                            Text("This is a baby pokemon")
+                        } icon: {
+                            Image(systemName: "stroller.fill").foregroundColor(Color("Type_\(type)"))
+                        }
+                    }
+                    
+                    // Is Legendary Pokemon
+                    if vm.pokemonSpecies?.is_legendary == true {
+                        Label {
+                            Text("This is a legendary pokemon")
+                        } icon: {
+                            Image(systemName: "crown.fill").foregroundColor(Color("Type_\(type)"))
+                        }
+                    }
+                    
+                    // Is Mythical Pokemon
+                    if vm.pokemonSpecies?.is_mythical == true {
+                        Label {
+                            Text("This is a mythical pokemon")
+                        } icon: {
+                            Image(systemName: "wand.and.stars").foregroundColor(Color("Type_\(type)"))
+                        }
+                    }
                 }
                 
             }
