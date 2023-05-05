@@ -75,11 +75,11 @@ class PokemonManager{
     }
     
     // Retrieves 'PokemonSpecies FlavorText' data from PokeAPI
-    func getPokemonSpeciesFlavorTxt(id: Int, completion:@escaping (FlavorText) -> ()) {
-        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon-species/\(id)/", model: FlavorText.self) { data in
+    func getPokemonSprites(id: Int, completion:@escaping (PokemonSprites) -> ()) {
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: PokemonSprites.self) { data in
             completion(data)
         } failure: { error in
-            print("getPokemonSpeciesFlavorTxt func: \(error)")
+            print("getPokemonSprites func: \(error)")
         }
     }
     

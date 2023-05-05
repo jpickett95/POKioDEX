@@ -53,7 +53,9 @@ struct PokemonDetailsView: View {
                             }
                             .ignoresSafeArea()
                     }
-                    PokemonImageView(vm:vm, pokemon: pokemon, dimensions: 140)
+                    
+                    // Official Artwork Image
+                    AsyncImage(url: URL(string: vm.pokemonDetails?.sprites.other?.official_artwork.front_default ?? OfficialArtwork.sample.front_default), scale: 2)
                 }
                 
                 
@@ -190,11 +192,14 @@ struct PokemonDetailsView: View {
                     // Gender Rate
                     let genderRate = vm.pokemonSpecies?.gender_rate ?? 0
                     if genderRate == -1 {
-                        Text("This Pokemon is genderless.")
+                        Label {
+                            Text("This pokemon is genderless")
+                        } icon: {
+                            Image(systemName: "figure.dress.line.vertical.figure").foregroundColor(Color("Type_\(type)"))
+                        }
                     } else {
-                        var female = vm.formatGenderRate(value: genderRate).female
+                        let female = vm.formatGenderRate(value: genderRate).female
                         let male = vm.formatGenderRate(value: genderRate).male
-                        //Label("\(female)% Female | \(male)% Male", systemImage: "figure.dress.line.vertical.figure")
                         Label {
                             Text("\(female)% Female | \(male)% Male")
                         } icon: {
@@ -255,6 +260,14 @@ struct PokemonDetailsView: View {
             .onAppear{vm.getDetails(pokemon: pokemon)}
             .navigationTitle("\(pokemon.name.capitalized)")
         }
+        
+//        TabView {
+//            PokemonDetailsView(vm: vm, pokemon: pokemon)
+//                .tabItem() {
+//                    Image(systemName: "person.text.rectangle.fill")
+//                    Text("Details")
+//                }
+//        }
     }
 }
 

@@ -31,8 +31,9 @@ struct PokemonDetails: Codable, Identifiable {  // API NamedResource: "Pokemon"
     let types: [PokemonTypes]       // list of details showing types this Pokemon has
     let abilities: [PokemonAbility] // A list of abilities this Pokémon could potentially have.
     let species: PokemonSpecies     // The species this Pokémon belongs to.
+    let sprites: PokemonSprites     // A set of sprites used to depict this Pokémon in the game. A visual representation of the various sprites can be found at https://github.com/PokeAPI/sprites#sprites
     
-    static var sampleDetails = PokemonDetails(id: 1, name: "Bulbasaur", height: 7, weight: 69, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat.sample)], types: [PokemonTypes(slot: 0, type: SpecificType.sample)], abilities: [PokemonAbility.sample], species: PokemonSpecies.sample)
+    static var sampleDetails = PokemonDetails(id: 1, name: "Bulbasaur", height: 7, weight: 69, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat.sample)], types: [PokemonTypes(slot: 0, type: SpecificType.sample)], abilities: [PokemonAbility.sample], species: PokemonSpecies.sample, sprites: PokemonSprites.sample)
 }
 
 struct PokemonStats: Codable, Identifiable {      // Named API Resource: "PokemonStat"; 'Identifiable' because of stat ForEach loop in PokemonDetailsView
@@ -149,7 +150,7 @@ struct SpecificType: Codable {  // Named API Resource: "Type"
 }
 
 struct PokemonSpecies: Codable {
-    //let id: Int                                 // identifier
+    let id: Int?                                 // identifier
     let name: String                            // resource name
     let order: Int                              // order species should be sorted. Based on National dex order, except families are grouped together and sorted by stage
     let gender_rate: Int                        // chances of this Pokemon being female, in eights; or -1 for genderless
@@ -182,7 +183,7 @@ struct PokemonSpecies: Codable {
     */
     
     enum CodingKeys: String, CodingKey {
-        //case id = "id"
+        case id = "id"
         case name = "name"
         case order = "order"
         case gender_rate = "gender_rate"
@@ -200,9 +201,9 @@ struct PokemonSpecies: Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
-//        if let id = try values.decodeIfPresent(Int.self, forKey: .id){
-//            self.id = id
-//        } else {self.id = 0}
+        if let id = try values.decodeIfPresent(Int.self, forKey: .id){
+            self.id = id
+        } else {self.id = 0}
         if let name = try values.decodeIfPresent(String.self, forKey: .name){
             self.name = name
         } else {self.name = ""}
@@ -241,8 +242,8 @@ struct PokemonSpecies: Codable {
         } else {self.flavor_text_entries = [FlavorText]()}
     }
     
-    init(/*id: Int,*/ name: String, order: Int, gender_rate: Int, capture_rate: Int, base_happiness: Int, is_baby: Bool, is_legendary: Bool, is_mythical: Bool, hatch_counter: Int, has_gender_differences: Bool, forms_switchable: Bool, flavor_text_entries: [FlavorText]) {
-        //self.id = id
+    init(id: Int, name: String, order: Int, gender_rate: Int, capture_rate: Int, base_happiness: Int, is_baby: Bool, is_legendary: Bool, is_mythical: Bool, hatch_counter: Int, has_gender_differences: Bool, forms_switchable: Bool, flavor_text_entries: [FlavorText]) {
+        self.id = id
         self.name = name
         self.order = order
         self.gender_rate = gender_rate
@@ -257,7 +258,7 @@ struct PokemonSpecies: Codable {
         self.flavor_text_entries = flavor_text_entries
     }
     
-    static var sample = PokemonSpecies(/*id: 0,*/ name: "", order: 0, gender_rate: 0, capture_rate: 0, base_happiness: 0, is_baby: true, is_legendary: false, is_mythical: false, hatch_counter: 0, has_gender_differences: false, forms_switchable: false, flavor_text_entries: [FlavorText]())
+    static var sample = PokemonSpecies(id: 0, name: "", order: 0, gender_rate: 0, capture_rate: 0, base_happiness: 0, is_baby: true, is_legendary: false, is_mythical: false, hatch_counter: 0, has_gender_differences: false, forms_switchable: false, flavor_text_entries: [FlavorText]())
 }
 
 struct Pokedex: Codable {
@@ -282,4 +283,55 @@ struct PokemonAbility: Codable {
     let ability: Ability            // The ability the Pokémon may have.
     
     static var sample = PokemonAbility(is_hidden: false, slot: 1, ability: Ability.sample)
+}
+
+struct PokemonSprites: Codable {
+    let front_default: String           // The default depiction of this Pokémon from the front in battle.
+    let front_shiny: String             // The shiny depiction of this Pokémon from the front in battle.
+    let front_female: String?            // The female depiction of this Pokémon from the front in battle.
+    let front_shiny_female: String?      // The shiny female depiction of this Pokémon from the front in battle.
+    let back_default: String            // The default depiction of this Pokémon from the back in battle.
+    let back_shiny: String              // The shiny depiction of this Pokémon from the back in battle.
+    let back_female: String?             // The female depiction of this Pokémon from the back in battle.
+    let back_shiny_female: String?       // The shiny female depiction of this Pokémon from the back in battle.
+    let other: OtherSprites?
+    
+    static var sample = PokemonSprites(front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png", front_shiny: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png", front_female: "", front_shiny_female: "", back_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png", back_shiny: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/1.png", back_female: "", back_shiny_female: "", other: OtherSprites.sample)
+}
+
+struct OtherSprites: Codable {
+    let dream_world: DreamWorld
+    let home: HomeSprite
+    let official_artwork: OfficialArtwork
+    
+    enum CodingKeys: String, CodingKey {
+        case dream_world
+        case home
+        case official_artwork = "official-artwork"
+    }
+    
+    static var sample = OtherSprites(dream_world: DreamWorld.sample, home: HomeSprite.sample, official_artwork: OfficialArtwork.sample)
+}
+
+struct DreamWorld: Codable {
+    let front_default: String
+    let front_female: String?
+    
+    static var sample = DreamWorld(front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg", front_female: "")
+}
+
+struct HomeSprite: Codable {
+    let front_default: String
+    let front_female: String?
+    let front_shiny: String
+    let front_shiny_female: String?
+    
+    static var sample = HomeSprite(front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png", front_female: "", front_shiny: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/1.png", front_shiny_female: "")
+}
+
+struct OfficialArtwork: Codable {
+    let front_default: String
+    let front_shiny: String
+    
+    static var sample = OfficialArtwork(front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png", front_shiny: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/1.png")
 }
