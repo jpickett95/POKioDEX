@@ -15,7 +15,7 @@ struct PokedexView: View {
             LazyVStack {
                 ForEach(vm.filteredPokemon) { pokemon in
                     
-                    NavigationLink(destination: PokemonDetailsView(vm: vm, pokemon: pokemon)) {
+                    NavigationLink(destination: PokedexTabView(vm: vm, pokemon: pokemon)) {
                         PokedexCellView(vm: vm, pokemon: pokemon)
                     }
                     
