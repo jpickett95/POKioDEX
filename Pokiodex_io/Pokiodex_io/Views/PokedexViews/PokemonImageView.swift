@@ -15,12 +15,12 @@ struct PokemonImageView: View {
     
     var body: some View {
         AsyncImage(url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(vm.getPokemonID(pokemon: pokemon)).png")) { image in
-            if let image = image {
+            
                 image
                     .resizable()
                     .scaledToFit()
                     .frame(width: dimensions, height: dimensions)
-            }
+            
         }placeholder: {
             ProgressView()
                 .frame(width: dimensions, height: dimensions)

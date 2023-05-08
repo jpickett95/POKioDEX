@@ -21,7 +21,34 @@ struct PokedexTabView: View {
                         Image(systemName: "person.text.rectangle.fill")
                     }
                 }
-        }
+            
+            PokemonEvolutionChainView(vm: vm, pokemon: pokemon)
+                .tabItem {
+                    Label {
+                        Text("Evolution")
+                    } icon: {
+                        Image(systemName: "link.circle.fill")
+                    }
+                }
+            
+            PokemonMovesView(vm: vm, pokemon: pokemon)
+                .tabItem {
+                    Label {
+                        Text("Moves")
+                    } icon: {
+                        Image(systemName: "opticaldisc.fill")
+                    }
+                }
+            
+            PokemonLocationsView(vm: vm, pokemon: pokemon)
+                .tabItem {
+                    Label {
+                        Text("Locations")
+                    } icon: {
+                        Image(systemName: "mappin.and.ellipse")
+                    }
+                }
+        }.accentColor(Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")"))
     }
 }
 
