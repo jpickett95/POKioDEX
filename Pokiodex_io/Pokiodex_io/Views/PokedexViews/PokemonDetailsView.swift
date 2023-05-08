@@ -105,7 +105,7 @@ struct PokemonDetailsView: View {
                 }
                 
                 // About Section
-                Text("About")   // Title
+                Text("About")   // Title 
                     .font(.title2).bold()
                 HStack{
                     // Weight
