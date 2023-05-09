@@ -13,8 +13,15 @@ struct PokemonMovesView: View {
     
     var body: some View {
             List{
+                // Moves learned by leveling up
                 Section("Level-Up Moves") {
-                    ForEach(vm.getMovesLists().level) { move in
+                    let levelMoves = vm.getMovesLists().level
+                    
+                    if(levelMoves.isEmpty == true){
+                        Text("This pokemon cannot learn moves by leveling up...")
+                    }
+                    
+                    ForEach(levelMoves) { move in
                         VStack{
                             Text("Name: \(move.move.name ?? "N/A")")
                             Text("Method: \(move.version_group_details.first?.move_learn_method.name ?? "N/A")")
@@ -28,20 +35,41 @@ struct PokemonMovesView: View {
                     }
                 }
                 
+                // Moves learned from TMs/HMs (machine items)
                 Section("TM/HM Moves") {
-                    ForEach(vm.getMovesLists().machine) { move in
+                    let machineMoves = vm.getMovesLists().machine
+                    
+                    if(machineMoves.isEmpty == true){
+                        Text("This pokemon cannot learn moves through items like TMs or HMs...")
+                    }
+                    
+                    ForEach(machineMoves) { move in
                         Text("Name: \(move.move.name ?? "N/A")\nMethod: \(move.version_group_details.first?.move_learn_method.name ?? "N/A")\n")
                     }
                 }
                 
+                // Moves learned through being hatched from an egg
                 Section("Egg Moves") {
-                    ForEach(vm.getMovesLists().egg) { move in
+                    let eggMoves = vm.getMovesLists().egg
+                    
+                    if(eggMoves.isEmpty == true){
+                        Text("This pokemon cannot learn moves by being hatched from an egg...")
+                    }
+                    
+                    ForEach(eggMoves) { move in
                         Text("Name: \(move.move.name ?? "N/A")\nMethod: \(move.version_group_details.first?.move_learn_method.name ?? "N/A")\n")
                     }
                 }
                 
+                // Moves learned from a Pokemon Move Tutor
                 Section("Tutor Moves") {
-                    ForEach(vm.getMovesLists().tutor) { move in
+                    let tutorMoves = vm.getMovesLists().tutor
+                    
+                    if(tutorMoves.isEmpty == true){
+                        Text("This pokemon cannot learn moves from a move tutor...")
+                    }
+                    
+                    ForEach(tutorMoves) { move in
                         Text("Name: \(move.move.name ?? "N/A")\nMethod: \(move.version_group_details.first?.move_learn_method.name ?? "N/A")\n")
                     }
                 }

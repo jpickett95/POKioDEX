@@ -12,9 +12,14 @@ struct PokemonLocationsView: View {
     let pokemon: Pokemon
     
     var body: some View {
-     
+        
+            
             List{
                 let locations = vm.pokemonLocations ?? [LocationAreaEncounter]()
+                
+                if(locations.isEmpty == true) {
+                    Text("There are no locations where this pokemon can be found... \nPerhaps you can find an earlier evolution of this pokemon in the wild.")
+                }
                 
                 ForEach(locations){ location in
                     let details = location.version_details ?? [VersionEncounterDetail]()
@@ -28,7 +33,7 @@ struct PokemonLocationsView: View {
                                 Text("Max level to find: \(detail.encounter_details?.first?.max_level ?? 0)")
                                 Text("Min level to find: \(detail.encounter_details?.first?.min_level ?? 0)")
                                 Text("Condition Value name: \(detail.encounter_details?.first?.condition_values?.first?.name ?? "")")
-                                Text("Condition name: \(detail.encounter_details?.first?.condition_values?.first?.condition?.name ?? "")") 
+                                Text("Condition name: \(detail.encounter_details?.first?.condition_values?.first?.condition?.name ?? "")")
                             }
                         }
                         
@@ -38,6 +43,7 @@ struct PokemonLocationsView: View {
             }.scrollContentBackground(.hidden)
                 .background(Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")").opacity(0.50))
                 .onAppear{vm.getPokemonLocations()}
+        
     }
 }
 
