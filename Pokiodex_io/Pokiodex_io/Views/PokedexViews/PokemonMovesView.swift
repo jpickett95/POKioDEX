@@ -15,7 +15,16 @@ struct PokemonMovesView: View {
             List{
                 Section("Level-Up Moves") {
                     ForEach(vm.getMovesLists().level) { move in
-                        Text("Name: \(move.move.name ?? "N/A")\nMethod: \(move.version_group_details.first?.move_learn_method.name ?? "N/A")\n")
+                        VStack{
+                            Text("Name: \(move.move.name ?? "N/A")")
+                            Text("Method: \(move.version_group_details.first?.move_learn_method.name ?? "N/A")")
+                            Text("Level: \(move.version_group_details.first?.level_learned_at ?? 0)")
+                            Text("PP: \(move.move.pp ?? 0)")
+                            Text("Power: \(move.move.power ?? 0)")
+                            Text("Accuracy: \(move.move.accuracy ?? 0)")
+                            Text("Priority: \(move.move.priority ?? 0)")
+                            Text("Effect Chance: \(move.move.effect_chance ?? 0)")
+                        }
                     }
                 }
                 

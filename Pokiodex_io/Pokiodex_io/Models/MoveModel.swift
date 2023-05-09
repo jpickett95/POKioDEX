@@ -32,8 +32,9 @@ struct MoveDetails: Codable {   // Named API Resource: "Move"
     let priority: Int?                               // a value between -8 & 8; Sets the order in which move are executed during battle
     let power: Int?                                  // base power of this move, with a value of 0 if it does not have a base value
     let learned_by_pokemon: [PokemonDetails]?        // list of pokemon that can learn this move
+    let machines: [MachineVersionDetail]?            // A list of the machines that teach this move.
     
-    static var sample = MoveDetails(id: 0, name: "", accuracy: 0, effect_chance: 0, pp: 0, priority: 0, power: 0)
+    static var sample = MoveDetails(id: 0, name: "", accuracy: 0, effect_chance: 0, pp: 0, priority: 0, power: 0, learned_by_pokemon: [PokemonDetails.sampleDetails], machines: [MachineVersionDetail]())
     
     
     enum CodingKeys: String, CodingKey {
@@ -45,6 +46,7 @@ struct MoveDetails: Codable {   // Named API Resource: "Move"
         case priority = "priority"
         case power = "power"
         case learned_by_pokemon = "learned_by_pokemon"
+        case machines
     }
     
     // Decoder for 'null' values from api
@@ -52,6 +54,9 @@ struct MoveDetails: Codable {   // Named API Resource: "Move"
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         // Api may return 'null'
+        if let machines = try values.decodeIfPresent([MachineVersionDetail].self, forKey: .machines){
+            self.machines = machines
+        } else {self.machines = [MachineVersionDetail]()}
         if let learned_by_pokemon = try values.decodeIfPresent([PokemonDetails].self, forKey: .learned_by_pokemon){
             self.learned_by_pokemon = learned_by_pokemon
         } else {self.learned_by_pokemon = [PokemonDetails]()}
@@ -79,7 +84,7 @@ struct MoveDetails: Codable {   // Named API Resource: "Move"
     }
     
     // initializer for 'sample' variable
-    init(id: Int, name: String, accuracy: Int, effect_chance: Int, pp: Int, priority: Int, power: Int) {
+    init(id: Int, name: String, accuracy: Int, effect_chance: Int, pp: Int, priority: Int, power: Int, learned_by_pokemon: [PokemonDetails], machines: [MachineVersionDetail]) {
         self.id = id
         self.name = name
         self.accuracy = accuracy
@@ -87,7 +92,8 @@ struct MoveDetails: Codable {   // Named API Resource: "Move"
         self.pp = pp
         self.priority = priority
         self.power = power
-        self.learned_by_pokemon = [PokemonDetails.sampleDetails]
+        self.learned_by_pokemon = learned_by_pokemon
+        self.machines = machines
     }
 }
 

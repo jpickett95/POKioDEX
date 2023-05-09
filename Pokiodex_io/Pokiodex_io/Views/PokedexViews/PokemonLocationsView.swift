@@ -23,7 +23,12 @@ struct PokemonLocationsView: View {
                         ForEach(details) { detail in
                             VStack(alignment: .leading){
                                 Text("Method found name: \(detail.encounter_details?.first?.method?.name ?? "")")
-                                Text("Chance to find: \(detail.max_chance ?? 0)%")
+                                Text("Method Names found name: \(detail.encounter_details?.first?.method?.names?.first?.name ?? "")")
+                                Text("Chance to find: \(detail.encounter_details?.first?.chance ?? 0)%")
+                                Text("Max level to find: \(detail.encounter_details?.first?.max_level ?? 0)")
+                                Text("Min level to find: \(detail.encounter_details?.first?.min_level ?? 0)")
+                                Text("Condition Value name: \(detail.encounter_details?.first?.condition_values?.first?.name ?? "")")
+                                Text("Condition name: \(detail.encounter_details?.first?.condition_values?.first?.condition?.name ?? "")") 
                             }
                         }
                         
