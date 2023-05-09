@@ -23,18 +23,19 @@ struct Pokemon: Codable, Identifiable, Equatable {
 
 struct PokemonDetails: Codable, Identifiable {  // API NamedResource: "Pokemon"
     // API endpoint: https://pokeapi.co/api/v2/pokemon/{id or name}/
-    let id: Int                     // resource identifier
-    let name: String                // resource name
-    let height: Int                 // Pokemon height in decimeters
-    let weight: Int                 // Pokemon weight in hectograms
-    let stats: [PokemonStats]       // list of base stat vaalues for this Pokemon
-    let types: [PokemonTypes]       // list of details showing types this Pokemon has
-    let abilities: [PokemonAbility] // A list of abilities this Pokémon could potentially have.
-    let species: PokemonSpecies     // The species this Pokémon belongs to.
-    let sprites: PokemonSprites     // A set of sprites used to depict this Pokémon in the game. A visual representation of the various sprites can be found at https://github.com/PokeAPI/sprites#sprites
-    let moves: [PokemonLearnedMove] // A list of moves along with learn methods and level details pertaining to specific version groups.
+    let id: Int                                 // resource identifier
+    let name: String                            // resource name
+    let height: Int                             // Pokemon height in decimeters
+    let weight: Int                             // Pokemon weight in hectograms
+    let stats: [PokemonStats]                   // list of base stat vaalues for this Pokemon
+    let types: [PokemonTypes]                   // list of details showing types this Pokemon has
+    let abilities: [PokemonAbility]             // A list of abilities this Pokémon could potentially have.
+    let species: PokemonSpecies                 // The species this Pokémon belongs to.
+    let sprites: PokemonSprites                 // A set of sprites used to depict this Pokémon in the game. A visual representation of the various sprites can be found at https://github.com/PokeAPI/sprites#sprites
+    let moves: [PokemonLearnedMove]             // A list of moves along with learn methods and level details pertaining to specific version groups.
+    let location_area_encounters: String?       // A link to a list of location areas, as well as encounter details pertaining to specific versions.
     
-    static var sampleDetails = PokemonDetails(id: 1, name: "Bulbasaur", height: 7, weight: 69, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat.sample)], types: [PokemonTypes(slot: 0, type: SpecificType.sample)], abilities: [PokemonAbility.sample], species: PokemonSpecies.sample, sprites: PokemonSprites.sample, moves: [PokemonLearnedMove]())
+    static var sampleDetails = PokemonDetails(id: 1, name: "Bulbasaur", height: 7, weight: 69, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat.sample)], types: [PokemonTypes(slot: 0, type: SpecificType.sample)], abilities: [PokemonAbility.sample], species: PokemonSpecies.sample, sprites: PokemonSprites.sample, moves: [PokemonLearnedMove](), location_area_encounters: "https://pokeapi.co/api/v2/pokemon/1/encounters")
 }
 
 struct PokemonStats: Codable, Identifiable {      // Named API Resource: "PokemonStat"; 'Identifiable' because of stat ForEach loop in PokemonDetailsView
@@ -350,3 +351,4 @@ struct PokemonMoveVersion: Codable {
     let level_learned_at: Int?                  // The minimum level to learn the move.
     
 }
+

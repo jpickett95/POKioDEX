@@ -48,32 +48,32 @@ struct VerboseEffect: Codable {
 }
 
 struct Encounter: Codable {
-    let min_level: Int                                  // lowest level the Pokemon could be encountered at
-    let max_level: Int                                  // highest level the Pokemon could be encountered at
-    let condition_values: [EncounterConditionValue]     // list of condition values that must be in effect for this encounter to occur
-    let chance: Int                                     // percent chance that this encounter will occur
-    let method: EncounterMethod                         // the method by which this encounter happens
+    let min_level: Int?                                  // lowest level the Pokemon could be encountered at
+    let max_level: Int?                                  // highest level the Pokemon could be encountered at
+    let condition_values: [EncounterConditionValue]?     // list of condition values that must be in effect for this encounter to occur
+    let chance: Int?                                     // percent chance that this encounter will occur
+    let method: EncounterMethod?                         // the method by which this encounter happens
 }
 
 struct EncounterConditionValue: Codable {
-    let id: Int                             // identifier
-    let name: String                        // resource name
-    let condition: EncounterCondition       // the condition this encounter condition value pertains to
-    let names: [Name]                       // name of this resource listed in different languages
+    let id: Int?                             // identifier
+    let name: String?                        // resource name
+    let condition: EncounterCondition?       // the condition this encounter condition value pertains to
+    let names: [Name]?                       // name of this resource listed in different languages
 }
 
 struct EncounterCondition: Codable {
-    let id: Int                                 // identifier
-    let name: String                            // resource name
-    let names: [Name]                           // name of this resource listed in different languages
-    let values: [EncounterConditionValue]       // list of possible values for this encounter condition
+    let id: Int?                                 // identifier
+    let name: String?                            // resource name
+    let names: [Name]?                           // name of this resource listed in different languages
+    let values: [EncounterConditionValue]?       // list of possible values for this encounter condition
 }
 
 struct EncounterMethod: Codable {
-    let id: Int             // identifier
-    let name: String        // resource name
-    let order: Int          // a good value for sorting
-    let names: [Name]       // name of this resource listed in different languages
+    let id: Int?             // identifier
+    let name: String?        // resource name
+    let order: Int?          // a good value for sorting
+    let names: [Name]?       // name of this resource listed in different languages
 }
 
 struct FlavorText: Codable {
@@ -142,10 +142,11 @@ struct VersionGroup: Codable {
     static var sample = VersionGroup(id: 0, name: "", order: 0)
 }
 
-struct VersionEncounterDetail: Codable {
-    let version: Version                    // game version this encounter happens in
-    let max_chance: Int                     // total percentage of all encounter potential
-    let encounter_details: [Encounter]      // list of encounters and their specifics
+struct VersionEncounterDetail: Codable, Identifiable {
+    let id = UUID()
+    let version: Version?                    // game version this encounter happens in
+    let max_chance: Int?                     // total percentage of all encounter potential
+    let encounter_details: [Encounter]?      // list of encounters and their specifics
 }
 
 struct VersionGameIndex: Codable {

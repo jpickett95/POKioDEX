@@ -83,7 +83,12 @@ class PokemonManager{
         }
     }
     
-    func getDetailsObject() {
+    func getPokemonLocations(url: String, completion:@escaping ([LocationAreaEncounter]) -> ()) {
+        Bundle.main.fetchData(url: url, model: [LocationAreaEncounter].self) { data in
+            completion(data)
+        } failure: { error in
+            print("getPokemonLocations func: \(error)")
+        }
         
     }
 }
