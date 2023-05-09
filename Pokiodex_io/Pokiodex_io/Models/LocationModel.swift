@@ -17,13 +17,13 @@ struct Location: Codable {
 }
 
 struct Region: Codable {
-    let id: Int                                 // identifier
-    let locations: [Location]                   // list of locations that can be found in this region
+    let id: Int?                                 // identifier
+    let locations: [Location]?                   // list of locations that can be found in this region
     let name: String                            // resource name
-    let names: [Name]                           // resource name listed in different languages
-    let main_generation: Generation             // generation this region was introduced in
-    let pokedexes: [Pokedex]                    // list of Pokedexes that catalogue Pokemon in this region
-    let version_groups: [VersionGroup]          // list of version groups where this region can be visited
+    let names: [Name]?                           // resource name listed in different languages
+    let main_generation: Generation?             // generation this region was introduced in
+    let pokedexes: [Pokedex]?                    // list of Pokedexes that catalogue Pokemon in this region
+    let version_groups: [VersionGroup]?          // list of version groups where this region can be visited
 }
 
 struct LocationArea: Codable {

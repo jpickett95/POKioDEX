@@ -155,15 +155,15 @@ struct VersionGameIndex: Codable {
 }
 
 class Generation: Codable {                     // 'class' because contains recursive properties
-    let id: Int                                 // identifier
-    let name: String                            // resource name
-    let abilities: [Ability]                    // list of abilities that were introduced in this generation
-    let names: [Name]                           // name of this resource listed in different languages
-    let main_region: Region                     // main region travelled in this generation
-    let moves: [PokemonMove]                    // list of moves introduced in this generation
-    let pokemon_species: [PokemonSpecies]       // list of Pokemon species that were introduced in this generation
-    let types: [PokemonTypes]                   // list of types that were introduced in this generation
-    let version_groups: [VersionGroup]          // list of version groups introdcued in this generation
+    let id: Int?                                 // identifier
+    let name: String?                            // resource name
+    let abilities: [Ability]?                    // list of abilities that were introduced in this generation
+    let names: [Name]?                           // name of this resource listed in different languages
+    let main_region: Region?                     // main region travelled in this generation
+    let moves: [PokemonMove]?                    // list of moves introduced in this generation
+    let pokemon_species: [PokemonSpecies]?       // list of Pokemon species that were introduced in this generation
+    let types: [PokemonTypes]?                   // list of types that were introduced in this generation
+    let version_groups: [VersionGroup]?          // list of version groups introdcued in this generation
 }
 
 struct GenerationGameIndex: Codable {

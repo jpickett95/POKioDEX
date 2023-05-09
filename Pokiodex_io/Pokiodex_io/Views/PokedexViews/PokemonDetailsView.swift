@@ -189,6 +189,7 @@ struct PokemonDetailsView: View {
                     .font(.title2).bold()
                 
                 VStack(alignment: .leading, spacing: 10) {
+                
                     // Gender Rate
                     let genderRate = vm.pokemonSpecies?.gender_rate ?? 0
                     if genderRate == -1 {
@@ -202,6 +203,15 @@ struct PokemonDetailsView: View {
                         let male = vm.formatGenderRate(value: genderRate).male
                         Label {
                             Text("\(female)% Female | \(male)% Male")
+                        } icon: {
+                            Image(systemName: "figure.dress.line.vertical.figure").foregroundColor(Color("Type_\(type)"))
+                        }
+                    }
+                    
+                    // Has Gender Differences
+                    if vm.pokemonSpecies?.has_gender_differences == true {
+                        Label {
+                            Text("This pokemon has gender differences")
                         } icon: {
                             Image(systemName: "figure.dress.line.vertical.figure").foregroundColor(Color("Type_\(type)"))
                         }
@@ -252,6 +262,15 @@ struct PokemonDetailsView: View {
                             Text("This is a mythical pokemon")
                         } icon: {
                             Image(systemName: "wand.and.stars").foregroundColor(Color("Type_\(type)"))
+                        }
+                    }
+                    
+                    // Has Switchable Forms
+                    if vm.pokemonSpecies?.forms_switchable == true {
+                        Label {
+                            Text("This pokemon has switchable forms")
+                        } icon: {
+                            Image(systemName: "figure.stand.line.dotted.figure.stand").foregroundColor(Color("Type_\(type)"))
                         }
                     }
                 }

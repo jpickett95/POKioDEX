@@ -35,6 +35,7 @@
 		CF8926CE2A09688D00368E7D /* PokemonEvolutionChainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8926CD2A09688D00368E7D /* PokemonEvolutionChainView.swift */; };
 		CF8926D02A0968A200368E7D /* PokemonMovesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8926CF2A0968A200368E7D /* PokemonMovesView.swift */; };
 		CF8926D22A0968AE00368E7D /* PokemonLocationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8926D12A0968AE00368E7D /* PokemonLocationsView.swift */; };
+		CF8926D52A0AAF8100368E7D /* TypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8926D42A0AAF8100368E7D /* TypeModel.swift */; };
 		CFEF8ECC29C8221800C8F134 /* Pokiodex_ioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF8ECB29C8221800C8F134 /* Pokiodex_ioApp.swift */; };
 		CFEF8ECE29C8221800C8F134 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF8ECD29C8221800C8F134 /* ContentView.swift */; };
 		CFEF8ED029C8221900C8F134 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFEF8ECF29C8221900C8F134 /* Assets.xcassets */; };
@@ -72,6 +73,7 @@
 		CF8926CF2A0968A200368E7D /* PokemonMovesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonMovesView.swift; sourceTree = "<group>"; };
 		CF8926D12A0968AE00368E7D /* PokemonLocationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonLocationsView.swift; sourceTree = "<group>"; };
 		CF8926D32A0AA03600368E7D /* Pokiodex-io-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Pokiodex-io-Info.plist"; sourceTree = SOURCE_ROOT; };
+		CF8926D42A0AAF8100368E7D /* TypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeModel.swift; sourceTree = "<group>"; };
 		CFEF8EC829C8221800C8F134 /* Pokiodex_io.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokiodex_io.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFEF8ECB29C8221800C8F134 /* Pokiodex_ioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokiodex_ioApp.swift; sourceTree = "<group>"; };
 		CFEF8ECD29C8221800C8F134 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				CF473F7029CF8476001F6934 /* AbilityModel.swift */,
 				CF473F7229CF87FC001F6934 /* LocationModel.swift */,
 				CF473F7429CF92E3001F6934 /* EvolutionModel.swift */,
+				CF8926D42A0AAF8100368E7D /* TypeModel.swift */,
 				CF473F7A29FEFD97001F6934 /* TypeColor.swift */,
 				CF473F4E29C8CC6A001F6934 /* Managers */,
 				CF473F4A29C8C81C001F6934 /* Helpers */,
@@ -317,6 +320,7 @@
 				CF473F7B29FEFD97001F6934 /* TypeColor.swift in Sources */,
 				CF473F6229CA2029001F6934 /* MovesdexView.swift in Sources */,
 				CF473F7D2A058E3A001F6934 /* PokedexTabView.swift in Sources */,
+				CF8926D52A0AAF8100368E7D /* TypeModel.swift in Sources */,
 				CF473F6629CBED8E001F6934 /* TMsdexView.swift in Sources */,
 				CF473F4429C8C644001F6934 /* PokemonModel.swift in Sources */,
 				CF473F5429C8D108001F6934 /* PokemonDetailsView.swift in Sources */,

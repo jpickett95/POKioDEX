@@ -105,13 +105,17 @@ struct PokemonTypes: Codable {  // API Name: "PokemonType"
 }
 
 struct SpecificType: Codable {  // Named API Resource: "Type"
-    let id: Int                         // resource identifier
-    let name: String                    // resource name
-    let names: [Name]                   // resource name listed in different languages
-    let moves: [MoveDetails]?            // list of moves that have this type
+    let id: Int?                            // resource identifier
+    let name: String                        // resource name
+    let names: [Name]?                      // resource name listed in different languages
+    let moves: [MoveDetails]?               // list of moves that have this type
     let url: String
+    let move_damage_class: MoveDamageClass?  // The class of damage inflicted by this type.
+    let pokemon: [TypePokemon]?              // A list of details of Pokémon that have this type.
+    let damage_relations: TypeRelations?     // A detail of how effective this type is toward others and vice versa.
+    let past_damage_relations: [TypeRelationsPast]?         // A list of details of how effective this type was toward others and vice versa in previous generations
     
-    static var sample = SpecificType(name: "grass", url: "https://pokeapi.co/api/v2/type/12/", id: 12)
+    static var sample = SpecificType(name: "grass", url: "https://pokeapi.co/api/v2/type/12/", id: 12, move_damage_class: MoveDamageClass.sample, names: [Name](), moves: [MoveDetails](), pokemon: [TypePokemon](), damage_relations: TypeRelations.sample, past_damage_relations: [TypeRelationsPast]())
     
     enum CodingKeys: String, CodingKey {
         case name = "name"
@@ -119,12 +123,19 @@ struct SpecificType: Codable {  // Named API Resource: "Type"
         case id = "id"
         case names = "names"
         case moves = "moves"
+        case move_damage_class
+        case pokemon
+        case damage_relations
+        case past_damage_relations
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
-        // Api may return 'null' for effect_chance
+        // Api may return 'null'
+        if let move_damage_class = try values.decodeIfPresent(MoveDamageClass.self, forKey: .move_damage_class){
+            self.move_damage_class = move_damage_class
+        } else {self.move_damage_class = MoveDamageClass.sample}
         if let name = try values.decodeIfPresent(String.self, forKey: .name){
             self.name = name
         } else {self.name = ""}
@@ -140,16 +151,30 @@ struct SpecificType: Codable {  // Named API Resource: "Type"
         if let moves = try values.decodeIfPresent([MoveDetails].self, forKey: .moves){
             self.moves = moves
         } else {self.moves = [MoveDetails]()}
+        if let pokemon = try values.decodeIfPresent([TypePokemon].self, forKey: .pokemon){
+            self.pokemon = pokemon
+        } else {self.pokemon = [TypePokemon]()}
+        if let damage_relations = try values.decodeIfPresent(TypeRelations.self, forKey: .damage_relations){
+            self.damage_relations = damage_relations
+        } else {self.damage_relations = TypeRelations.sample}
+        if let past_damage_relations = try values.decodeIfPresent([TypeRelationsPast].self, forKey: .past_damage_relations){
+            self.past_damage_relations = past_damage_relations
+        } else {self.past_damage_relations = [TypeRelationsPast]()}
     }
     
-    init(name: String, url: String, id: Int) {
+    init(name: String, url: String, id: Int, move_damage_class: MoveDamageClass, names: [Name], moves: [MoveDetails], pokemon: [TypePokemon], damage_relations: TypeRelations, past_damage_relations: [TypeRelationsPast]) {
         self.name = name
         self.url = url
         self.id = id
-        self.names = [Name]()
-        self.moves = [MoveDetails]()
+        self.names = names
+        self.moves = moves
+        self.move_damage_class = move_damage_class
+        self.pokemon = pokemon
+        self.damage_relations = damage_relations
+        self.past_damage_relations = past_damage_relations
     }
 }
+
 
 struct PokemonSpecies: Codable {
     let id: Int?                                 // identifier

@@ -103,6 +103,8 @@ struct MoveDamageClass: Codable {
     let descriptions: [Description]?     // resource decription listed in different languages
     let names: [Name]?                   // resource name listed in different languages
     let move: [PokemonMove]?             // list of moves that fall into this damage class
+    
+    static var sample = MoveDamageClass(id: 0, name: "", descriptions: [Description](), names: [Name](), move: [PokemonMove]())
 }
 
 struct MoveLearnMethod: Codable {
