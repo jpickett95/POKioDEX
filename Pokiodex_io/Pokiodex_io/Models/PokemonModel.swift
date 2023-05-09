@@ -32,8 +32,9 @@ struct PokemonDetails: Codable, Identifiable {  // API NamedResource: "Pokemon"
     let abilities: [PokemonAbility] // A list of abilities this Pokémon could potentially have.
     let species: PokemonSpecies     // The species this Pokémon belongs to.
     let sprites: PokemonSprites     // A set of sprites used to depict this Pokémon in the game. A visual representation of the various sprites can be found at https://github.com/PokeAPI/sprites#sprites
+    let moves: [PokemonLearnedMove] // A list of moves along with learn methods and level details pertaining to specific version groups.
     
-    static var sampleDetails = PokemonDetails(id: 1, name: "Bulbasaur", height: 7, weight: 69, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat.sample)], types: [PokemonTypes(slot: 0, type: SpecificType.sample)], abilities: [PokemonAbility.sample], species: PokemonSpecies.sample, sprites: PokemonSprites.sample)
+    static var sampleDetails = PokemonDetails(id: 1, name: "Bulbasaur", height: 7, weight: 69, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat.sample)], types: [PokemonTypes(slot: 0, type: SpecificType.sample)], abilities: [PokemonAbility.sample], species: PokemonSpecies.sample, sprites: PokemonSprites.sample, moves: [PokemonLearnedMove]())
 }
 
 struct PokemonStats: Codable, Identifiable {      // Named API Resource: "PokemonStat"; 'Identifiable' because of stat ForEach loop in PokemonDetailsView
@@ -334,4 +335,18 @@ struct OfficialArtwork: Codable {
     let front_shiny: String
     
     static var sample = OfficialArtwork(front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png", front_shiny: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/1.png")
+}
+
+
+struct PokemonLearnedMove: Codable, Identifiable {
+    let id = UUID()
+    let move: MoveDetails                                   // The move the Pokémon can learn.
+    let version_group_details: [PokemonMoveVersion]         // The details of the version in which the Pokémon can learn the move.
+}
+
+struct PokemonMoveVersion: Codable {
+    let move_learn_method: MoveLearnMethod      // The method by which the move is learned.
+    let version_group: VersionGroup             // The version group in which the move is learned.
+    let level_learned_at: Int?                  // The minimum level to learn the move.
+    
 }

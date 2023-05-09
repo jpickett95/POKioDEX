@@ -31,7 +31,7 @@ struct MovesdexCellView: View {
                 // Block with (ATK## | ACC##)
                 HStack{
                     
-                    Text("\(details.power)")  // Attack Power
+                    Text("\(details.power ?? 0)")  // Attack Power
                     Divider()
                     Text("\(vm.moveDetails?.accuracy ?? 0)") // Accuracy
                 }

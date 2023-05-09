@@ -12,7 +12,9 @@ struct PokemonEvolutionChainView: View {
     let pokemon: Pokemon
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack{
+            Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")").opacity(0.50)
+        }
     }
 }
 

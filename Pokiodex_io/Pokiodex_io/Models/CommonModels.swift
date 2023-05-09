@@ -130,9 +130,9 @@ struct Version: Codable {
 }
 
 struct VersionGroup: Codable {
-    let id: Int                                     // identifier
-    let name: String                                // resource name
-    let order: Int                                  // order for sorting (almost be date of release, except similar versions are grouped together)
+    let id: Int?                                     // identifier
+    let name: String?                                // resource name
+    let order: Int?                                  // order for sorting (almost be date of release, except similar versions are grouped together)
     //let generation: Generation                      // generation this version belongs to
     //let move_learn_methods: [MoveLearnMethod]       // list of methods in which Pokemon can larn moves in this version group
     //let pokedexes: [Pokedex]                        // list of pokedexes introduced in this version group

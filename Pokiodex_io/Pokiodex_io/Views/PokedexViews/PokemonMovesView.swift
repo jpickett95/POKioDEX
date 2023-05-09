@@ -12,7 +12,32 @@ struct PokemonMovesView: View {
     let pokemon: Pokemon
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            List{
+                Section("Level-Up Moves") {
+                    ForEach(vm.getMovesLists().level) { move in
+                        Text("Name: \(move.move.name ?? "N/A")\nMethod: \(move.version_group_details.first?.move_learn_method.name ?? "N/A")\n")
+                    }
+                }
+                
+                Section("TM/HM Moves") {
+                    ForEach(vm.getMovesLists().machine) { move in
+                        Text("Name: \(move.move.name ?? "N/A")\nMethod: \(move.version_group_details.first?.move_learn_method.name ?? "N/A")\n")
+                    }
+                }
+                
+                Section("Egg Moves") {
+                    ForEach(vm.getMovesLists().egg) { move in
+                        Text("Name: \(move.move.name ?? "N/A")\nMethod: \(move.version_group_details.first?.move_learn_method.name ?? "N/A")\n")
+                    }
+                }
+                
+                Section("Tutor Moves") {
+                    ForEach(vm.getMovesLists().tutor) { move in
+                        Text("Name: \(move.move.name ?? "N/A")\nMethod: \(move.version_group_details.first?.move_learn_method.name ?? "N/A")\n")
+                    }
+                }
+            }.scrollContentBackground(.hidden)
+            .background(Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")").opacity(0.50))
     }
 }
 
