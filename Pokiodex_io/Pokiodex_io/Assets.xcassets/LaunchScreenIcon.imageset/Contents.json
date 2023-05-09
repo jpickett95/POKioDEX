@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "POKioDEX_AppLogo_250x250px.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "POKioDEX_AppLogo_500x500px.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "POKioDEX_AppLogo.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
