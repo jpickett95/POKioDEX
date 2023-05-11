@@ -14,6 +14,16 @@ struct PokemonEvolutionChainView: View {
     var body: some View {
         ZStack{
             Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")").opacity(0.50)
+            
+            Text("Resistances & Weaknesses")   // Title
+                .font(.title2).bold()
+            
+            let typeRelations = vm.returnTypeRelations(typeName: vm.pokemonDetails?.types.first?.type.name ?? "")
+            Text("No damage to: ")
+            ForEach(typeRelations.no_damage_to ?? [TypeRelationsType]()) { type in
+                Text(type.name)
+            }
+            
         }
     }
 }

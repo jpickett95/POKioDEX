@@ -104,7 +104,7 @@ struct PokemonTypes: Codable {  // API Name: "PokemonType"
     let type: SpecificType      // type of referenced Pokemon
 }
 
-struct SpecificType: Codable {  // Named API Resource: "Type"
+struct SpecificType: Codable, Identifiable {  // Named API Resource: "Type"
     let id: Int?                            // resource identifier
     let name: String                        // resource name
     let names: [Name]?                      // resource name listed in different languages

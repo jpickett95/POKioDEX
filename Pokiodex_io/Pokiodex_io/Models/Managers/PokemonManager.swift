@@ -89,6 +89,16 @@ class PokemonManager{
         } failure: { error in
             print("getPokemonLocations func: \(error)")
         }
+    }
+    
+    func getTypeRelations(typeName: String, completion:@escaping (TypeRelations) -> ()) {
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/type/\(typeName)/", model: TypeRelations.self) { data in
+            completion(data)
+            print(data)
+        } failure: { error in
+            print("getTypeRelations func: \(error)")
+        }
         
     }
+    
 }

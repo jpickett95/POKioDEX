@@ -187,7 +187,6 @@ struct PokemonDetailsView: View {
                 // Characteristics Section
                 Text("Characteristics")   // Title
                     .font(.title2).bold()
-                
                 VStack(alignment: .leading, spacing: 10) {
                 
                     // Gender Rate
@@ -274,7 +273,18 @@ struct PokemonDetailsView: View {
                         }
                     }
                 }
-                
+                Group{
+                    // Resistances Section
+                    Text("Resistances & Weaknesses")   // Title
+                        .font(.title2).bold()
+                    
+                    let typeRelations = vm.returnTypeRelations(typeName: vm.pokemonDetails?.types.first?.type.name ?? "normal")
+                    Text("Double damage to: ")
+                    ForEach(typeRelations.double_damage_to ?? [TypeRelationsType]()) { type in
+                        Text(type.name)
+                    }
+                    
+                }
             }
             .onAppear{vm.getDetails(pokemon: pokemon)}
             .navigationTitle("\(pokemon.name.capitalized)")
