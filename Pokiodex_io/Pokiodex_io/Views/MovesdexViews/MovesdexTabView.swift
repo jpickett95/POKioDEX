@@ -8,13 +8,34 @@
 import SwiftUI
 
 struct MovesdexTabView: View {
+    @ObservedObject var vm: MovesViewModel
+    let move: PokemonMove
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView {
+            MoveDetailsView(vm: vm, move: move)
+                .tabItem{
+                    Label {
+                        Text("Details")
+                    } icon: {
+                        Image(systemName: "person.text.rectangle.fill")
+                    }
+                }
+            
+            MovesLearnedByView(vm: vm, move: move)
+                .tabItem{
+                    Label {
+                        Text("Learned By")
+                    } icon: {
+                        Image(systemName: "studentdesk")
+                    }
+                }
+        }
     }
 }
 
 struct MovesdexTabView_Previews: PreviewProvider {
     static var previews: some View {
-        MovesdexTabView()
+        MovesdexTabView(vm: MovesViewModel(), move: PokemonMove.sample)
     }
 }
