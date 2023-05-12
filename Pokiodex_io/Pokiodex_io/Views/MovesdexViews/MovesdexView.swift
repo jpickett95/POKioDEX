@@ -14,7 +14,7 @@ struct MovesdexView: View {
         ScrollView{
             LazyVStack{
                 ForEach(vm.filteredMoves){ move in
-                    NavigationLink(destination: MoveDetailsView(vm: vm, move: move)) {
+                    NavigationLink(destination: MovesdexTabView(vm: vm, move: move)) {
                         if let details = vm.moveDetails {
                             MovesdexCellView(vm: vm, move: move, details: details)
                         }

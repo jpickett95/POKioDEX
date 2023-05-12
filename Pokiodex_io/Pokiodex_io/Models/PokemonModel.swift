@@ -23,7 +23,7 @@ struct Pokemon: Codable, Identifiable, Equatable {
 
 struct PokemonDetails: Codable, Identifiable {  // API NamedResource: "Pokemon"
     // API endpoint: https://pokeapi.co/api/v2/pokemon/{id or name}/
-    let id: Int                                 // resource identifier
+    let id: Int?                                 // resource identifier
     let name: String                            // resource name
     let height: Int                             // Pokemon height in decimeters
     let weight: Int                             // Pokemon weight in hectograms

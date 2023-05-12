@@ -280,7 +280,7 @@ struct PokemonDetailsView: View {
                     
                     let typeRelations = vm.returnTypeRelations(typeName: vm.pokemonDetails?.types.first?.type.name ?? "normal")
                     Text("Double damage to: ")
-                    ForEach(typeRelations.double_damage_to ?? [TypeRelationsType]()) { type in
+                    ForEach(typeRelations.double_damage_to ?? [SpecificType]()) { type in
                         Text(type.name)
                     }
                     
