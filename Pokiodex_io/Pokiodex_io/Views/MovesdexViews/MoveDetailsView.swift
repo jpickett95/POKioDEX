@@ -12,20 +12,165 @@ struct MoveDetailsView: View {
     let move: Result
     
     var body: some View {
-        VStack {
-            VStack(alignment: .leading, spacing: 10) {
+        ScrollView{
+            VStack (spacing: 20){
                 Text("**Name**: \(move.name.capitalized)")
-                Text("**ID**: \(vm.getMoveID(move: move))")
-                Text("**Accuracy**: \(vm.moveDetails?.accuracy ?? 0)")
-                //Text("**Effect Chance**: \(vm.moveDetails?.effectChance)")
-                Text("**PP**: \(vm.moveDetails?.pp ?? 0)")
-                Text("**Prioirty**: \(vm.moveDetails?.priority ?? 0)")
-                Text("**Power**: \(vm.moveDetails?.power ?? 0)")
+                
+                TypeChips(vm: vm)
+                
+                Text("\(vm.moveDetails?.flavorTextEntries.first?.flavorText ?? "")")
+                Text("**Target**: \(vm.moveDetails?.target.name.replacingOccurrences(of: "-", with: " ").capitalized ?? "")")
+                
+                MoveStatsSection(vm: vm)
+                
+                Text("Effect").font(.title2).bold()
+                VStack(alignment: .leading, spacing: 15){
+                    
+                    Text("**Effect**: \(vm.moveDetails?.effectEntries?.first?.effect.replacingOccurrences(of: "$effect_chance%", with: "\(vm.moveDetails?.effectChance ?? 0)%") ?? "")")
+                    Text("**Effect Chance**: \(vm.moveDetails?.effectChance ?? 0)%")
+                    if vm.moveDetails?.meta?.ailment?.name != "none" {
+                        Text("Ailment: \(vm.moveDetails?.meta?.ailment?.name ?? "")")
+                        var ailmentChance = vm.moveDetails?.meta?.ailmentChance ?? 0
+                        if ailmentChance == 0 {
+                            Text("Ailment Chance: 100%")
+                        } else {
+                            Text("Ailment Chance: \(ailmentChance)%")
+                        }
+                    }
+                }
+                
+                
+                
             }
-            
+            .onAppear{vm.getDetails(move: move)}
+            .navigationTitle("\(move.name.capitalized) Details")
         }
-        .onAppear{vm.getDetails(move: move)}
-        .navigationTitle("\(move.name.capitalized) Details")
+    }
+}
+
+struct TypeChips: View {
+    @ObservedObject var vm: MovesViewModel
+    
+    var body: some View {
+        HStack(spacing: 35){
+            Label {
+                Text(vm.moveDetails?.type.name.capitalized ?? "Normal")
+            } icon:{
+                Image("TypeIcon_\(vm.moveDetails?.type.name.capitalized ?? "Normal")")
+                    .resizable()
+                    .scaledToFit()
+            }
+            .font(.subheadline).bold()
+            .foregroundColor(.white)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 4)
+            .background(
+                RoundedRectangle( cornerRadius: 20)
+                    .fill(Color("Type_\(vm.moveDetails?.type.name.capitalized ?? "Normal")").opacity(0.75))
+            )
+            .frame(height: 24)
+            
+            Label {
+                Text(vm.moveDetails?.damageClass?.name.capitalized ?? "Special")
+            } icon:{
+                Image("\(vm.moveDetails?.damageClass?.name.capitalized ?? "Special")MoveIcon")
+                    .resizable()
+                    .scaledToFit()
+            }
+            .font(.subheadline).bold()
+            .foregroundColor(.white)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 4)
+            .background(
+                RoundedRectangle( cornerRadius: 20)
+                    .fill(Color("MoveType_\(vm.moveDetails?.damageClass?.name.capitalized ?? "Special")").opacity(0.75))
+            )
+            .frame(height: 24)
+        }
+    }
+}
+
+struct MoveStatsSection: View{
+    @ObservedObject var vm: MovesViewModel
+    
+    var body: some View{
+        let type = vm.moveDetails?.type.name.capitalized ?? "Normal"
+
+        // Stats Section
+        Text("Stats")   // Title
+            .font(.title2).bold()
+        
+        // Progress Bar created for each stat
+        HStack {
+            HStack{
+                Text("POW")
+                Divider()
+                    .frame(width: 1.5)
+                    .overlay(Color("Type_\(type)"))
+                Text("\(vm.moveDetails?.power ?? 0)")       // stat value
+            }
+            .frame(width: 100)
+                    
+            // Progress Bar
+            ProgressView(value: Float(vm.moveDetails?.power ?? 0), total: Float(250))
+                .accentColor(Color("Type_\(type)"))
+                .scaleEffect(x: 1, y: 4, anchor: .center)
+        }
+        .padding([.leading, .trailing],30)
+        
+        HStack {
+            HStack{
+                Text("ACC")
+                Divider()
+                    .frame(width: 1.5)
+                    .overlay(Color("Type_\(type)"))
+                Text("\(vm.moveDetails?.accuracy ?? 0)")       // stat value
+            }
+            .frame(width: 100)
+                
+            // Progress Bar
+            ProgressView(value: Float(vm.moveDetails?.accuracy ?? 0), total: Float(100))
+                .accentColor(Color("Type_\(type)"))
+                .scaleEffect(x: 1, y: 4, anchor: .center)
+                
+        }
+        .padding([.leading, .trailing],30)
+        
+        HStack {
+            HStack{
+                Text("PP")
+                Divider()
+                    .frame(width: 1.5)
+                    .overlay(Color("Type_\(type)"))
+                Text("\(vm.moveDetails?.pp ?? 0)")       // stat value
+            }
+            .frame(width: 100)
+                
+            // Progress Bar
+            ProgressView(value: Float(vm.moveDetails?.pp ?? 0), total: Float(64))
+                .accentColor(Color("Type_\(type)"))
+                .scaleEffect(x: 1, y: 4, anchor: .center)
+                
+        }
+        .padding([.leading, .trailing],30)
+        
+        HStack {
+            HStack{
+                Text("PRIO")
+                Divider()
+                    .frame(width: 1.5)
+                    .overlay(Color("Type_\(type)"))
+                Text("\(vm.moveDetails?.priority ?? 0)")       // stat value
+            }
+            .frame(width: 100)
+                
+            // Progress Bar
+            ProgressView(value: Float(vm.moveDetails?.priority ?? 0), total: Float(5))
+                .accentColor(Color("Type_\(type)"))
+                .scaleEffect(x: 1, y: 4, anchor: .center)
+                
+        }
+        .padding([.leading, .trailing],30)
     }
 }
 

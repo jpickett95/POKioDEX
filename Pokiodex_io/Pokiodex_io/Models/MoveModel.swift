@@ -9,26 +9,26 @@ import Foundation
 
 // MARK: - MoveDetails
 struct MoveDetails: Codable {
-    let accuracy: Int
-    let contestCombos: ContestCombos
-    let contestEffect: ContestEffect
-    let contestType, damageClass: ContestType
-    let effectChance: JSONNull?
+    let accuracy: Int?
+    let contestCombos: ContestCombos?
+    let contestEffect: ContestEffect?
+    let contestType, damageClass: URLObject?
+    let effectChance: Int?
     let effectChanges: [JSONAny]
-    let effectEntries: [EffectEntry]
+    let effectEntries: [EffectEntry]?
     let flavorTextEntries: [FlavorTextEntry]
-    let generation: ContestType
+    let generation: URLObject
     let id: Int
-    let learnedByPokemon: [ContestType]
+    let learnedByPokemon: [URLObject]
     let machines: [JSONAny]
-    let meta: Meta
+    let meta: Meta?
     let name: String
     let names: [Name]
     let pastValues: [JSONAny]
-    let power, pp, priority: Int
+    let power, pp, priority: Int?
     let statChanges: [JSONAny]
-    let superContestEffect: ContestEffect
-    let target, type: ContestType
+    let superContestEffect: ContestEffect?
+    let target, type: URLObject
 
     enum CodingKeys: String, CodingKey {
         case accuracy
@@ -53,7 +53,7 @@ struct MoveDetails: Codable {
 
 // MARK: - ContestCombos
 struct ContestCombos: Codable {
-    let normal, contestCombosSuper: Normal
+    let normal, contestCombosSuper: Normal?
 
     enum CodingKeys: String, CodingKey {
         case normal
@@ -63,8 +63,8 @@ struct ContestCombos: Codable {
 
 // MARK: - Normal
 struct Normal: Codable {
-    let useAfter: JSONNull?
-    let useBefore: [ContestType]?
+    let useAfter: [URLObject]?
+    let useBefore: [URLObject]?
 
     enum CodingKeys: String, CodingKey {
         case useAfter = "use_after"
@@ -72,11 +72,6 @@ struct Normal: Codable {
     }
 }
 
-// MARK: - ContestType
-struct ContestType: Codable {
-    let name: String
-    let url: String
-}
 
 // MARK: - ContestEffect
 struct ContestEffect: Codable {
@@ -87,12 +82,12 @@ struct ContestEffect: Codable {
 
 // MARK: - Meta
 struct Meta: Codable {
-    let ailment: ContestType
-    let ailmentChance: Int
-    let category: ContestType
-    let critRate, drain, flinchChance, healing: Int
-    let maxHits, maxTurns, minHits, minTurns: JSONNull?
-    let statChance: Int
+    let ailment: URLObject?
+    let ailmentChance: Int?
+    let category: URLObject?
+    let critRate, drain, flinchChance, healing: Int?
+    let maxHits, maxTurns, minHits, minTurns: Int?
+    let statChance: Int?
 
     enum CodingKeys: String, CodingKey {
         case ailment

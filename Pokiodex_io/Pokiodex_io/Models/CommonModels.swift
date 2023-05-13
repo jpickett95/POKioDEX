@@ -9,8 +9,8 @@ import Foundation
 
 struct ResourceList: Codable {
     let count: Int
-    let next: String
-    let previous: JSONNull?
+    let next: String?
+    let previous: String?
     let results: [Result]
 }
 
@@ -172,7 +172,7 @@ struct Language: Codable {
 // MARK: - EffectEntry
 struct EffectEntry: Codable {
     let effect: String
-    let language: ContestType
+    let language: URLObject
     let shortEffect: String
 
     enum CodingKeys: String, CodingKey {

@@ -294,7 +294,7 @@ final class PokemonViewModel: ObservableObject {
             self.pokemonManager.getPokemonLocations(url: url) { data in
                 DispatchQueue.main.async {
                     self.pokemonLocations = data
-                    print(self.pokemonLocations)
+                    //print(self.pokemonLocations)
                     //print(data)
                 }
             }

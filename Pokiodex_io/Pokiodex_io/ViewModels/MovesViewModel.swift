@@ -46,18 +46,20 @@ final class MovesViewModel: ObservableObject {
     func getDetails(move: Result) {
         let id = getMoveID(move: move)  // get id#
         
-        //self.moveDetails = MoveDetails(id: 0, name: "", accuracy: 0, effect_chance: 0, pp: 0, priority: 0, power: 0, learned_by_pokemon: [Pokemon]()) //- not necessary since decoded in struct initializer
-        
         DispatchQueue.global().async {
             // get 'MoveDetails'
             self.moveManager.getMoveDetails(id: id) { data in
                 DispatchQueue.main.async {
                     self.moveDetails = data
+                    //print(self.moveDetails)
                 }
             }
         }
-        //print(self.$moveDetails)
     }
     
-    
+    func parseID(url: String) -> String {
+        var urlSrting = url.replacingOccurrences(of: "https://pokeapi.co/api/v2/pokemon/", with: "")
+        urlSrting = urlSrting.replacingOccurrences(of: "/", with: "")
+        return urlSrting
+    }
 }

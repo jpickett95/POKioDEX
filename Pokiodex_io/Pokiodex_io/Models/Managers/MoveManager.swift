@@ -11,7 +11,7 @@ class MoveManager {
     
     // Retrieves list of 'PokemonMove's from internal .json
     func getMoves(completion:@escaping (ResourceList) -> ()) {
-        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/move/", model: ResourceList.self) { data in
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/move?limit=500/", model: ResourceList.self) { data in
             completion(data)
         } failure: { error in
             print("getMoves func: \(error)")
