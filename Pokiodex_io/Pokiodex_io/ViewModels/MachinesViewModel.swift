@@ -15,6 +15,7 @@ final class MachinesViewModel: ObservableObject {
     @Published var machineElementList = [MachineElement]()
     @Published var machinesList = [MachineDetails]()
     @Published var moveDetails: MoveDetails?
+    @Published var itemDetails: ItemDetails?
     
     // Filtered list of 'Machines for searchbar
     var filteredMoves: [MachineDetails] {
@@ -58,6 +59,18 @@ final class MachinesViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.moveDetails = data
                     //print(self.moveDetails)
+                    //print(data)
+                }
+            }
+        }
+    }
+    
+    func getItemDetails(url: String) {
+        DispatchQueue.global().async {
+            self.machineManager.getItemDetails(url: url) { data in
+                DispatchQueue.main.async {
+                    self.itemDetails = data
+                    //print(self.itemDetails)
                     //print(data)
                 }
             }

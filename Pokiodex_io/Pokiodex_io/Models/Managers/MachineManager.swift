@@ -27,12 +27,21 @@ class MachineManager {
         }
     }
     
-    // Retrieves 'MachineDetails' from PokeAPI
+    // Retrieves 'MoveDetails' from PokeAPI
     func getMoveDetails(url: String, completion:@escaping (MoveDetails) -> ()) {
         Bundle.main.fetchData(url: url, model: MoveDetails.self) { data in
             completion(data)
         } failure: { error in
             print("\nMachineManager:\ngetMoveDetails func: \(error)\n")
+        }
+    }
+    
+    // Retrieves 'MachineItemDetails' from PokeAPI
+    func getItemDetails(url: String, completion:@escaping (ItemDetails) -> ()) {
+        Bundle.main.fetchData(url: url, model: ItemDetails.self) { data in
+            completion(data)
+        } failure: { error in
+            print("\nMachineManager:\ngetItemDetails func: \(error)\n")
         }
     }
 }

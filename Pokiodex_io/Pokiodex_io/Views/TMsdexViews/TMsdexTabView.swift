@@ -31,14 +31,14 @@ struct TMsdexTabView: View {
                     }
                 }
             
-            MachineLocations(vm: vm, machine: machine)
-                .tabItem {
-                    Label {
-                        Text("Locations")
-                    } icon: {
-                        Image(systemName: "mappin.and.ellipse")
-                    }
-                }
+//            MachineLocations(vm: vm, machine: machine)
+//                .tabItem {
+//                    Label {
+//                        Text("Locations")
+//                    } icon: {
+//                        Image(systemName: "mappin.and.ellipse")
+//                    }
+//                }
         }
         .accentColor(Color("Type_\(vm.moveDetails?.type.name.capitalized ?? "Normal")"))
         .onAppear{vm.getMoveDetails(url: machine.move.url)}
