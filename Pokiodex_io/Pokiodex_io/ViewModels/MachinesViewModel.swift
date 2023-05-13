@@ -14,7 +14,6 @@ final class MachinesViewModel: ObservableObject {
     @Published var searchText = ""
     @Published var machineElementList = [MachineElement]()
     @Published var machinesList = [MachineDetails]()
-    @Published var machineDetails: MachineDetails?
     @Published var moveDetails: MoveDetails?
     
     // Filtered list of 'Machines for searchbar
@@ -53,5 +52,21 @@ final class MachinesViewModel: ObservableObject {
         }
     }
 
+    func getMoveDetails(url: String) {
+        DispatchQueue.global().async {
+            self.machineManager.getMoveDetails(url: url) { data in
+                DispatchQueue.main.async {
+                    self.moveDetails = data
+                    //print(self.moveDetails)
+                    //print(data)
+                }
+            }
+        }
+    }
     
+    func parseID(url: String) -> String {
+        var urlSrting = url.replacingOccurrences(of: "https://pokeapi.co/api/v2/pokemon/", with: "")
+        urlSrting = urlSrting.replacingOccurrences(of: "/", with: "")
+        return urlSrting
+    }
 }

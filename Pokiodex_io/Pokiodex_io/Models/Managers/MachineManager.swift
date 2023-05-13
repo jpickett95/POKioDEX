@@ -26,4 +26,13 @@ class MachineManager {
             print("\ngetMachineDetails func: \(error)\n")
         }
     }
+    
+    // Retrieves 'MachineDetails' from PokeAPI
+    func getMoveDetails(url: String, completion:@escaping (MoveDetails) -> ()) {
+        Bundle.main.fetchData(url: url, model: MoveDetails.self) { data in
+            completion(data)
+        } failure: { error in
+            print("\nMachineManager:\ngetMoveDetails func: \(error)\n")
+        }
+    }
 }

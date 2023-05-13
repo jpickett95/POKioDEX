@@ -30,7 +30,7 @@ struct MoveDetailsView: View {
                     Text("**Effect Chance**: \(vm.moveDetails?.effectChance ?? 0)%")
                     if vm.moveDetails?.meta?.ailment?.name != "none" {
                         Text("Ailment: \(vm.moveDetails?.meta?.ailment?.name ?? "")")
-                        var ailmentChance = vm.moveDetails?.meta?.ailmentChance ?? 0
+                        let ailmentChance = vm.moveDetails?.meta?.ailmentChance ?? 0
                         if ailmentChance == 0 {
                             Text("Ailment Chance: 100%")
                         } else {
@@ -155,19 +155,26 @@ struct MoveStatsSection: View{
         .padding([.leading, .trailing],30)
         
         HStack {
+            let priority = vm.moveDetails?.priority ?? 0
             HStack{
                 Text("PRIO")
                 Divider()
                     .frame(width: 1.5)
                     .overlay(Color("Type_\(type)"))
-                Text("\(vm.moveDetails?.priority ?? 0)")       // stat value
+                Text("\(priority)")       // stat value
             }
             .frame(width: 100)
                 
             // Progress Bar
-            ProgressView(value: Float(vm.moveDetails?.priority ?? 0), total: Float(5))
-                .accentColor(Color("Type_\(type)"))
-                .scaleEffect(x: 1, y: 4, anchor: .center)
+            if priority < 0 {
+                ProgressView(value: Float(priority * -1), total: Float(5))
+                    .accentColor(Color.red)
+                    .scaleEffect(x: 1, y: 4, anchor: .center)
+            } else {
+                ProgressView(value: Float(priority), total: Float(5))
+                    .accentColor(Color("Type_\(type)"))
+                    .scaleEffect(x: 1, y: 4, anchor: .center)
+            }
                 
         }
         .padding([.leading, .trailing],30)

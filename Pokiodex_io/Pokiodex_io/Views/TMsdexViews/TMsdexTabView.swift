@@ -13,7 +13,7 @@ struct TMsdexTabView: View {
     
     var body: some View {
         TabView{
-            MachineDetailsView()
+            MachineDetailsView(vm: vm, machine: machine)
                 .tabItem {
                     Label {
                         Text("Details")
@@ -22,7 +22,7 @@ struct TMsdexTabView: View {
                     }
                 }
             
-            MachineLearnedByView()
+            MachineLearnedByView(vm: vm, machine: machine)
                 .tabItem {
                     Label {
                         Text("Learned By")
@@ -31,7 +31,7 @@ struct TMsdexTabView: View {
                     }
                 }
             
-            MachineLocations()
+            MachineLocations(vm: vm, machine: machine)
                 .tabItem {
                     Label {
                         Text("Locations")
@@ -40,7 +40,8 @@ struct TMsdexTabView: View {
                     }
                 }
         }
-        .accentColor(Color("Type_Normal"))
+        .accentColor(Color("Type_\(vm.moveDetails?.type.name.capitalized ?? "Normal")"))
+        .onAppear{vm.getMoveDetails(url: machine.move.url)}
     }
 }
 

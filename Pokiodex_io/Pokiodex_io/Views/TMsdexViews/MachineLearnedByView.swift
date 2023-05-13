@@ -8,13 +8,26 @@
 import SwiftUI
 
 struct MachineLearnedByView: View {
+    @ObservedObject var vm: MachinesViewModel
+    let machine: MachineDetails
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List {
+            let learnedBy = vm.moveDetails?.learnedByPokemon ?? [URLObject]()
+            ForEach(learnedBy) { pokemon in
+                HStack{
+                    Text("\(pokemon.name.replacingOccurrences(of: "-", with: " ").capitalized)")
+                    let id  = vm.parseID(url: pokemon.url)
+                    Spacer()
+                    AsyncImage(url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(id).png"))
+                }
+            }
+        }
     }
 }
 
 struct MachineLearnedByView_Previews: PreviewProvider {
     static var previews: some View {
-        MachineLearnedByView()
+        MachineLearnedByView(vm: MachinesViewModel(), machine: MachineDetails.sample)
     }
 }
