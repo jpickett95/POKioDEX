@@ -7,14 +7,13 @@
 
 import Foundation
 
-struct Machine: Codable {
-    let id: Int?                         // identifier
-    let item: Item?                      // the TM or HM item that corresponds to this machine
-    let move: MoveDetails?               // move that is taught by this machine
-    let version_group: VersionGroup?     // vversion group this machine applies to
-}
+// MARK: - MachineDetails
+struct MachineDetails: Codable {
+    let id: Int
+    let item, move, versionGroup: URLObject
 
-struct MachineVersionDetail: Codable {
-    let machine: Machine?                // machine that teaches a move from an item
-    let version_group: VersionGroup?     // version group of this specific machine
+    enum CodingKeys: String, CodingKey {
+        case id, item, move
+        case versionGroup = "version_group"
+    }
 }

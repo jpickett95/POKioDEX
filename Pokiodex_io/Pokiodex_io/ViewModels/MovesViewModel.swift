@@ -10,12 +10,12 @@ import SwiftUI
 
 final class MovesViewModel: ObservableObject {
     private let moveManager = MoveManager()
-    @Published var movesList = [PokemonMove]()
+    @Published var movesList = [Result]()
     @Published var moveDetails: MoveDetails?
     @Published var searchText = ""
     
     // Filtered list of 'PokemonMove's for searchbar
-    var filteredMoves: [PokemonMove] {
+    var filteredMoves: [Result] {
         return searchText == "" ? movesList : movesList.filter {
             $0.name.contains(searchText.lowercased())
         }
@@ -23,11 +23,18 @@ final class MovesViewModel: ObservableObject {
     
     // initializer to populate self.movesList
     init() {
-        self.movesList = moveManager.getMoves()
+        DispatchQueue.global().async {
+            self.moveManager.getMoves() { data in
+                DispatchQueue.main.async {
+                    self.movesList = data.results
+                    //print(self.movesList)
+                }
+            }
+        }
     }
     
     // Returns id# of 'PokemonMove' input
-    func getMoveID(move: PokemonMove) -> Int {
+    func getMoveID(move: Result) -> Int {
         if let id = self.movesList.firstIndex(of: move) {
             if id >= 901 {
                 return id + 9100
@@ -36,7 +43,7 @@ final class MovesViewModel: ObservableObject {
         return 0
     }
     
-    func getDetails(move: PokemonMove) {
+    func getDetails(move: Result) {
         let id = getMoveID(move: move)  // get id#
         
         //self.moveDetails = MoveDetails(id: 0, name: "", accuracy: 0, effect_chance: 0, pp: 0, priority: 0, power: 0, learned_by_pokemon: [Pokemon]()) //- not necessary since decoded in struct initializer

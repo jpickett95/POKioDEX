@@ -7,111 +7,105 @@
 
 import Foundation
 
-struct MovesList: Codable {     // API endpoint: https://pokeapi.co/api/v2/move/ ; returns paginated list
-    let count: Int
-    let results: [PokemonMove]
-    
-    //let next: String          // not valid
-    //let previous: String      // not valid
+// MARK: - MoveDetails
+struct MoveDetails: Codable {
+    let accuracy: Int
+    let contestCombos: ContestCombos
+    let contestEffect: ContestEffect
+    let contestType, damageClass: ContestType
+    let effectChance: JSONNull?
+    let effectChanges: [JSONAny]
+    let effectEntries: [EffectEntry]
+    let flavorTextEntries: [FlavorTextEntry]
+    let generation: ContestType
+    let id: Int
+    let learnedByPokemon: [ContestType]
+    let machines: [JSONAny]
+    let meta: Meta
+    let name: String
+    let names: [Name]
+    let pastValues: [JSONAny]
+    let power, pp, priority: Int
+    let statChanges: [JSONAny]
+    let superContestEffect: ContestEffect
+    let target, type: ContestType
+
+    enum CodingKeys: String, CodingKey {
+        case accuracy
+        case contestCombos = "contest_combos"
+        case contestEffect = "contest_effect"
+        case contestType = "contest_type"
+        case damageClass = "damage_class"
+        case effectChance = "effect_chance"
+        case effectChanges = "effect_changes"
+        case effectEntries = "effect_entries"
+        case flavorTextEntries = "flavor_text_entries"
+        case generation, id
+        case learnedByPokemon = "learned_by_pokemon"
+        case machines, meta, name, names
+        case pastValues = "past_values"
+        case power, pp, priority
+        case statChanges = "stat_changes"
+        case superContestEffect = "super_contest_effect"
+        case target, type
+    }
 }
 
-struct PokemonMove: Codable, Identifiable, Equatable, Hashable {
-    let id = UUID()
+// MARK: - ContestCombos
+struct ContestCombos: Codable {
+    let normal, contestCombosSuper: Normal
+
+    enum CodingKeys: String, CodingKey {
+        case normal
+        case contestCombosSuper = "super"
+    }
+}
+
+// MARK: - Normal
+struct Normal: Codable {
+    let useAfter: JSONNull?
+    let useBefore: [ContestType]?
+
+    enum CodingKeys: String, CodingKey {
+        case useAfter = "use_after"
+        case useBefore = "use_before"
+    }
+}
+
+// MARK: - ContestType
+struct ContestType: Codable {
     let name: String
     let url: String
-    
-    static var sample = PokemonMove(name: "pound", url:"https://pokeapi.co/api/v2/move/1/")
 }
 
-struct MoveDetails: Codable {   // Named API Resource: "Move"
-    let id: Int?                                     // resource identifier
-    let name: String?                                // resource name
-    let accuracy: Int?                               // percent value of how likely this move is to be successful
-    let effect_chance: Int?                          // the percent value of how likely it is this move's effect will happen
-    let pp: Int?                                     // power points; number of times this move can be used
-    let priority: Int?                               // a value between -8 & 8; Sets the order in which move are executed during battle
-    let power: Int?                                  // base power of this move, with a value of 0 if it does not have a base value
-    let learned_by_pokemon: [PokemonDetails]?        // list of pokemon that can learn this move
-    let machines: [MachineVersionDetail]?            // A list of the machines that teach this move.
-    
-    static var sample = MoveDetails(id: 0, name: "", accuracy: 0, effect_chance: 0, pp: 0, priority: 0, power: 0, learned_by_pokemon: [PokemonDetails.sampleDetails], machines: [MachineVersionDetail]())
-    
-    
+// MARK: - ContestEffect
+struct ContestEffect: Codable {
+    let url: String
+}
+
+
+
+// MARK: - Meta
+struct Meta: Codable {
+    let ailment: ContestType
+    let ailmentChance: Int
+    let category: ContestType
+    let critRate, drain, flinchChance, healing: Int
+    let maxHits, maxTurns, minHits, minTurns: JSONNull?
+    let statChance: Int
+
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case name = "name"
-        case accuracy = "accuracy"
-        case effect_chance = "effect_chance"
-        case pp = "pp"
-        case priority = "priority"
-        case power = "power"
-        case learned_by_pokemon = "learned_by_pokemon"
-        case machines
-    }
-    
-    // Decoder for 'null' values from api
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        
-        // Api may return 'null'
-        if let machines = try values.decodeIfPresent([MachineVersionDetail].self, forKey: .machines){
-            self.machines = machines
-        } else {self.machines = [MachineVersionDetail]()}
-        if let learned_by_pokemon = try values.decodeIfPresent([PokemonDetails].self, forKey: .learned_by_pokemon){
-            self.learned_by_pokemon = learned_by_pokemon
-        } else {self.learned_by_pokemon = [PokemonDetails]()}
-        if let name = try values.decodeIfPresent(String.self, forKey: .name) {
-            self.name = name
-        } else {self.name = ""}
-        if let priority = try values.decodeIfPresent(Int.self, forKey: .priority) {
-            self.priority = priority
-        } else {self.priority = 0}
-        if let id = try values.decodeIfPresent(Int.self, forKey: .id){
-            self.id = id
-        } else {self.id = 0}
-        if let chance = try values.decodeIfPresent(Int.self, forKey: .effect_chance){
-            self.effect_chance = chance
-        } else {self.effect_chance = 0}
-        if let power = try values.decodeIfPresent(Int.self, forKey: .power){
-            self.power = power
-        } else {self.power = 0}
-        if let accuracy = try values.decodeIfPresent(Int.self, forKey: .accuracy){
-            self.accuracy = accuracy
-        } else {self.accuracy = 0}
-        if let pp = try values.decodeIfPresent(Int.self, forKey: .pp){
-            self.pp = pp
-        } else {self.pp = 0}
-    }
-    
-    // initializer for 'sample' variable
-    init(id: Int, name: String, accuracy: Int, effect_chance: Int, pp: Int, priority: Int, power: Int, learned_by_pokemon: [PokemonDetails], machines: [MachineVersionDetail]) {
-        self.id = id
-        self.name = name
-        self.accuracy = accuracy
-        self.effect_chance = effect_chance
-        self.pp = pp
-        self.priority = priority
-        self.power = power
-        self.learned_by_pokemon = learned_by_pokemon
-        self.machines = machines
+        case ailment
+        case ailmentChance = "ailment_chance"
+        case category
+        case critRate = "crit_rate"
+        case drain
+        case flinchChance = "flinch_chance"
+        case healing
+        case maxHits = "max_hits"
+        case maxTurns = "max_turns"
+        case minHits = "min_hits"
+        case minTurns = "min_turns"
+        case statChance = "stat_chance"
     }
 }
-
-struct MoveDamageClass: Codable {
-    let id: Int?                         // resource identifier
-    let name: String                    // resource name
-    let descriptions: [Description]?     // resource decription listed in different languages
-    let names: [Name]?                   // resource name listed in different languages
-    let move: [PokemonMove]?             // list of moves that fall into this damage class
-    
-    static var sample = MoveDamageClass(id: 0, name: "", descriptions: [Description](), names: [Name](), move: [PokemonMove]())
-}
-
-struct MoveLearnMethod: Codable {
-    let id: Int?                             // resource identifier
-    let name: String                        // resource name
-    let descriptions: [Description]?         // descriptions for this resource in different languages
-    let names: [Name]?                       // names for this resource in different languages
-    let version_groups: [VersionGroup]?      // list of version groups where moves can be learned through this method
-}
-

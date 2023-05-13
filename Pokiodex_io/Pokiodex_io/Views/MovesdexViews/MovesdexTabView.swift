@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MovesdexTabView: View {
     @ObservedObject var vm: MovesViewModel
-    let move: PokemonMove
+    let move: Result
     
     var body: some View {
         TabView {
@@ -36,6 +36,6 @@ struct MovesdexTabView: View {
 
 struct MovesdexTabView_Previews: PreviewProvider {
     static var previews: some View {
-        MovesdexTabView(vm: MovesViewModel(), move: PokemonMove.sample)
+        MovesdexTabView(vm: MovesViewModel(), move: Result.sample)
     }
 }

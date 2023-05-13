@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PokedexTabView: View {
     @ObservedObject var vm: PokemonViewModel
-    let pokemon: Pokemon
+    let pokemon: Result
     
     var body: some View {
         TabView {
@@ -54,6 +54,6 @@ struct PokedexTabView: View {
 
 struct PokedexTabView_Previews: PreviewProvider {
     static var previews: some View {
-        PokedexTabView(vm: PokemonViewModel(), pokemon: Pokemon.samplePokemon)
+        PokedexTabView(vm: PokemonViewModel(), pokemon: Result.sample)
     }
 }

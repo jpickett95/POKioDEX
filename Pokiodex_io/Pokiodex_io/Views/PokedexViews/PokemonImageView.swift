@@ -10,7 +10,7 @@ import SwiftUI
 
 struct PokemonImageView: View {
     @ObservedObject var vm: PokemonViewModel
-    let pokemon: Pokemon
+    let pokemon: Result
     let dimensions: Double
     
     var body: some View {
@@ -32,6 +32,6 @@ struct PokemonImageView: View {
 
 struct PokemonImageView_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonImageView(vm: PokemonViewModel(), pokemon: Pokemon.samplePokemon, dimensions: 140)
+        PokemonImageView(vm: PokemonViewModel(), pokemon: Result.sample, dimensions: 140)
     }
 }

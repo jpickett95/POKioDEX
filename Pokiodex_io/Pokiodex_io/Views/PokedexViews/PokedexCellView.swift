@@ -9,7 +9,8 @@ import SwiftUI
 
 struct PokedexCellView: View {
     @StateObject var vm: PokemonViewModel
-    let pokemon: Pokemon
+    //@StateObject var cellVM = PokedexCellViewModel()
+    let pokemon: Result
     
     var body: some View {
         ZStack {
@@ -22,17 +23,17 @@ struct PokedexCellView: View {
                         .padding(.leading)
                         .padding(.trailing)
                 
-                    // Pokemon Type
-                    Text("type")
-                        .font(.subheadline).bold()
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .overlay (
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(Color.white.opacity(0.25))
-                        )
-                        .frame(width: 200, height: 24)
+//                    // Pokemon Type
+//                    Text(cellVM.pokemonDetails?.types.first?.type.name ?? "")
+//                        .font(.subheadline).bold()
+//                        .foregroundColor(.white)
+//                        .padding(.horizontal, 16)
+//                        .padding(.vertical, 8)
+//                        .overlay (
+//                            RoundedRectangle(cornerRadius: 20)
+//                                .fill(Color.white.opacity(0.25))
+//                        )
+//                        .frame(width: 200, height: 24)
                 }
                 //.task {vm.getDetails(pokemon: pokemon)}
                 
@@ -42,7 +43,7 @@ struct PokedexCellView: View {
             }
             
         }
-        //.onAppear{vm.getDetails(pokemon: pokemon)}
+        //.onAppear{cellVM.getDetails(pokemon: pokemon)}
         .frame(width: 350, height: 100)
         .background(Color.gray)
         .cornerRadius(12)
@@ -52,6 +53,6 @@ struct PokedexCellView: View {
 
 struct PokedexCellView_Previews: PreviewProvider {
     static var previews: some View {
-        PokedexCellView(vm: PokemonViewModel(), pokemon: Pokemon.samplePokemon)
+        PokedexCellView(vm: PokemonViewModel(), pokemon: Result.sample)
     }
 }

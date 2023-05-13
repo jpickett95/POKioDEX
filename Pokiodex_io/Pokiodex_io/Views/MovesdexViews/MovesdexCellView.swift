@@ -9,8 +9,8 @@ import SwiftUI
 
 struct MovesdexCellView: View {
     @ObservedObject var vm: MovesViewModel
-    let move: PokemonMove
-    let details: MoveDetails
+    let move: Result
+    //let details: MoveDetails
     
     var body: some View {
        
@@ -31,7 +31,7 @@ struct MovesdexCellView: View {
                 // Block with (ATK## | ACC##)
                 HStack{
                     
-                    Text("\(details.power ?? 0)")  // Attack Power
+                    Text("\(vm.moveDetails?.power ?? 0 )")  // Attack Power
                     Divider()
                     Text("\(vm.moveDetails?.accuracy ?? 0)") // Accuracy
                 }
@@ -75,6 +75,6 @@ struct MovesdexCellView: View {
 
 struct MovesdexCellView_Previews: PreviewProvider {
     static var previews: some View {
-        MovesdexCellView(vm: MovesViewModel(), move: PokemonMove.sample, details: MoveDetails.sample)
+        MovesdexCellView(vm: MovesViewModel(), move: Result.sample)
     }
 }

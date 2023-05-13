@@ -16,7 +16,7 @@ struct MovesdexView: View {
                 ForEach(vm.filteredMoves){ move in
                     NavigationLink(destination: MovesdexTabView(vm: vm, move: move)) {
                         if let details = vm.moveDetails {
-                            MovesdexCellView(vm: vm, move: move, details: details)
+                            MovesdexCellView(vm: vm, move: move)
                         }
                     }.onAppear{vm.getDetails(move: move)}
                 }

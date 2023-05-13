@@ -11,17 +11,17 @@ import SwiftUI
 final class PokemonViewModel: ObservableObject {
     private let pokemonManager = PokemonManager()
     
-    @Published var pokemonList = [Pokemon]()
+    @Published var pokemonList = [Result]()
     @Published var pokemonDetails: PokemonDetails?
-    @Published var pokemonStats: SpecificStat?
-    @Published var pokemonTypes: SpecificType?
-    @Published var pokemonAbilities: Ability?
+    //@Published var pokemonStats: PokemonStat?
+    @Published var pokemonTypes: [TypeDetails]?
+    @Published var evolutionChain: EvolutionChain?
     @Published var pokemonSpecies: PokemonSpecies?
     @Published var searchText = ""
-    @Published var pokemonLocations: [LocationAreaEncounter]?
+    @Published var pokemonLocations: [PokemonLocationArea]?
     
     // Filtered pokemonList for searchbar
-    var filteredPokemon: [Pokemon] {
+    var filteredPokemon: [Result] {
         return searchText == "" ? pokemonList : pokemonList.filter {
             $0.name.contains(searchText.lowercased())
         }
@@ -39,16 +39,8 @@ final class PokemonViewModel: ObservableObject {
         }
     }
     
-//    func populateDetailsList(pokemon: Pokemon) {
-//        self.getDetails(pokemon: pokemon)
-//        if let details = self.pokemonDetails {
-//            self.detailsList.append(details)
-//            print(detailsList)
-//        }
-//    }
-    
     // Returns Pokedex id# of input 'Pokemon'
-    func getPokemonID(pokemon: Pokemon) -> Int {
+    func getPokemonID(pokemon: Result) -> Int {
         if let id = self.pokemonList.firstIndex(of: pokemon) {
             return id + 1
         }
@@ -57,15 +49,8 @@ final class PokemonViewModel: ObservableObject {
     }
     
     // Uses manager to populate self.pokemonDetails with 'PokemonDetails' from PokeAPI
-    func getDetails(pokemon: Pokemon) {
+    func getDetails(pokemon: Result) {
         let id = getPokemonID(pokemon: pokemon) // get id#
-        
-        // instantiate variables
-        self.pokemonDetails = PokemonDetails(id: 0, name: "Bulbasaur", height: 0, weight: 0, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat(name: "", url: "", id: 0, game_index: 0, is_battle_only: false))], types: [PokemonTypes(slot: 0, type: SpecificType(name: "", url: "", id: 0, move_damage_class: MoveDamageClass(id: 0, name: "", descriptions: [Description](), names: [Name](), move: [PokemonMove]()), names: [Name](), moves: [MoveDetails](), pokemon: [TypePokemon](), damage_relations: TypeRelations(no_damage_to: [SpecificType](), half_damage_to: [SpecificType](), double_damage_to: [SpecificType](), no_damage_from: [SpecificType](), half_damage_from: [SpecificType](), double_damage_from: [SpecificType]()), past_damage_relations: [TypeRelationsPast]()))], abilities: [PokemonAbility(is_hidden: false, slot: 0, ability: Ability(id: 0, name: "", is_main_series: true, effect_entries: [VerboseEffect(effect: "", short_effect: "", language: Language.sample)], effect_changes: [AbilityEffectChange(effect_entries: [Effect(effect: "", language: Language.sample)], version_group: VersionGroup(id: 0, name: "", order: 0))], flavor_text_entries: [AbilityFlavorText(flavor_text: "", language: Language.sample, version_group: VersionGroup(id: 0, name: "", order: 0))]))], species: PokemonSpecies(id: 0, name: "", order: 0, gender_rate: 0, capture_rate: 0, base_happiness: 0, is_baby: false, is_legendary: false, is_mythical: false, hatch_counter: 0, has_gender_differences: false, forms_switchable: false, flavor_text_entries: [FlavorText(flavor_text: "", language: Language.sample, version: Version(id: 0, name: "", names: [Name(name: "", language: Language.sample)], version_group: VersionGroup.sample))]), sprites: PokemonSprites(front_default: "", front_shiny: "", front_female: "", front_shiny_female: "", back_default: "", back_shiny: "", back_female: "", back_shiny_female: "", other: OtherSprites(dream_world: DreamWorld(front_default: "", front_female: ""), home: HomeSprite(front_default: "", front_female: "", front_shiny: "", front_shiny_female: ""), official_artwork: OfficialArtwork(front_default: "", front_shiny: ""))), moves: [PokemonLearnedMove](), location_area_encounters: "")
-        self.pokemonStats = SpecificStat(name: "", url: "", id: 0, game_index: 0, is_battle_only: false)
-        self.pokemonTypes = SpecificType(name: "", url: "", id: 0, move_damage_class: MoveDamageClass(id: 0, name: "", descriptions: [Description](), names: [Name](), move: [PokemonMove]()), names: [Name](), moves: [MoveDetails](), pokemon: [TypePokemon](), damage_relations: TypeRelations(no_damage_to: [SpecificType](), half_damage_to: [SpecificType](), double_damage_to: [SpecificType](), no_damage_from: [SpecificType](), half_damage_from: [SpecificType](), double_damage_from: [SpecificType]()), past_damage_relations: [TypeRelationsPast]())
-        self.pokemonAbilities = Ability(id: 0, name: "", is_main_series: true, effect_entries: [VerboseEffect(effect: "", short_effect: "", language: Language.sample)], effect_changes: [AbilityEffectChange](), flavor_text_entries: [AbilityFlavorText]())
-        self.pokemonSpecies = PokemonSpecies(id: 0, name: "", order: 0, gender_rate: 0, capture_rate: 0, base_happiness: 0, is_baby: false, is_legendary: false, is_mythical: false, hatch_counter: 0, has_gender_differences: false, forms_switchable: false, flavor_text_entries: [FlavorText]())
         
         DispatchQueue.global().async {
             // get 'PokemonDetails'
@@ -73,63 +58,131 @@ final class PokemonViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.pokemonDetails = data
                     //print(self.pokemonDetails)
+                    
+                    self.getSpecies(url: data.species.url)
+                    self.returnResistances(types: data.types)
+                    self.getPokemonLocations(url: data.locationAreaEncounters)
                 }
             }
-            
-            // get 'SpecificStat'
-            self.pokemonManager.getPokemonStats(id: id) { data in
-                DispatchQueue.main.async {
-                    self.pokemonStats = data
-                }
-            }
-            
-            // get 'SpecificType'
-            self.pokemonManager.getPokemonTypes(id: id) { data in
-                DispatchQueue.main.async {
-                    self.pokemonTypes = data
-                    //print(self.pokemonTypes)
-                }
-            }
-            
-            // get 'Abilities'
-            self.pokemonManager.getPokemonAbilities(id: id) { data in
-                DispatchQueue.main.async {
-                    self.pokemonAbilities = data
-                    //print(self.pokemonAbilities)
-                }
-            }
-            
+        }
+    }
+    
+    func getSpecies(url: String) {
+        DispatchQueue.global().async {
             // get 'PokemonSpecies'
-            self.pokemonManager.getPokemonSpecies(id: id) { data in
+            self.pokemonManager.getPokemonSpecies(url: url) { data in
                 DispatchQueue.main.async {
                     self.pokemonSpecies = data
                     //print(self.pokemonSpecies)
+                    
+                    self.getEvolutionChain(url: data.evolutionChain.url)
                 }
             }
-            
         }
     }
     
-    func returnTypeRelations(typeName: String) -> TypeRelations {
-        var typeRelations = TypeRelations(no_damage_to: [SpecificType](), half_damage_to: [SpecificType](), double_damage_to: [SpecificType](), no_damage_from: [SpecificType](), half_damage_from: [SpecificType](), double_damage_from: [SpecificType]())
+    func returnResistances(types: [TypeElement]) {
+        self.pokemonTypes = [TypeDetails]()
         
         DispatchQueue.global().async {
-            self.pokemonManager.getTypeRelations(typeName: typeName) { data in
-                DispatchQueue.main.async {
-                    typeRelations = data
-                    print(data)
+            for type in types {
+                self.pokemonManager.getTypeDetails(typeName: type.type.name) { data in
+                    DispatchQueue.main.async {
+                        self.pokemonTypes?.append(data)
+                        //print(data.damageRelations.doubleDamageFrom.first?.name)
+                        //print(data.damageRelations)
+                    }
                 }
             }
         }
-        return typeRelations
     }
     
-//    func copyDetails() -> PokemonDetails {
-//        if let details = self.pokemonDetails {
-//            return details
-//        }
-//        return PokemonDetails.sampleDetails
-//    }
+    func returnDamageRelations() -> ( damageDoubleFrom: [String], damageHalfFrom: [String], noDamageFrom: [String], damageQuadFrom: [String], damageQuarterFrom: [String]) {
+        
+        var damageDoubleFrom = [String]()
+        var damageHalfFrom = [String]()
+        var noDamageFrom = [String]()
+        var damageQuadFrom = [String]()
+        var damageQuarterFrom = [String]()
+        
+        for type in self.pokemonTypes ?? [TypeDetails]() {
+            for typeName in type.damageRelations.doubleDamageFrom {
+                if(damageDoubleFrom.contains(typeName.name)) {
+                    if let index = damageDoubleFrom.firstIndex(of: typeName.name){
+                        damageDoubleFrom.remove(at: index)
+                    }
+                    damageQuadFrom.append(typeName.name)
+                }else {
+                    damageDoubleFrom.append(typeName.name)
+                }
+                if(damageHalfFrom.contains(typeName.name)) {
+                    if let index = damageHalfFrom.firstIndex(of: typeName.name){
+                        damageHalfFrom.remove(at: index)
+                    }
+                    if let index = damageDoubleFrom.firstIndex(of: typeName.name){
+                        damageDoubleFrom.remove(at: index)
+                    }
+                }
+                if(noDamageFrom.contains(typeName.name)) {
+                    if let index = damageDoubleFrom.firstIndex(of: typeName.name){
+                        damageDoubleFrom.remove(at: index)
+                    }
+                }
+            }
+            for typeName in type.damageRelations.halfDamageFrom {
+                if(damageHalfFrom.contains(typeName.name)) {
+                    if let index = damageHalfFrom.firstIndex(of: typeName.name){
+                        damageHalfFrom.remove(at: index)
+                    }
+                    damageQuarterFrom.append(typeName.name)
+                }else {
+                    damageHalfFrom.append(typeName.name)
+                }
+                if(damageDoubleFrom.contains(typeName.name)) {
+                    if let index = damageHalfFrom.firstIndex(of: typeName.name){
+                        damageHalfFrom.remove(at: index)
+                    }
+                    if let index = damageDoubleFrom.firstIndex(of: typeName.name){
+                        damageDoubleFrom.remove(at: index)
+                    }
+                }
+                if(noDamageFrom.contains(typeName.name)) {
+                    if let index = damageHalfFrom.firstIndex(of: typeName.name){
+                        damageHalfFrom.remove(at: index)
+                    }
+                }
+            }
+            for typeName in type.damageRelations.noDamageFrom {
+                if(!noDamageFrom.contains(typeName.name)) {
+                    noDamageFrom.append(typeName.name)
+                }
+                if(damageDoubleFrom.contains(typeName.name)) {
+                    if let index = damageDoubleFrom.firstIndex(of: typeName.name){
+                        damageDoubleFrom.remove(at: index)
+                    }
+                }
+                if(damageHalfFrom.contains(typeName.name)) {
+                    if let index = damageHalfFrom.firstIndex(of: typeName.name){
+                        damageHalfFrom.remove(at: index)
+                    }
+                }
+            }
+        }
+        
+        return ( damageDoubleFrom: damageDoubleFrom, damageHalfFrom: damageHalfFrom, noDamageFrom: noDamageFrom, damageQuadFrom: damageQuadFrom, damageQuarterFrom: damageQuarterFrom)
+    }
+    
+    func getEvolutionChain(url: String) {
+        DispatchQueue.global().async {
+            self.pokemonManager.getEvolutionChain(url: url) { data in
+                DispatchQueue.main.async {
+                    self.evolutionChain = data
+                    //print(data)
+                    //print(self.evolutionChain)
+                }
+            }
+        }
+    }
     
     // Returns formatted height/weight data as a string
     func formatHW(value: Int) -> String {
@@ -210,14 +263,14 @@ final class PokemonViewModel: ObservableObject {
         }
     }
     
-    func getMovesLists() -> (egg: [PokemonLearnedMove], level: [PokemonLearnedMove], machine: [PokemonLearnedMove], tutor: [PokemonLearnedMove]) {
-        var eggMoves = [PokemonLearnedMove]()
-        var levelMoves = [PokemonLearnedMove]()
-        var machineMoves = [PokemonLearnedMove]()
-        var tutorMoves = [PokemonLearnedMove]()
+    func getMovesLists() -> (egg: [Move], level: [Move], machine: [Move], tutor: [Move]) {
+        var eggMoves = [Move]()
+        var levelMoves = [Move]()
+        var machineMoves = [Move]()
+        var tutorMoves = [Move]()
         
-        for move in (self.pokemonDetails?.moves ?? [PokemonLearnedMove]()) {
-            let methodName = move.version_group_details.first?.move_learn_method.name ?? ""
+        for move in (self.pokemonDetails?.moves ?? [Move]()) {
+            let methodName = move.versionGroupDetails.first?.moveLearnMethod.name ?? ""
             
             switch(methodName){
             case "egg":
@@ -236,15 +289,21 @@ final class PokemonViewModel: ObservableObject {
         return(egg: eggMoves, level: levelMoves, machine: machineMoves, tutor: tutorMoves)
     }
     
-    func getPokemonLocations() {
+    func getPokemonLocations(url: String) {
         DispatchQueue.global().async {
-            let url = self.pokemonDetails?.location_area_encounters ?? ""
             self.pokemonManager.getPokemonLocations(url: url) { data in
                 DispatchQueue.main.async {
                     self.pokemonLocations = data
-                    //print(self.pokemonLocations)
+                    print(self.pokemonLocations)
+                    //print(data)
                 }
             }
         }
+    }
+    
+    func parseID(url: String) -> String {
+        var urlSrting = url.replacingOccurrences(of: "https://pokeapi.co/api/v2/pokemon-species/", with: "")
+        urlSrting = urlSrting.replacingOccurrences(of: "/", with: "")
+        return urlSrting
     }
 }

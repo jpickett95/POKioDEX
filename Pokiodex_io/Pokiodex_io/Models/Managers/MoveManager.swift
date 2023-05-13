@@ -10,11 +10,12 @@ import Foundation
 class MoveManager {
     
     // Retrieves list of 'PokemonMove's from internal .json
-    func getMoves() -> [PokemonMove] {
-        let data: MovesList = Bundle.main.decode(file: "moves.json")
-        let moves: [PokemonMove] = data.results
-        
-        return moves
+    func getMoves(completion:@escaping (ResourceList) -> ()) {
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/move/", model: ResourceList.self) { data in
+            completion(data)
+        } failure: { error in
+            print("getMoves func: \(error)")
+        }
     }
     
     // Retrieves 'MoveDetails' from PokeAPI
@@ -22,7 +23,7 @@ class MoveManager {
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/move/\(id)/", model: MoveDetails.self) { data in
             completion(data)
         } failure: { error in
-            print(error)
+            print("getMoveDetails func: \(error)")
         }
     }
     

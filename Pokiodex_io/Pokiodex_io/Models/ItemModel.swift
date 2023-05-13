@@ -7,64 +7,42 @@
 
 import Foundation
 
-class Item: Codable {
-    let id: Int?                                         // identifier
-    let name: String                                    // resource name
-    let cost: Int?                                      // price of this item in stores
-    let fling_power: Int?                                // power of the move Fling when used with this item
-    let fling_effect: ItemFlingEffect?                  // effect of the move Fling when used with this item
-    let attributes: [ItemAttribute]?                     // list of attributes this item has
-    let category: ItemCategory?                          // category of items this item falls into
-    let effect_entries: [VerboseEffect]?                 // effect of this ability listed in different languages
-    let flavor_text_entries: [VersionGroupFlavorText]?   // flavor text of this ability listed in different languages
-    let game_indices: [GenerationGameIndex]?             // list of game indices relevant to this item by generation
-    let names: [Name]?                                   // resource name listed in different languages
-    let sprites: ItemSprites?                            // set of sprites used to depict this item in game
-    let held_by_pokemon: [ItemHolderPokemon]?            // list of pokemon that might be found in the wild holding this item
-    let baby_trigger_for: EvolutionChain?                // an evolution chain this item requires to produce a baby during mating
-    let machines: [MachineVersionDetail]?                // list of machines related to this item
+// MARK: - ItemDetails
+struct ItemDetails: Codable {
+    let attributes: [URLObject]
+    let babyTriggerFor: JSONNull?
+    let category: URLObject
+    let cost: Int
+    let effectEntries: [EffectEntry]
+    let flavorTextEntries: [FlavorTextEntry]
+    let flingEffect, flingPower: JSONNull?
+    let gameIndices: [GameIndex]
+    let heldByPokemon: [JSONAny]
+    let id: Int
+    let machines: [JSONAny]
+    let name: String
+    let names: [Name]
+    let sprites: ItemSprites
+
+    enum CodingKeys: String, CodingKey {
+        case attributes
+        case babyTriggerFor = "baby_trigger_for"
+        case category, cost
+        case effectEntries = "effect_entries"
+        case flavorTextEntries = "flavor_text_entries"
+        case flingEffect = "fling_effect"
+        case flingPower = "fling_power"
+        case gameIndices = "game_indices"
+        case heldByPokemon = "held_by_pokemon"
+        case id, machines, name, names, sprites
+    }
 }
 
-struct ItemFlingEffect: Codable {
-    let id: Int?                         // identifier
-    let name: String                    // resource name
-    let effect_entries: [Effect]?        // result of this fling effect listed in different languages
-    let items: [Item]?                   // list of items that have this fling effect
-}
-
-struct ItemAttribute: Codable {
-    let id: Int?                         //identifier
-    let name: String                    // resource name
-    let items: [Item]?                   // list of items that have this attribute
-    let names: [Name]?                   // resource name listed in different languages
-    let descriptions: [Description]?     // description of this item attribute listed in different languages
-}
-
-struct ItemCategory: Codable {
-    let id: Int?                 // identifier
-    let name: String            // resource name
-    let items: [Item]           // list of items that are a part of this category
-    let names: [Name]           // resource name listed in different languages
-    let pocket: ItemPocket?      // the pocket items in this category would be put in
-}
-
-struct ItemPocket: Codable {
-    let id: Int?                         // identifier
-    let name: String                    // resource name
-    let categories: [ItemCategory]      // list of items categories that are relevant to this item pocket
-    let names: [Name]                   // resource name listed in different languages
-}
-
+// MARK: - Sprites
 struct ItemSprites: Codable {
-    let default_depiction: String?     // default depiction of this item
-}
+    let spritesDefault: String
 
-struct ItemHolderPokemon: Codable {
-    let pokemon: PokemonDetails                                 // the pokemon that holds this item
-    let version_details: [ItemHolderPokemonVersionDetail]       // the details for the version that this item is held in by the pokemon
-}
-
-struct ItemHolderPokemonVersionDetail: Codable {
-    let rarity: Int         // how often this pokemon holds this item in this version
-    let version: Version    // version that this item is held by the pokemon
+    enum CodingKeys: String, CodingKey {
+        case spritesDefault = "default"
+    }
 }

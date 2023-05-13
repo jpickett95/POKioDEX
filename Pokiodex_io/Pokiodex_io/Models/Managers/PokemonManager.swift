@@ -13,16 +13,18 @@ import Foundation
 class PokemonManager{
     
     // Retrieves list of 'Pokemon' from internal .json
-    func getPokemon() -> [Pokemon] {
-        let data: PokemonList = Bundle.main.decode(file: "pokemon.json")
-        let pokemon: [Pokemon] = data.results
-        
-        return pokemon
+    func getPokemon(completion:@escaping (ResourceList) -> ()) {
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon?limit=151/", model: ResourceList.self) { data in
+            completion(data)
+        } failure: { error in
+            print("getPokemon func: \(error)")
+        }
     }
     
+    
     // Retrieves paginated list of 'Pokemon' from PokeAPI
-    func getPokemonAPI(completion:@escaping (PokemonList) -> ()) {
-        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon?limit=151/", model: PokemonList.self) { data in
+    func getPokemonAPI(completion:@escaping (ResourceList) -> ()) {
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon?limit=151/", model: ResourceList.self) { data in
             completion(data)
         } failure: { error in
             print("getPokemonAPI func: \(error)")
@@ -39,8 +41,8 @@ class PokemonManager{
     }
     
     // Retrieves 'SpecificStat' data from PokeAPI
-    func getPokemonStats(id: Int, completion:@escaping (SpecificStat) -> ()) {
-        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: SpecificStat.self) { data in
+    func getPokemonStats(id: Int, completion:@escaping (PokemonStat) -> ()) {
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/stat/\(id)/", model: PokemonStat.self) { data in
             completion(data)
         } failure: { error in
             print("getPokemonStats func: \(error)")
@@ -48,17 +50,17 @@ class PokemonManager{
     }
     
     // Retrieves 'SpecificType' data from PokeAPI
-    func getPokemonTypes(id: Int, completion:@escaping (SpecificType) -> ()) {
-        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: SpecificType.self) { data in
+    func getTypeDetails(typeName: String, completion:@escaping (TypeDetails) -> ()) {
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/type/\(typeName)/", model: TypeDetails.self) { data in
             completion(data)
         } failure: { error in
-            print("getPokemonTypes func: \(error)")
+            print("getTypeDetails func: \(error)")
         }
     }
     
     // Retrieves 'Ability' data from PokeAPI
-    func getPokemonAbilities(id: Int, completion:@escaping (Ability) -> ()) {
-        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: Ability.self) { data in
+    func getPokemonAbilities(id: Int, completion:@escaping (AbilityDetails) -> ()) {
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/ability/\(id)/", model: AbilityDetails.self) { data in
             completion(data)
         } failure: { error in
             print("getPokemonAbilities func: \(error)")
@@ -66,8 +68,8 @@ class PokemonManager{
     }
     
     // Retrieves 'PokemonSpecies' data from PokeAPI
-    func getPokemonSpecies(id: Int, completion:@escaping (PokemonSpecies) -> ()) {
-        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon-species/\(id)/", model: PokemonSpecies.self) { data in
+    func getPokemonSpecies(url: String, completion:@escaping (PokemonSpecies) -> ()) {
+        Bundle.main.fetchData(url: url, model: PokemonSpecies.self) { data in
             completion(data)
         } failure: { error in
             print("getPokemonSpecies func: \(error)")
@@ -75,30 +77,20 @@ class PokemonManager{
     }
     
     // Retrieves 'PokemonSpecies FlavorText' data from PokeAPI
-    func getPokemonSprites(id: Int, completion:@escaping (PokemonSprites) -> ()) {
-        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: PokemonSprites.self) { data in
+    func getEvolutionChain(url: String, completion:@escaping (EvolutionChain) -> ()) {
+        Bundle.main.fetchData(url: url, model: EvolutionChain.self) { data in
             completion(data)
         } failure: { error in
-            print("getPokemonSprites func: \(error)")
+            print("getEvolutionChain func: \(error)")
         }
     }
     
-    func getPokemonLocations(url: String, completion:@escaping ([LocationAreaEncounter]) -> ()) {
-        Bundle.main.fetchData(url: url, model: [LocationAreaEncounter].self) { data in
+    func getPokemonLocations(url: String, completion:@escaping ([PokemonLocationArea]) -> ()) {
+        Bundle.main.fetchData(url: url, model: [PokemonLocationArea].self) { data in
             completion(data)
         } failure: { error in
             print("getPokemonLocations func: \(error)")
         }
-    }
-    
-    func getTypeRelations(typeName: String, completion:@escaping (TypeRelations) -> ()) {
-        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/type/\(typeName)/", model: TypeRelations.self) { data in
-            completion(data)
-            print(data)
-        } failure: { error in
-            print("getTypeRelations func: \(error)")
-        }
-        
     }
     
 }

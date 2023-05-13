@@ -7,373 +7,428 @@
 
 import Foundation
 
-struct PokemonList: Codable {   // paginated list returned from enpoint https://pokeapi.co/api/v2/pokemon/
-    let count: Int
-    let next: String
-    let results: [Pokemon]
-}
-
-struct Pokemon: Codable, Identifiable, Equatable {
-    let id = UUID()
+struct PokemonDetails: Codable {
+    let abilities: [Ability]
+    let baseExperience: Int
+    let forms: [URLObject]
+    let gameIndices: [GameIndex]
+    let height: Int
+    let heldItems: [JSONAny]
+    let id: Int
+    let isDefault: Bool
+    let locationAreaEncounters: String
+    let moves: [Move]
     let name: String
-    let url: String
-    
-    static var samplePokemon = Pokemon(name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/1/")
+    let order: Int
+    let pastTypes: [JSONAny]
+    let species: URLObject
+    let sprites: Sprites
+    let stats: [Stat]
+    let types: [TypeElement]
+    let weight: Int
+
+    enum CodingKeys: String, CodingKey {
+        case abilities
+        case baseExperience = "base_experience"
+        case forms
+        case gameIndices = "game_indices"
+        case height
+        case heldItems = "held_items"
+        case id
+        case isDefault = "is_default"
+        case locationAreaEncounters = "location_area_encounters"
+        case moves, name, order
+        case pastTypes = "past_types"
+        case species, sprites, stats, types, weight
+    }
 }
 
-struct PokemonDetails: Codable, Identifiable {  // API NamedResource: "Pokemon"
-    // API endpoint: https://pokeapi.co/api/v2/pokemon/{id or name}/
-    let id: Int?                                 // resource identifier
-    let name: String                            // resource name
-    let height: Int                             // Pokemon height in decimeters
-    let weight: Int                             // Pokemon weight in hectograms
-    let stats: [PokemonStats]                   // list of base stat vaalues for this Pokemon
-    let types: [PokemonTypes]                   // list of details showing types this Pokemon has
-    let abilities: [PokemonAbility]             // A list of abilities this Pokémon could potentially have.
-    let species: PokemonSpecies                 // The species this Pokémon belongs to.
-    let sprites: PokemonSprites                 // A set of sprites used to depict this Pokémon in the game. A visual representation of the various sprites can be found at https://github.com/PokeAPI/sprites#sprites
-    let moves: [PokemonLearnedMove]             // A list of moves along with learn methods and level details pertaining to specific version groups.
-    let location_area_encounters: String?       // A link to a list of location areas, as well as encounter details pertaining to specific versions.
-    
-    static var sampleDetails = PokemonDetails(id: 1, name: "Bulbasaur", height: 7, weight: 69, stats: [PokemonStats(base_stat: 0, effort: 0, stat: SpecificStat.sample)], types: [PokemonTypes(slot: 0, type: SpecificType.sample)], abilities: [PokemonAbility.sample], species: PokemonSpecies.sample, sprites: PokemonSprites.sample, moves: [PokemonLearnedMove](), location_area_encounters: "https://pokeapi.co/api/v2/pokemon/1/encounters")
-}
 
-struct PokemonStats: Codable, Identifiable {      // Named API Resource: "PokemonStat"; 'Identifiable' because of stat ForEach loop in PokemonDetailsView
+struct Ability: Codable, Identifiable {
     let id = UUID()
-    let base_stat: Int              // base value of the stat
-    let effort: Int                 // the effort points (EV) the Pokemon has in the stat
-    let stat: SpecificStat          // the stat the Pokemon has
-}
+    let ability: URLObject
+    let isHidden: Bool
+    let slot: Int
 
-struct SpecificStat: Codable {      // Named API Resource: "Stat"
-    let id: Int                     // resource identifier
-    let name: String                // resource number
-    let game_index: Int             // ID the game uses for this stat
-    let is_battle_only: Bool        // whether this stat only exists within a battle
-    let names: [Name]               // resource name listed in different languages
-    let url: String
-    static var sample = SpecificStat(name: "", url: "", id: 0, game_index: 0, is_battle_only: false)
-    
-    
     enum CodingKeys: String, CodingKey {
-        case name = "name"
-        case url = "url"
-        case id = "id"
-        case game_index = "game_index"
-        case is_battle_only = "is_battle_only"
-        case names = "names"
+        case ability
+        case isHidden = "is_hidden"
+        case slot
     }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        
-        // Api may return 'null' for effect_chance
-        if let name = try values.decodeIfPresent(String.self, forKey: .name){
-            self.name = name
-        } else {self.name = ""}
-        if let id = try values.decodeIfPresent(Int.self, forKey: .id){
-            self.id = id
-        } else {self.id = 0}
-        if let game_index = try values.decodeIfPresent(Int.self, forKey: .game_index){
-            self.game_index = game_index
-        } else {self.game_index = 0}
-        if let is_battle_only = try values.decodeIfPresent(Bool.self, forKey: .is_battle_only){
-            self.is_battle_only = is_battle_only
-        } else {self.is_battle_only = false}
-        if let names = try values.decodeIfPresent([Name].self, forKey: .names){
-            self.names = names
-        } else {self.names = [Name]()}
-        if let url = try values.decodeIfPresent(String.self, forKey: .url){
-            self.url = url
-        } else {self.url = ""}
-    }
-    
-    init(name: String, url: String, id: Int, game_index: Int, is_battle_only: Bool) {
-        self.name = name
-        self.url = url
-        self.id = id
-        self.game_index = game_index
-        self.is_battle_only = is_battle_only
-        self.names = [Name]()
-    }
-    
 }
 
-struct PokemonTypes: Codable {  // API Name: "PokemonType"
-    let slot: Int               // order the Pokemon's types are listed in
-    let type: SpecificType      // type of referenced Pokemon
-}
 
-struct SpecificType: Codable, Identifiable {  // Named API Resource: "Type"
-    let id: Int?                            // resource identifier
-    let name: String                        // resource name
-    let names: [Name]?                      // resource name listed in different languages
-    let moves: [MoveDetails]?               // list of moves that have this type
-    let url: String
-    let move_damage_class: MoveDamageClass?  // The class of damage inflicted by this type.
-    let pokemon: [TypePokemon]?              // A list of details of Pokémon that have this type.
-    let damage_relations: TypeRelations?     // A detail of how effective this type is toward others and vice versa.
-    let past_damage_relations: [TypeRelationsPast]?         // A list of details of how effective this type was toward others and vice versa in previous generations
-    
-    static var sample = SpecificType(name: "grass", url: "https://pokeapi.co/api/v2/type/12/", id: 12, move_damage_class: MoveDamageClass.sample, names: [Name](), moves: [MoveDetails](), pokemon: [TypePokemon](), damage_relations: TypeRelations.sample, past_damage_relations: [TypeRelationsPast]())
-    
+
+
+
+struct Move: Codable, Identifiable {
+    let id = UUID()
+    let move: URLObject
+    let versionGroupDetails: [VersionGroupDetail]
+
     enum CodingKeys: String, CodingKey {
-        case name = "name"
-        case url = "url"
-        case id = "id"
-        case names = "names"
-        case moves = "moves"
-        case move_damage_class
-        case pokemon
-        case damage_relations
-        case past_damage_relations
-    }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        
-        // Api may return 'null'
-        if let move_damage_class = try values.decodeIfPresent(MoveDamageClass.self, forKey: .move_damage_class){
-            self.move_damage_class = move_damage_class
-        } else {self.move_damage_class = MoveDamageClass.sample}
-        if let name = try values.decodeIfPresent(String.self, forKey: .name){
-            self.name = name
-        } else {self.name = ""}
-        if let url = try values.decodeIfPresent(String.self, forKey: .url){
-            self.url = url
-        } else {self.url = ""}
-        if let id = try values.decodeIfPresent(Int.self, forKey: .id){
-            self.id = id
-        } else {self.id = 0}
-        if let names = try values.decodeIfPresent([Name].self, forKey: .names){
-            self.names = names
-        } else {self.names = [Name]()}
-        if let moves = try values.decodeIfPresent([MoveDetails].self, forKey: .moves){
-            self.moves = moves
-        } else {self.moves = [MoveDetails]()}
-        if let pokemon = try values.decodeIfPresent([TypePokemon].self, forKey: .pokemon){
-            self.pokemon = pokemon
-        } else {self.pokemon = [TypePokemon]()}
-        if let damage_relations = try values.decodeIfPresent(TypeRelations.self, forKey: .damage_relations){
-            self.damage_relations = damage_relations
-        } else {self.damage_relations = TypeRelations.sample}
-        if let past_damage_relations = try values.decodeIfPresent([TypeRelationsPast].self, forKey: .past_damage_relations){
-            self.past_damage_relations = past_damage_relations
-        } else {self.past_damage_relations = [TypeRelationsPast]()}
-    }
-    
-    init(name: String, url: String, id: Int, move_damage_class: MoveDamageClass, names: [Name], moves: [MoveDetails], pokemon: [TypePokemon], damage_relations: TypeRelations, past_damage_relations: [TypeRelationsPast]) {
-        self.name = name
-        self.url = url
-        self.id = id
-        self.names = names
-        self.moves = moves
-        self.move_damage_class = move_damage_class
-        self.pokemon = pokemon
-        self.damage_relations = damage_relations
-        self.past_damage_relations = past_damage_relations
+        case move
+        case versionGroupDetails = "version_group_details"
     }
 }
 
 
-struct PokemonSpecies: Codable {
-    let id: Int?                                 // identifier
-    let name: String                            // resource name
-    let order: Int                              // order species should be sorted. Based on National dex order, except families are grouped together and sorted by stage
-    let gender_rate: Int                        // chances of this Pokemon being female, in eights; or -1 for genderless
-    let capture_rate: Int                       // base capture rate; up to 255. Higher the number, easier to catch
-    let base_happiness: Int                     // happiness when caught by a normal pokeball; up to 255. The higher the number, happier the pokemon
-    let is_baby: Bool                           // whether or not this is a baby pokemon
-    let is_legendary: Bool                      // whether or not this is a legendary pokemon
-    let is_mythical: Bool                       // whether or not this is a mythical pokemon
-    let hatch_counter: Int                      // initial hatch counter: one must walk 255 x (hatch_counter + 1) steps before this Pokemon's egg hatches, unless utilizing bonuses like Flame Body's
-    let has_gender_differences: Bool            // whether or not this pokemon has visual gender differences
-    let forms_switchable: Bool                  // whether or not this pokemon has multiple forms and can switch between them
-    let flavor_text_entries: [FlavorText]       // list of flavor text entries for this species
-    
-    /*
-    let growth_rate: GrowthRate         // rate at which this species gains levels
-    let pokedex_numbers: [PokemonSpeciesDexEntry]          // list of pokedexes & indexes reserved within them for this species
-    let egg_groups: [EggGroup]      // list of egg groups this species is a member of
-    let color: PokemonColor         // color for Pokedex search
-    let shape: PokemonShape         // shape for Pokedex search
-    let evolves_from_species: PokemonSpecies    // pokemon species that eolves into this species
-    let evolution_chain: EvolutionChain     // evolution chain this species is a part of
-    let habitat: PokemonHabitat     // habitat this species can be encountered in
-    let generation: Generation      // generation this species was introduced in
-    let names: [Name]       // name of resource listed in different languages
-    let pal_park_encounters: [PalParkEncounterArea]     // list of encounters that can be had with this species in Pal Park
-    
-    let form_descriptions: [Description]        // descriptions of different forms pokemon take on within this species
-    let genera: [Genus]     // genus of this Pokemon species listed in multiple languages
-    let varieties: [PokemonSpeciesVariety]      // list of Pokemon that exist within this species
-    */
-    
+
+
+
+class Sprites: Codable {
+    let backDefault: String
+    let backFemale: String?
+    let backShiny: String
+    let backShinyFemale: String?
+    let frontDefault: String
+    let frontFemale: String?
+    let frontShiny: String
+    let frontShinyFemale: String?
+    let other: Other?
+    let versions: Versions?
+    let animated: Sprites?
+
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case name = "name"
-        case order = "order"
-        case gender_rate = "gender_rate"
-        case capture_rate = "capture_rate"
-        case base_happiness = "base_happiness"
-        case is_baby = "is_baby"
-        case is_legendary = "is_legendary"
-        case is_mythical = "is_mythical"
-        case hatch_counter = "hatch_counter"
-        case has_gender_differences = "has_gender_differences"
-        case forms_switchable = "forms_switchable"
-        case flavor_text_entries = "flavor_text_entries"
+        case backDefault = "back_default"
+        case backFemale = "back_female"
+        case backShiny = "back_shiny"
+        case backShinyFemale = "back_shiny_female"
+        case frontDefault = "front_default"
+        case frontFemale = "front_female"
+        case frontShiny = "front_shiny"
+        case frontShinyFemale = "front_shiny_female"
+        case other, versions, animated
     }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        
-        if let id = try values.decodeIfPresent(Int.self, forKey: .id){
-            self.id = id
-        } else {self.id = 0}
-        if let name = try values.decodeIfPresent(String.self, forKey: .name){
-            self.name = name
-        } else {self.name = ""}
-        if let order = try values.decodeIfPresent(Int.self, forKey: .order){
-            self.order = order
-        } else {self.order = 0}
-        if let gender_rate = try values.decodeIfPresent(Int.self, forKey: .gender_rate){
-            self.gender_rate = gender_rate
-        } else {self.gender_rate = 0}
-        if let capture_rate = try values.decodeIfPresent(Int.self, forKey: .capture_rate){
-            self.capture_rate = capture_rate
-        } else {self.capture_rate = 0}
-        if let base_happiness = try values.decodeIfPresent(Int.self, forKey: .base_happiness){
-            self.base_happiness = base_happiness
-        } else {self.base_happiness = 0}
-        if let is_baby = try values.decodeIfPresent(Bool.self, forKey: .is_baby){
-            self.is_baby = is_baby
-        } else {self.is_baby = false}
-        if let is_legendary = try values.decodeIfPresent(Bool.self, forKey: .is_legendary){
-            self.is_legendary = is_legendary
-        } else {self.is_legendary = false}
-        if let is_mythical = try values.decodeIfPresent(Bool.self, forKey: .is_mythical){
-            self.is_mythical = is_mythical
-        } else {self.is_mythical = false}
-        if let hatch_counter = try values.decodeIfPresent(Int.self, forKey: .hatch_counter){
-            self.hatch_counter = hatch_counter
-        } else {self.hatch_counter = 0}
-        if let has_gender_differences = try values.decodeIfPresent(Bool.self, forKey: .has_gender_differences){
-            self.has_gender_differences = has_gender_differences
-        } else {self.has_gender_differences = false}
-        if let forms_switchable = try values.decodeIfPresent(Bool.self, forKey: .forms_switchable){
-            self.forms_switchable = forms_switchable
-        } else {self.forms_switchable = false}
-        if let flavor_text_entries = try values.decodeIfPresent([FlavorText].self, forKey: .flavor_text_entries){
-            self.flavor_text_entries = flavor_text_entries
-        } else {self.flavor_text_entries = [FlavorText]()}
+
+    init(backDefault: String, backFemale: String?, backShiny: String, backShinyFemale: String?, frontDefault: String, frontFemale: String?, frontShiny: String, frontShinyFemale: String?, other: Other?, versions: Versions?, animated: Sprites?) {
+        self.backDefault = backDefault
+        self.backFemale = backFemale
+        self.backShiny = backShiny
+        self.backShinyFemale = backShinyFemale
+        self.frontDefault = frontDefault
+        self.frontFemale = frontFemale
+        self.frontShiny = frontShiny
+        self.frontShinyFemale = frontShinyFemale
+        self.other = other
+        self.versions = versions
+        self.animated = animated
     }
-    
-    init(id: Int, name: String, order: Int, gender_rate: Int, capture_rate: Int, base_happiness: Int, is_baby: Bool, is_legendary: Bool, is_mythical: Bool, hatch_counter: Int, has_gender_differences: Bool, forms_switchable: Bool, flavor_text_entries: [FlavorText]) {
-        self.id = id
-        self.name = name
-        self.order = order
-        self.gender_rate = gender_rate
-        self.capture_rate = capture_rate
-        self.base_happiness = base_happiness
-        self.is_baby = is_baby
-        self.is_legendary = is_legendary
-        self.is_mythical = is_mythical
-        self.hatch_counter = hatch_counter
-        self.has_gender_differences = has_gender_differences
-        self.forms_switchable = forms_switchable
-        self.flavor_text_entries = flavor_text_entries
-    }
-    
-    static var sample = PokemonSpecies(id: 0, name: "", order: 0, gender_rate: 0, capture_rate: 0, base_happiness: 0, is_baby: true, is_legendary: false, is_mythical: false, hatch_counter: 0, has_gender_differences: false, forms_switchable: false, flavor_text_entries: [FlavorText]())
 }
 
-struct Pokedex: Codable {
-    let id: Int                             // identifier
-    let name: String                        // resource name
-    let is_main_series: Bool                // whether or not this Pokedex orginated in the main series of the video games
-    let descriptions: [Description]         //description of this resource listed in different languages
-    let names: [Name]                        // name of this resource liste din different languages
-    let pokemon_entries: [PokemonEntry]     // list of Pokemon catalogues in this Pokedex and their indexes
-    let region: Region                      // region this Pokedex catalogues Pokemon for
-    let verion_groups: [VersionGroup]       // list of version groups this Pokedex belongs to
-}
+struct RedBlue: Codable {
+    let backDefault, backGray, backTransparent, frontDefault: String
+    let frontGray, frontTransparent: String
 
-struct PokemonEntry: Codable {
-    let entry_number: Int                   // index of this Pokemon species entry within the Pokedex
-    let pokemon_species: PokemonSpecies     // the Pokemon species being encountered
-}
-
-struct PokemonAbility: Codable {
-    let is_hidden: Bool             // Whether or not this is a hidden ability.
-    let slot: Int                   // The slot this ability occupies in this Pokémon species.
-    let ability: Ability            // The ability the Pokémon may have.
-    
-    static var sample = PokemonAbility(is_hidden: false, slot: 1, ability: Ability.sample)
-}
-
-struct PokemonSprites: Codable {
-    let front_default: String           // The default depiction of this Pokémon from the front in battle.
-    let front_shiny: String             // The shiny depiction of this Pokémon from the front in battle.
-    let front_female: String?            // The female depiction of this Pokémon from the front in battle.
-    let front_shiny_female: String?      // The shiny female depiction of this Pokémon from the front in battle.
-    let back_default: String            // The default depiction of this Pokémon from the back in battle.
-    let back_shiny: String              // The shiny depiction of this Pokémon from the back in battle.
-    let back_female: String?             // The female depiction of this Pokémon from the back in battle.
-    let back_shiny_female: String?       // The shiny female depiction of this Pokémon from the back in battle.
-    let other: OtherSprites?
-    
-    static var sample = PokemonSprites(front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png", front_shiny: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png", front_female: "", front_shiny_female: "", back_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png", back_shiny: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/1.png", back_female: "", back_shiny_female: "", other: OtherSprites.sample)
-}
-
-struct OtherSprites: Codable {
-    let dream_world: DreamWorld
-    let home: HomeSprite
-    let official_artwork: OfficialArtwork
-    
     enum CodingKeys: String, CodingKey {
-        case dream_world
-        case home
-        case official_artwork = "official-artwork"
+        case backDefault = "back_default"
+        case backGray = "back_gray"
+        case backTransparent = "back_transparent"
+        case frontDefault = "front_default"
+        case frontGray = "front_gray"
+        case frontTransparent = "front_transparent"
     }
-    
-    static var sample = OtherSprites(dream_world: DreamWorld.sample, home: HomeSprite.sample, official_artwork: OfficialArtwork.sample)
 }
 
-struct DreamWorld: Codable {
-    let front_default: String
-    let front_female: String?
-    
-    static var sample = DreamWorld(front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg", front_female: "")
+
+
+
+
+struct Crystal: Codable {
+    let backDefault, backShiny, backShinyTransparent, backTransparent: String
+    let frontDefault, frontShiny, frontShinyTransparent, frontTransparent: String
+
+    enum CodingKeys: String, CodingKey {
+        case backDefault = "back_default"
+        case backShiny = "back_shiny"
+        case backShinyTransparent = "back_shiny_transparent"
+        case backTransparent = "back_transparent"
+        case frontDefault = "front_default"
+        case frontShiny = "front_shiny"
+        case frontShinyTransparent = "front_shiny_transparent"
+        case frontTransparent = "front_transparent"
+    }
 }
 
-struct HomeSprite: Codable {
-    let front_default: String
-    let front_female: String?
-    let front_shiny: String
-    let front_shiny_female: String?
-    
-    static var sample = HomeSprite(front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png", front_female: "", front_shiny: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/1.png", front_shiny_female: "")
+
+struct Gold: Codable {
+    let backDefault, backShiny, frontDefault, frontShiny: String
+    let frontTransparent: String?
+
+    enum CodingKeys: String, CodingKey {
+        case backDefault = "back_default"
+        case backShiny = "back_shiny"
+        case frontDefault = "front_default"
+        case frontShiny = "front_shiny"
+        case frontTransparent = "front_transparent"
+    }
 }
 
 struct OfficialArtwork: Codable {
-    let front_default: String
-    let front_shiny: String
+    let frontDefault, frontShiny: String
+
+    enum CodingKeys: String, CodingKey {
+        case frontDefault = "front_default"
+        case frontShiny = "front_shiny"
+    }
     
-    static var sample = OfficialArtwork(front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png", front_shiny: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/1.png")
+    static var sample = OfficialArtwork(frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png", frontShiny: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/1.png")
+}
+
+struct Home: Codable {
+    let frontDefault: String
+    let frontFemale: String?
+    let frontShiny: String
+    let frontShinyFemale: String?
+
+    enum CodingKeys: String, CodingKey {
+        case frontDefault = "front_default"
+        case frontFemale = "front_female"
+        case frontShiny = "front_shiny"
+        case frontShinyFemale = "front_shiny_female"
+    }
 }
 
 
-struct PokemonLearnedMove: Codable, Identifiable {
+
+struct DreamWorld: Codable {
+    let frontDefault: String
+    let frontFemale: JSONNull?
+
+    enum CodingKeys: String, CodingKey {
+        case frontDefault = "front_default"
+        case frontFemale = "front_female"
+    }
+}
+
+struct Other: Codable {
+    let dreamWorld: DreamWorld
+    let home: Home
+    let officialArtwork: OfficialArtwork
+
+    enum CodingKeys: String, CodingKey {
+        case dreamWorld = "dream_world"
+        case home
+        case officialArtwork = "official-artwork"
+    }
+}
+
+struct Stat: Codable, Identifiable {
     let id = UUID()
-    let move: MoveDetails                                   // The move the Pokémon can learn.
-    let version_group_details: [PokemonMoveVersion]         // The details of the version in which the Pokémon can learn the move.
+    let baseStat, effort: Int
+    let stat: URLObject
+
+    enum CodingKeys: String, CodingKey {
+        case baseStat = "base_stat"
+        case effort, stat
+    }
 }
 
-struct PokemonMoveVersion: Codable {
-    let move_learn_method: MoveLearnMethod      // The method by which the move is learned.
-    let version_group: VersionGroup             // The version group in which the move is learned.
-    let level_learned_at: Int?                  // The minimum level to learn the move.
-    
+struct TypeElement: Codable {
+    let slot: Int
+    let type: URLObject
 }
 
+// MARK: - PokemonSpecies
+struct PokemonSpecies: Codable {
+    let baseHappiness, captureRate: Int
+    let color: URLObject
+    let eggGroups: [URLObject]
+    let evolutionChain: EvolutionChainLink
+    let evolvesFromSpecies: JSONAny?
+    let flavorTextEntries: [FlavorTextEntry]
+    let formDescriptions: [JSONAny]
+    let formsSwitchable: Bool
+    let genderRate: Int
+    let genera: [Genus]
+    let generation, growthRate, habitat: URLObject
+    let hasGenderDifferences: Bool
+    let hatchCounter, id: Int
+    let isBaby, isLegendary, isMythical: Bool
+    let name: String
+    let names: [Name]
+    let order: Int
+    let palParkEncounters: [PalParkEncounter]
+    let pokedexNumbers: [PokedexNumber]
+    let shape: URLObject
+    let varieties: [Variety]
+
+    enum CodingKeys: String, CodingKey {
+        case baseHappiness = "base_happiness"
+        case captureRate = "capture_rate"
+        case color
+        case eggGroups = "egg_groups"
+        case evolutionChain = "evolution_chain"
+        case evolvesFromSpecies = "evolves_from_species"
+        case flavorTextEntries = "flavor_text_entries"
+        case formDescriptions = "form_descriptions"
+        case formsSwitchable = "forms_switchable"
+        case genderRate = "gender_rate"
+        case genera, generation
+        case growthRate = "growth_rate"
+        case habitat
+        case hasGenderDifferences = "has_gender_differences"
+        case hatchCounter = "hatch_counter"
+        case id
+        case isBaby = "is_baby"
+        case isLegendary = "is_legendary"
+        case isMythical = "is_mythical"
+        case name, names, order
+        case palParkEncounters = "pal_park_encounters"
+        case pokedexNumbers = "pokedex_numbers"
+        case shape, varieties
+    }
+}
+
+
+// MARK: - EvolutionChain
+struct EvolutionChainLink: Codable {
+    let url: String
+}
+
+
+
+// MARK: - Genus
+struct Genus: Codable, Identifiable {
+    let id = UUID()
+    let genus: String
+    let language: URLObject
+}
+
+
+
+// MARK: - PalParkEncounter
+struct PalParkEncounter: Codable {
+    let area: URLObject
+    let baseScore, rate: Int
+
+    enum CodingKeys: String, CodingKey {
+        case area
+        case baseScore = "base_score"
+        case rate
+    }
+}
+
+// MARK: - PokedexNumber
+struct PokedexNumber: Codable {
+    let entryNumber: Int
+    let pokedex: URLObject
+
+    enum CodingKeys: String, CodingKey {
+        case entryNumber = "entry_number"
+        case pokedex
+    }
+}
+
+// MARK: - Variety
+struct Variety: Codable {
+    let isDefault: Bool
+    let pokemon: URLObject
+
+    enum CodingKeys: String, CodingKey {
+        case isDefault = "is_default"
+        case pokemon
+    }
+}
+
+// MARK: - Characteristic
+struct Characteristic: Codable {
+    let descriptions: [Description]
+    let geneModulo: Int
+    let highestStat: URLObject
+    let id: Int
+    let possibleValues: [Int]
+
+    enum CodingKeys: String, CodingKey {
+        case descriptions
+        case geneModulo = "gene_modulo"
+        case highestStat = "highest_stat"
+        case id
+        case possibleValues = "possible_values"
+    }
+}
+
+// MARK: - Description
+struct Description: Codable {
+    let description: String
+    let language: URLObject
+}
+
+// MARK: - EggGroup
+struct EggGroup: Codable {
+    let id: Int
+    let name: String
+    let names: [Name]
+    let pokemonSpecies: [URLObject]
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, names
+        case pokemonSpecies = "pokemon_species"
+    }
+}
+
+// MARK: - GrowthRate
+struct GrowthRate: Codable {
+    let descriptions: [Description]
+    let formula: String
+    let id: Int
+    let levels: [Level]
+    let name: String
+    let pokemonSpecies: [URLObject]
+
+    enum CodingKeys: String, CodingKey {
+        case descriptions, formula, id, levels, name
+        case pokemonSpecies = "pokemon_species"
+    }
+}
+
+// MARK: - Level
+struct Level: Codable {
+    let experience, level: Int
+}
+
+// MARK: - PokemonNature
+struct PokemonNature: Codable {
+    let decreasedStat, hatesFlavor: JSONAny?
+    let id: Int
+    let increasedStat, likesFlavor: JSONAny?
+    let moveBattleStylePreferences: [MoveBattleStylePreference]
+    let name: String
+    let names: [Name]
+    let pokeathlonStatChanges: [PokeathlonStatChange]
+
+    enum CodingKeys: String, CodingKey {
+        case decreasedStat = "decreased_stat"
+        case hatesFlavor = "hates_flavor"
+        case id
+        case increasedStat = "increased_stat"
+        case likesFlavor = "likes_flavor"
+        case moveBattleStylePreferences = "move_battle_style_preferences"
+        case name, names
+        case pokeathlonStatChanges = "pokeathlon_stat_changes"
+    }
+}
+
+// MARK: - MoveBattleStylePreference
+struct MoveBattleStylePreference: Codable {
+    let highHPPreference, lowHPPreference: Int
+    let moveBattleStyle: URLObject
+
+    enum CodingKeys: String, CodingKey {
+        case highHPPreference = "high_hp_preference"
+        case lowHPPreference = "low_hp_preference"
+        case moveBattleStyle = "move_battle_style"
+    }
+}
+
+
+// MARK: - PokeathlonStatChange
+struct PokeathlonStatChange: Codable {
+    let maxChange: Int
+    let pokeathlonStat: URLObject
+
+    enum CodingKeys: String, CodingKey {
+        case maxChange = "max_change"
+        case pokeathlonStat = "pokeathlon_stat"
+    }
+}

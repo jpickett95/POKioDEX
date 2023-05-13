@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MoveDetailsView: View {
     @ObservedObject var vm: MovesViewModel
-    let move: PokemonMove
+    let move: Result
     
     var body: some View {
         VStack {
@@ -17,7 +17,7 @@ struct MoveDetailsView: View {
                 Text("**Name**: \(move.name.capitalized)")
                 Text("**ID**: \(vm.getMoveID(move: move))")
                 Text("**Accuracy**: \(vm.moveDetails?.accuracy ?? 0)")
-                Text("**Effect Chance**: \(vm.moveDetails?.effect_chance ?? 0)")
+                //Text("**Effect Chance**: \(vm.moveDetails?.effectChance)")
                 Text("**PP**: \(vm.moveDetails?.pp ?? 0)")
                 Text("**Prioirty**: \(vm.moveDetails?.priority ?? 0)")
                 Text("**Power**: \(vm.moveDetails?.power ?? 0)")
@@ -31,6 +31,6 @@ struct MoveDetailsView: View {
 
 struct MoveDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        MoveDetailsView(vm: MovesViewModel(), move: PokemonMove.sample)
+        MoveDetailsView(vm: MovesViewModel(), move: Result.sample)
     }
 }

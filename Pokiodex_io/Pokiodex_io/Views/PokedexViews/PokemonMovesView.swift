@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PokemonMovesView: View {
     @ObservedObject var vm: PokemonViewModel
-    let pokemon: Pokemon
+    let pokemon: Result
     
     var body: some View {
             List{
@@ -23,14 +23,17 @@ struct PokemonMovesView: View {
                     
                     ForEach(levelMoves) { move in
                         VStack{
-                            Text("Name: \(move.move.name ?? "N/A")")
-                            Text("Method: \(move.version_group_details.first?.move_learn_method.name ?? "N/A")")
-                            Text("Level: \(move.version_group_details.first?.level_learned_at ?? 0)")
-                            Text("PP: \(move.move.pp ?? 0)")
-                            Text("Power: \(move.move.power ?? 0)")
-                            Text("Accuracy: \(move.move.accuracy ?? 0)")
-                            Text("Priority: \(move.move.priority ?? 0)")
-                            Text("Effect Chance: \(move.move.effect_chance ?? 0)")
+                            Text("Name: \(move.move.name.capitalized)").bold()
+                            ForEach(move.versionGroupDetails) { detail in
+                                Text("Game: \(detail.versionGroup.name.replacingOccurrences(of: "-", with: " ").capitalized)")
+                                //Text("Method: \(detail.moveLearnMethod.name.capitalized)")
+                                Text("Level: \(detail.levelLearnedAt)")
+                                
+                            }
+//                            Text("Power: \(move.move.power ?? 0)")
+//                            Text("Accuracy: \(move.move.accuracy ?? 0)")
+//                            Text("Priority: \(move.move.priority ?? 0)")
+//                            Text("Effect Chance: \(move.move.effect_chance ?? 0)")
                         }
                     }
                 }
@@ -44,7 +47,7 @@ struct PokemonMovesView: View {
                     }
                     
                     ForEach(machineMoves) { move in
-                        Text("Name: \(move.move.name ?? "N/A")\nMethod: \(move.version_group_details.first?.move_learn_method.name ?? "N/A")\n")
+                        Text("Name: \(move.move.name )\nMethod: \(move.versionGroupDetails.first?.moveLearnMethod.name ?? "N/A")\n")
                     }
                 }
                 
@@ -57,7 +60,7 @@ struct PokemonMovesView: View {
                     }
                     
                     ForEach(eggMoves) { move in
-                        Text("Name: \(move.move.name ?? "N/A")\nMethod: \(move.version_group_details.first?.move_learn_method.name ?? "N/A")\n")
+                        Text("Name: \(move.move.name )\nMethod: \(move.versionGroupDetails.first?.moveLearnMethod.name ?? "N/A")\n")
                     }
                 }
                 
@@ -70,7 +73,7 @@ struct PokemonMovesView: View {
                     }
                     
                     ForEach(tutorMoves) { move in
-                        Text("Name: \(move.move.name ?? "N/A")\nMethod: \(move.version_group_details.first?.move_learn_method.name ?? "N/A")\n")
+                        Text("Name: \(move.move.name )\nMethod: \(move.versionGroupDetails.first?.moveLearnMethod.name ?? "N/A")\n")
                     }
                 }
             }.scrollContentBackground(.hidden)
@@ -80,6 +83,6 @@ struct PokemonMovesView: View {
 
 struct PokemonMovesView_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonMovesView(vm: PokemonViewModel(), pokemon: Pokemon.samplePokemon)
+        PokemonMovesView(vm: PokemonViewModel(), pokemon: Result.sample)
     }
 }
