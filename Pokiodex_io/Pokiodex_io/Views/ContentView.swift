@@ -12,29 +12,146 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            NavigationLink(destination: PokedexView()) {
-                Image("PokedexImage")
-                    .resizable()
-                    .scaledToFit()
-            }
-            HStack{
-                NavigationLink(destination: MovesdexView()) {
-                    Image("MovesImage")
+            ScrollView {
+                NavigationLink(destination: PokedexView()) {
+                    Image("PokedexImage")
                         .resizable()
                         .scaledToFit()
+                }
+                HStack{
+                    NavigationLink(destination: MovesdexView()) {
+                        Image("MovesImage")
+                            .resizable()
+                            .scaledToFit()
+                    }
+                    
+                    NavigationLink(destination: TMsdexView()) {
+                        Image("TMsImage")
+                            .resizable()
+                            .scaledToFit()
+                    }
+                    
+                }
+                .padding(5)
+                
+                NavigationLink(destination: AbilitiesdexView()) {
+                    ZStack{
+                        HStack{
+                            Image(systemName: "sparkles")
+                                .resizable()
+                                .scaledToFit()
+                                .accentColor(Color.white)
+                                .padding(15)
+                            
+                            Spacer()
+                            
+                            Text("Abilities")
+                                .font(.title).bold()
+                                .foregroundColor(Color.white)
+                        }
+                        .padding(.leading, 20)
+                        .padding(.trailing, 30)
+                    }
+                    .frame(width: 350, height: 75)
+                    .background(Color.purple.opacity(0.9))
+                    .cornerRadius(15)
                 }
                 
-                NavigationLink(destination: TMsdexView()) {
-                    Image("TMsImage")
-                        .resizable()
-                        .scaledToFit()
+                NavigationLink(destination: TypeMatchupsView()) {
+                    ZStack{
+                        HStack{
+                            Image(systemName: "checkerboard.shield")
+                                .resizable()
+                                .scaledToFit()
+                                .accentColor(Color.white)
+                                .padding(15)
+                            
+                            Spacer()
+                            
+                            Text("Type Matchups")
+                                .font(.title).bold()
+                                .foregroundColor(Color.white)
+                        }
+                        .padding(.leading, 20)
+                        .padding(.trailing, 30)
+                    }
+                    .frame(width: 350, height: 75)
+                    .background(Color.gray.opacity(0.9))
+                    .cornerRadius(15)
                 }
-
+                
+                NavigationLink(destination: NaturesdexView()) {
+                    ZStack{
+                        HStack{
+                            Image(systemName: "leaf")
+                                .resizable()
+                                .scaledToFit()
+                                .accentColor(Color.white)
+                                .padding(15)
+                            
+                            Spacer()
+                            
+                            Text("Natures")
+                                .font(.title).bold()
+                                .foregroundColor(Color.white)
+                        }
+                        .padding(.leading, 20)
+                        .padding(.trailing, 30)
+                    }
+                    .frame(width: 350, height: 75)
+                    .background(Color.green.opacity(0.9))
+                    .cornerRadius(15)
+                }
+                
+                NavigationLink(destination: ObjectsdexView()) {
+                    ZStack{
+                        HStack{
+                            Image(systemName: "backpack")
+                                .resizable()
+                                .scaledToFit()
+                                .accentColor(Color.white)
+                                .padding(15)
+                            
+                            Spacer()
+                            
+                            Text("Game Objects")
+                                .font(.title).bold()
+                                .foregroundColor(Color.white)
+                        }
+                        .padding(.leading, 20)
+                        .padding(.trailing, 30)
+                    }
+                    .frame(width: 350, height: 75)
+                    .background(Color.brown.opacity(0.9))
+                    .cornerRadius(15)
+                }
+                
+                NavigationLink(destination: LocationsdexView()) {
+                    ZStack{
+                        HStack{
+                            Image(systemName: "map")
+                                .resizable()
+                                .scaledToFit()
+                                .accentColor(Color.white)
+                                .padding(15)
+                            
+                            Spacer()
+                            
+                            Text("Locations")
+                                .font(.title).bold()
+                                .foregroundColor(Color.white)
+                        }
+                        .padding(.leading, 20)
+                        .padding(.trailing, 30)
+                    }
+                    .frame(width: 350, height: 75)
+                    .background(Color.blue.opacity(0.8))
+                    .cornerRadius(15)
+                }
             }
-            .padding(5)
+            .padding()
+            .environmentObject(vm)
         }
-        .padding()
-        .environmentObject(vm)
     }
 }
 
