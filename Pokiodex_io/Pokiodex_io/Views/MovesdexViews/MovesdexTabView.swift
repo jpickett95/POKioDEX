@@ -31,6 +31,7 @@ struct MovesdexTabView: View {
                     }
                 }
         }
+        .accentColor(Color("Type_\(vm.moveDetails?.type.name.capitalized ?? "Normal")"))
     }
 }
 

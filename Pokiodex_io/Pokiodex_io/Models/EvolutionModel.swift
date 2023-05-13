@@ -40,13 +40,13 @@ struct EvolutionDetail: Codable {
     let gender, heldItem, item, knownMove: JSONAny?
     let knownMoveType, location, minAffection, minBeauty: JSONAny?
     let minHappiness: JSONAny?
-    let minLevel: Int
-    let needsOverworldRain: Bool
+    let minLevel: Int?
+    let needsOverworldRain: Bool?
     let partySpecies, partyType, relativePhysicalStats: JSONAny?
-    let timeOfDay: String
+    let timeOfDay: String?
     let tradeSpecies: JSONAny?
     let trigger: URLObject
-    let turnUpsideDown: Bool
+    let turnUpsideDown: Bool?
 
     enum CodingKeys: String, CodingKey {
         case gender

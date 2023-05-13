@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - MachineDetails
-struct MachineDetails: Codable {
+struct MachineDetails: Codable, Identifiable {
     let id: Int
     let item, move, versionGroup: URLObject
 
@@ -16,4 +16,18 @@ struct MachineDetails: Codable {
         case id, item, move
         case versionGroup = "version_group"
     }
+    
+    static var sample = MachineDetails(id: 1, item: URLObject(name: "tm00", url: "https://pokeapi.co/api/v2/item/1288/"), move: URLObject(name: "mega-punch", url: "https://pokeapi.co/api/v2/move/5/"), versionGroup: URLObject(name: "sword-shield", url: "https://pokeapi.co/api/v2/version-group/20/"))
+}
+
+struct MachineElement: Codable, Equatable, Identifiable {
+    let id = UUID()
+    let url: String
+}
+
+struct MachineResourceList: Codable {
+    let count: Int
+    let next: String?
+    let previous: String?
+    let results: [MachineElement]
 }

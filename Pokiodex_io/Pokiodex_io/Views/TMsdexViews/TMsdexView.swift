@@ -8,8 +8,19 @@
 import SwiftUI
 
 struct TMsdexView: View {
+    @StateObject var vm = MachinesViewModel()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView{
+            LazyVStack{
+                ForEach(vm.machinesList){ machine in
+                    NavigationLink(destination: TMsdexTabView(vm: vm, machine: machine)) {
+                        TMsdexCellView(vm: vm, machine: machine)
+                    }.onAppear{}
+                }
+            }
+        }
+        .searchable(text: $vm.searchText)
     }
 }
 

@@ -28,38 +28,38 @@ struct MovesdexCellView: View {
                 .frame(width: 125)
                 
                 
-                // Block with (ATK## | ACC##)
-                HStack{
-                    
-                    Text("\(vm.moveDetails?.power ?? 0 )")  // Attack Power
-                    Divider()
-                    Text("\(vm.moveDetails?.accuracy ?? 0)") // Accuracy
-                }
-                .frame(height: 25)
-                .padding([.trailing,.leading], 10)
-                .padding(10)
-                .clipShape(Rectangle())
-                .background(Color.gray.opacity(0.75))
-                .cornerRadius(20)
-                
-                // Block for move type (fire, water, grasss, etc.) & move category (physical, status, special, etc.)
-                HStack{
-                    Image("TypeIcon_Poison")    // Move Type (i.e. 'grass')
-                        .resizable()
-                        .scaledToFit()
-                        .padding(10)
-                        .background(Color.gray.opacity(0.75))
-                        .frame(width: 45, height: 45)
-                        .clipShape(Circle())
-                    
-                    Image("PhysicalMoveIcon")   // Move category (i.e. 'physical)
-                        .resizable()
-                        .scaledToFit()
-                        .padding(5)
-                        .background(Color.gray.opacity(0.75))
-                        .frame(width: 45, height: 45)
-                        .clipShape(Circle())
-                }
+//                // Block with (ATK## | ACC##)
+//                HStack{
+//                    
+//                    Text("\(vm.moveDetails?.power ?? 0 )")  // Attack Power
+//                    Divider()
+//                    Text("\(vm.moveDetails?.accuracy ?? 0)") // Accuracy
+//                }
+//                .frame(height: 25)
+//                .padding([.trailing,.leading], 10)
+//                .padding(10)
+//                .clipShape(Rectangle())
+//                .background(Color.gray.opacity(0.75))
+//                .cornerRadius(20)
+//                
+//                // Block for move type (fire, water, grasss, etc.) & move category (physical, status, special, etc.)
+//                HStack{
+//                    Image("TypeIcon_Poison")    // Move Type (i.e. 'grass')
+//                        .resizable()
+//                        .scaledToFit()
+//                        .padding(10)
+//                        .background(Color.gray.opacity(0.75))
+//                        .frame(width: 45, height: 45)
+//                        .clipShape(Circle())
+//                    
+//                    Image("PhysicalMoveIcon")   // Move category (i.e. 'physical)
+//                        .resizable()
+//                        .scaledToFit()
+//                        .padding(5)
+//                        .background(Color.gray.opacity(0.75))
+//                        .frame(width: 45, height: 45)
+//                        .clipShape(Circle())
+//                }
             }
             .onAppear{vm.getDetails(move: move)}
             .frame(width: 375, height: 70)
