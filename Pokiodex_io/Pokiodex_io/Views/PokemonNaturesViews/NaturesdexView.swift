@@ -8,8 +8,16 @@
 import SwiftUI
 
 struct NaturesdexView: View {
+    @StateObject var vm = NaturesViewModel()
     var body: some View {
-        Text("Pokemon Natures")
+        ScrollView{
+            LazyVStack{
+                ForEach(vm.naturesList){ nature in
+                    NatureCellView(vm: vm, nature: nature)
+                }
+            }
+        }
+        .searchable(text: $vm.searchText)
     }
 }
 
