@@ -9,4 +9,12 @@ import Foundation
 
 class ItemsManager {
     
+    // Retrieves list of 'Items'
+    func getItems(completion:@escaping (ResourceList) -> ()) {
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/item?limit=500/", model: ResourceList.self) { data in
+            completion(data)
+        } failure: { error in
+            print("\n(ItemsManager class) getItems func: \(error)\n")
+        }
+    }
 }

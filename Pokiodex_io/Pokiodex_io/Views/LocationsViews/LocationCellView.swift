@@ -1,5 +1,5 @@
 //
-//  AbilityCellView.swift
+//  LocationCellView.swift
 //  Pokiodex_io
 //
 //  Created by Jonah Pickett on 5/15/23.
@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct AbilityCellView: View {
-    @ObservedObject var vm: AbilitiesViewModel
-    let ability: Result
+struct LocationCellView: View {
+    @ObservedObject var vm: LocationsViewModel
+    let location: Result
     
     var body: some View {
         HStack(spacing: 15) {
             HStack() {
-                Text("")     // Ability index #
+                Text("")     // Location index #
                     .font(Font.title3)
                 Spacer()
-                Text(ability.name.capitalized)     // Ability name
+                Text(location.name.replacingOccurrences(of: "-", with: " ").capitalized)     // Location name
                     .font(Font.title3)
                     .bold()
                     .lineLimit(1)
@@ -34,8 +34,8 @@ struct AbilityCellView: View {
     }
 }
 
-struct AbilityCellView_Previews: PreviewProvider {
+struct LocationCellView_Previews: PreviewProvider {
     static var previews: some View {
-        AbilityCellView(vm: AbilitiesViewModel(), ability: Result.sample)
+        LocationCellView(vm: LocationsViewModel(), location: Result.sample)
     }
 }

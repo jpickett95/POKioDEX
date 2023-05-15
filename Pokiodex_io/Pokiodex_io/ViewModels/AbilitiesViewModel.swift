@@ -13,14 +13,14 @@ final class AbilitiesViewModel: ObservableObject {
     @Published var searchText = ""
     @Published var abilitiesList = [Result]()
     
-    // Filtered list of 'Machines for searchbar
+    // Filtered list of 'Abilities' for searchbar
     var filteredAbilities: [Result] {
         return searchText == "" ? abilitiesList : abilitiesList.filter {
             $0.name.contains(searchText.lowercased())
         }
     }
     
-    // initializer to populate self.machinesList
+    // initializer to populate self.abilitiesList
     init() {
         DispatchQueue.global().async {
             self.manager.getAbilities() { data in

@@ -8,8 +8,19 @@
 import SwiftUI
 
 struct LocationsdexView: View {
+    @StateObject var vm = LocationsViewModel()
+    
     var body: some View {
-        Text("Locations")
+        ScrollView{
+            LazyVStack{
+                ForEach(vm.locationsList){ location in
+                    NavigationLink(destination: LocationDetailsView(vm: vm, location: location)) {
+                        LocationCellView(vm: vm, location: location)
+                    }//.onAppear{}
+                }
+            }
+        }
+        .searchable(text: $vm.searchText)
     }
 }
 

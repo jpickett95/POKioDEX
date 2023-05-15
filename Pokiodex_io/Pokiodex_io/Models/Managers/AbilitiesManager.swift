@@ -14,7 +14,7 @@ class AbilitiesManager {
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/ability?limit=500/", model: ResourceList.self) { data in
             completion(data)
         } failure: { error in
-            print("\n(Ability Manager class) getAbilities func: \(error)\n")
+            print("\n(AbilitiesManager class) getAbilities func: \(error)\n")
         }
     }
 }
