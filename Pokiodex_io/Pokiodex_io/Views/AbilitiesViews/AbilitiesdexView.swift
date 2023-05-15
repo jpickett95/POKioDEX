@@ -8,8 +8,19 @@
 import SwiftUI
 
 struct AbilitiesdexView: View {
+    @StateObject var vm = AbilitiesViewModel()
+    
     var body: some View {
-        Text("Abilities")
+        ScrollView{
+            LazyVStack{
+                ForEach(vm.abilitiesList){ ability in
+                    NavigationLink(destination: AbilityDetailsView(vm: vm, ability: ability)) {
+                        AbilityCellView(vm: vm, ability: ability)
+                    }//.onAppear{}
+                }
+            }
+        }
+        .searchable(text: $vm.searchText)
     }
 }
 
