@@ -14,17 +14,25 @@ struct NatureCellView: View {
     var body: some View {
         HStack(spacing: 15) {
             HStack() {
-                Text("")     // Natureindex #
-                    .font(Font.title3)
-                Spacer()
                 Text(nature.name.capitalized)     // Nature name
                     .font(Font.title3)
                     .bold()
                     .lineLimit(1)
                     .truncationMode(.tail)
+                
+                Spacer()
+                
+                Label {
+                    Text("\(vm.switchStatName(stat: vm.natureDetails?.increasedStat?.name ?? "N/A"))")
+                } icon: { Image(systemName: "arrow.up").foregroundColor(Color.green) }
+                Label {
+                    Text("\(vm.switchStatName(stat: vm.natureDetails?.decreasedStat?.name ?? "N/A"))")
+                } icon: { Image(systemName: "arrow.down").foregroundColor(Color.red) }
+                
             }
             .padding(.leading, 5)
             .frame(width: 300)
+            .onAppear{vm.getNatureDetails(url: nature.url)}
                 
   
         }

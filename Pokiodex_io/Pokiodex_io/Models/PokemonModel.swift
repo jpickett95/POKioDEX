@@ -389,9 +389,9 @@ struct Level: Codable {
 
 // MARK: - PokemonNature
 struct PokemonNature: Codable {
-    let decreasedStat, hatesFlavor: JSONAny?
+    let decreasedStat, hatesFlavor: URLObject?
     let id: Int
-    let increasedStat, likesFlavor: JSONAny?
+    let increasedStat, likesFlavor: URLObject?
     let moveBattleStylePreferences: [MoveBattleStylePreference]
     let name: String
     let names: [Name]

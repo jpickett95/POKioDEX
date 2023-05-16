@@ -17,4 +17,15 @@ class NaturesManager{
             print("\n(NaturesManager class) getNatures func: \(error)\n")
         }
     }
+    
+    // Retrieves 'PokemonNature' from PokeAPI
+    func getNatureDetails(url: String, completion:@escaping (PokemonNature) -> ()) {
+        Bundle.main.fetchData(url: url, model: PokemonNature.self) { data in
+            completion(data)
+        } failure: { error in
+            print("\ngetNatureDetails func: \(error)\n")
+        }
+    }
+    
+    
 }

@@ -11,6 +11,7 @@ final class NaturesViewModel: ObservableObject {
     private let manager = NaturesManager()
     @Published var searchText = ""
     @Published var naturesList = [Result]()
+    /*@Published*/ var natureDetails: PokemonNature?
     
     // Filtered list of 'Natures' for searchbar
     var filteredItems: [Result] {
@@ -28,6 +29,37 @@ final class NaturesViewModel: ObservableObject {
                     //print(self.naturesList)
                 }
             }
+        }
+    }
+    
+    func getNatureDetails(url: String) {
+        DispatchQueue.global().async {
+            self.manager.getNatureDetails(url: url) { data in
+                DispatchQueue.main.async {
+                    self.natureDetails = data
+                    //print(self.natureDetails)
+                    //print(data)
+                }
+            }
+        }
+    }
+    
+    func switchStatName(stat: String) -> String {
+        switch(stat){
+        case "hp":
+            return "HP  "
+        case "attack":
+            return "ATK  "
+        case "defense":
+            return "DEF  "
+        case "speed":
+            return"SPD  "
+        case "special-attack":
+            return "SpATK"
+        case "special-defense":
+            return "SpDEF"
+        default:
+            return "N/A"
         }
     }
 }
