@@ -193,7 +193,7 @@ struct Home: Codable {
 
 struct DreamWorld: Codable {
     let frontDefault: String
-    let frontFemale: JSONNull?
+    let frontFemale: String?
 
     enum CodingKeys: String, CodingKey {
         case frontDefault = "front_default"

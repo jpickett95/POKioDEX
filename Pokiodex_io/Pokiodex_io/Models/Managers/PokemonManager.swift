@@ -36,7 +36,7 @@ class PokemonManager{
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon/\(id)/", model: PokemonDetails.self) { data in
             completion(data)
         } failure: { error in
-            print("getDetailedPokemon func: \(error)")
+            print("\n(PokemonManager class) getDetailedPokemon func: \(error)\n")
         }
     }
     

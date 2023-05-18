@@ -17,4 +17,13 @@ class AbilitiesManager {
             print("\n(AbilitiesManager class) getAbilities func: \(error)\n")
         }
     }
+    
+    // Retrieves Detailed Information
+    func getDetails(url: String, completion:@escaping (AbilityDetails) -> ()) {
+        Bundle.main.fetchData(url: url, model: AbilityDetails.self) { data in
+            completion(data)
+        } failure: { error in
+            print("\n(AbilitiesManager class) getDetails func: \(error)\n")
+        }
+    }
 }

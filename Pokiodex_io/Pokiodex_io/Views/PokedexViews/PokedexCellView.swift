@@ -23,8 +23,9 @@ struct PokedexCellView: View {
                         .padding(.leading)
                         .padding(.trailing)
                 
-//                    // Pokemon Type
-//                    Text(cellVM.pokemonDetails?.types.first?.type.name ?? "")
+                    // Pokemon Type
+//                    let type = vm.cellPokemonDetails?.types.first?.type.name ?? "N/A"
+//                    Text(type)
 //                        .font(.subheadline).bold()
 //                        .foregroundColor(.white)
 //                        .padding(.horizontal, 16)
@@ -35,15 +36,18 @@ struct PokedexCellView: View {
 //                        )
 //                        .frame(width: 200, height: 24)
                 }
-                //.task {vm.getDetails(pokemon: pokemon)}
+                //.onAppear{vm.getCellDetails(pokemon: pokemon)}
+                
+                Spacer()
                 
                 PokemonImageView(vm:vm, pokemon: pokemon, dimensions: 75)
                     .padding([.bottom, .trailing, .top], 10)
                 
             }
+            .padding(20)
             
         }
-        //.onAppear{cellVM.getDetails(pokemon: pokemon)}
+        
         .frame(width: 350, height: 100)
         .background(Color.gray)
         .cornerRadius(12)

@@ -113,7 +113,8 @@ struct Versions: Codable {
     }
 }
 
-struct FlavorTextEntry: Codable {
+struct FlavorTextEntry: Codable, Identifiable {
+    let id = UUID()
     let flavorText: String
     let language, versionGroup: URLObject?
 
@@ -131,7 +132,8 @@ struct Name: Codable {
 }
 
 // MARK: - Pokemon
-struct Pokemon: Codable {
+struct Pokemon: Codable, Identifiable {
+    let id = UUID()
     let isHidden: Bool?
     let pokemon: URLObject
     let slot: Int

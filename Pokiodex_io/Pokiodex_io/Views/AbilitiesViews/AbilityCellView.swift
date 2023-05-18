@@ -13,23 +13,22 @@ struct AbilityCellView: View {
     
     var body: some View {
         HStack(spacing: 15) {
-            HStack() {
-                Text("")     // Ability index #
-                    .font(Font.title3)
-                Spacer()
-                Text(ability.name.capitalized)     // Ability name
+            
+                Image(systemName: "sparkles").foregroundColor(Color.white).scaledToFit()
+                
+                Text(ability.name.capitalized.replacingOccurrences(of: "-", with: " "))     // Ability name
                     .font(Font.title3)
                     .bold()
                     .lineLimit(1)
                     .truncationMode(.tail)
-            }
-            .padding(.leading, 5)
-            .frame(width: 300)
+                
+           Spacer()
                 
   
         }
+        .padding(20)
         .frame(width: 375, height: 70)
-        .background(Color.gray.opacity(0.5))
+        .background(Color.purple.opacity(0.25))
         .cornerRadius(12)
     }
 }

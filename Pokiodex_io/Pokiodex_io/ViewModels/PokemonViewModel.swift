@@ -13,6 +13,7 @@ final class PokemonViewModel: ObservableObject {
     
     @Published var pokemonList = [Result]()
     @Published var pokemonDetails: PokemonDetails?
+    var cellPokemonDetails: PokemonDetails?
     //@Published var pokemonStats: PokemonStat?
     @Published var pokemonTypes: [TypeDetails]?
     @Published var evolutionChain: EvolutionChain?
@@ -62,6 +63,19 @@ final class PokemonViewModel: ObservableObject {
                     self.getSpecies(url: data.species.url)
                     self.returnResistances(types: data.types)
                     self.getPokemonLocations(url: data.locationAreaEncounters)
+                }
+            }
+        }
+    }
+    
+    func getCellDetails(pokemon: Result) {
+        let id = getPokemonID(pokemon: pokemon) // get id#
+        
+        DispatchQueue.global().async {
+            self.pokemonManager.getDetailedPokemon(id: id) { data in
+                DispatchQueue.main.async {
+                    self.cellPokemonDetails = data
+                    print(self.cellPokemonDetails)
                 }
             }
         }

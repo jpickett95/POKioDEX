@@ -12,7 +12,36 @@ struct AbilityDetailsView: View {
     let ability: Result
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView {
+            VStack(spacing: 15) {
+                Text("Ability Effect").font(.title2).bold()
+                
+                Text(vm.filterFlavorTextLanguage(language: "en"))
+                
+                Spacer()
+                Divider()
+                    .scaleEffect(10)
+                
+                Text("Pokemon with \"\(ability.name.capitalized.replacingOccurrences(of: "-", with: " "))\"").font(.title2).bold()
+                Label("- Indicates a hidden ability.", systemImage: "eye.fill").font(.caption)
+                
+                let pokemonList = vm.abilityDetails?.pokemon ?? [Pokemon]()
+                ForEach(pokemonList) { pokemon in
+                    HStack{
+                        Text(pokemon.pokemon.name.capitalized.replacingOccurrences(of: "-", with: " ")).foregroundColor(Color.white).bold()
+                        if pokemon.isHidden == true {
+                            Image(systemName: "eye.fill").foregroundColor(Color.white)
+                        }
+                        let id  = vm.parseID(url: pokemon.pokemon.url)
+                        Spacer()
+                        AsyncImage(url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(id).png"))
+                    }
+                    .padding(20)
+                    .background(RoundedRectangle(cornerRadius: 20).fill(Color.purple.opacity(0.5)))
+                }
+            }
+        }.onAppear{vm.getDetails(url: ability.url)}
+            .padding(20)
     }
 }
 
