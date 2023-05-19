@@ -42,6 +42,7 @@ struct TMsdexTabView: View {
         }
         .accentColor(Color("Type_\(vm.moveDetails?.type.name.capitalized ?? "Normal")"))
         .onAppear{vm.getMoveDetails(url: machine.move.url)}
+        .navigationTitle("\(machine.item.name.uppercased()) Details")
     }
 }
 

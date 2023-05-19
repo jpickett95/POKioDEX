@@ -49,6 +49,7 @@ struct PokedexTabView: View {
                     }
                 }
         }.accentColor(Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")"))
+            .navigationTitle("\(pokemon.name.capitalized.replacingOccurrences(of: "-", with: " "))'s Details")
     }
 }
 

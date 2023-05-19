@@ -15,17 +15,18 @@ struct MovesdexCellView: View {
     var body: some View {
        
         HStack(spacing: 15) {
-                VStack(alignment: .leading) {
+            
                     Text("# \(vm.getMoveID(move: move))")     // Move index #
-                        .font(Font.caption)
-                    Text(move.name.capitalized)     // Move name
+                        .font(Font.subheadline)
+                
+                    Spacer()
+                
+                    Text(move.name.capitalized.replacingOccurrences(of: "-", with: " "))     // Move name
                         .font(Font.title3)
                         .bold()
                         .lineLimit(1)
                         .truncationMode(.tail)
-                }
-                .padding(.leading, 5)
-                .frame(width: 125)
+               
                 
                 
 //                // Block with (ATK## | ACC##)
@@ -61,10 +62,12 @@ struct MovesdexCellView: View {
 //                        .clipShape(Circle())
 //                }
             }
+            .padding(40)
             .onAppear{vm.getDetails(move: move)}
             .frame(width: 375, height: 70)
-            .background(Color.gray.opacity(0.5))
+            .background(Color.yellow.opacity(0.25))
             .cornerRadius(12)
+            
         
         
         

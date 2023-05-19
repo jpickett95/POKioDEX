@@ -49,7 +49,7 @@ struct PokedexCellView: View {
         }
         
         .frame(width: 350, height: 100)
-        .background(Color.gray)
+        .background(Color.red.opacity(0.5))
         .cornerRadius(12)
         
     }

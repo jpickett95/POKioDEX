@@ -14,7 +14,7 @@ struct MoveDetailsView: View {
     var body: some View {
         ScrollView{
             VStack (spacing: 20){
-                Text("**Name**: \(move.name.capitalized)")
+                Text("\(move.name.capitalized.replacingOccurrences(of: "-", with: " "))").font(.title2).bold()
                 
                 TypeChips(vm: vm)
                 
@@ -26,15 +26,30 @@ struct MoveDetailsView: View {
                 Text("Effect").font(.title2).bold()
                 VStack(alignment: .leading, spacing: 15){
                     
-                    Text("**Effect**: \(vm.moveDetails?.effectEntries?.first?.effect.replacingOccurrences(of: "$effect_chance%", with: "\(vm.moveDetails?.effectChance ?? 0)%") ?? "")")
-                    Text("**Effect Chance**: \(vm.moveDetails?.effectChance ?? 0)%")
-                    if vm.moveDetails?.meta?.ailment?.name != "none" {
-                        Text("Ailment: \(vm.moveDetails?.meta?.ailment?.name ?? "")")
-                        let ailmentChance = vm.moveDetails?.meta?.ailmentChance ?? 0
-                        if ailmentChance == 0 {
-                            Text("Ailment Chance: 100%")
-                        } else {
-                            Text("Ailment Chance: \(ailmentChance)%")
+                    Text("\(vm.moveDetails?.effectEntries?.first?.effect.replacingOccurrences(of: "$effect_chance%", with: "\(vm.moveDetails?.effectChance ?? 0)%") ?? "")")
+                    if vm.moveDetails?.effectChance != nil {
+                        Text("**Effect Chance**: \(vm.moveDetails?.effectChance ?? 0)%")
+                    }
+                    
+                    let ailment = vm.moveDetails?.meta?.ailment?.name ?? "none"
+                    let type = vm.moveDetails?.type.name.capitalized ?? "Normal"
+                    if ailment != "none" {
+                        HStack(spacing: 30){
+                            Label{
+                                Text("\(vm.moveDetails?.meta?.ailment?.name.capitalized ?? "")").bold()
+                            } icon: {Image(systemName: vm.switchAilment(ailment: ailment)).foregroundColor(Color("Type_\(type)"))}
+                            
+                            
+                            let ailmentChance = vm.moveDetails?.meta?.ailmentChance ?? 0
+                            if ailmentChance == 0 {
+                                Label{
+                                    Text("**Chance**: 100%")
+                                } icon: {Image(systemName: vm.switchAilment(ailment: ailment)).foregroundColor(Color("Type_\(type)"))}
+                            } else {
+                                Label{
+                                    Text("**Chance**: \(ailmentChance)%")
+                                } icon: {Image(systemName: vm.switchAilment(ailment: ailment)).foregroundColor(Color("Type_\(type)"))}
+                            }
                         }
                     }
                 }
@@ -43,7 +58,8 @@ struct MoveDetailsView: View {
                 
             }
             .onAppear{vm.getDetails(move: move)}
-            .navigationTitle("\(move.name.capitalized) Details")
+            //.navigationTitle("\(move.name.capitalized) Details")
+            .padding(10)
         }
     }
 }

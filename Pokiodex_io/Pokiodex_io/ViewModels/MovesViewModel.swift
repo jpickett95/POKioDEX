@@ -62,4 +62,27 @@ final class MovesViewModel: ObservableObject {
         urlSrting = urlSrting.replacingOccurrences(of: "/", with: "")
         return urlSrting
     }
+    
+    func switchAilment(ailment: String) -> String {
+        switch ailment {
+        case  "freeze":
+            return "snowflake"
+        case "burn":
+            return "flame"
+        case "paralysis":
+            return "bolt.fill"
+        case "confusion":
+            return "bubbles.and.sparkles.fill"
+        case "leech-seed":
+            return "leaf.arrow.triangle.circlepath"
+        case "poison":
+            return "cross.vial.fill"
+        case "sleep":
+            return "zzz"
+        case "disable":
+            return "exclamationmark.octagon.fill"
+        default:
+            return "microbe.fill"
+        }
+    }
 }

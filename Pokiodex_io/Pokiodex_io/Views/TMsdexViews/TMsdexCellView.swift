@@ -14,10 +14,14 @@ struct TMsdexCellView: View {
     var body: some View {
         HStack(spacing: 15) {
                 HStack() {
-                    Text("\(machine.item.name)")     // Move index #
-                        .font(Font.title3)
+                    Label {
+                        Text("\(machine.item.name.uppercased())").bold()     // Move index #
+                            .font(Font.title3)
+                    } icon: {
+                        Image(systemName: "opticaldisc.fill")
+                    }
                     Spacer()
-                    Text(machine.move.name.capitalized)     // Move name
+                    Text(machine.move.name.capitalized.replacingOccurrences(of: "-", with: " "))     // Move name
                         .font(Font.title3)
                         .bold()
                         .lineLimit(1)
@@ -29,7 +33,7 @@ struct TMsdexCellView: View {
   
             }
             .frame(width: 375, height: 70)
-            .background(Color.gray.opacity(0.5))
+            .background(Color.green.opacity(0.5))
             .cornerRadius(12)
     }
 }

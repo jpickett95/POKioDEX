@@ -14,7 +14,7 @@ struct MachineDetailsView: View {
     var body: some View {
         ScrollView{
             VStack (spacing: 20){
-                Text("**Name**: \(machine.move.name.capitalized)")
+                Text("\(machine.move.name.capitalized.replacingOccurrences(of: "-", with: " "))").font(.title2).bold()
                 
                 TMTypeChips(vm: vm)
                 
@@ -26,8 +26,11 @@ struct MachineDetailsView: View {
                 Text("Effect").font(.title2).bold()
                 VStack(alignment: .leading, spacing: 15){
                     
-                    Text("**Effect**: \(vm.moveDetails?.effectEntries?.first?.effect.replacingOccurrences(of: "$effect_chance%", with: "\(vm.moveDetails?.effectChance ?? 0)%") ?? "")")
-                    Text("**Effect Chance**: \(vm.moveDetails?.effectChance ?? 0)%")
+                    Text("\(vm.moveDetails?.effectEntries?.first?.effect.replacingOccurrences(of: "$effect_chance%", with: "\(vm.moveDetails?.effectChance ?? 0)%") ?? "")")
+                    
+                    if vm.moveDetails?.effectChance != 0{
+                        Text("**Effect Chance**: \(vm.moveDetails?.effectChance ?? 0)%")
+                    }
                     if vm.moveDetails?.meta?.ailment?.name != "none" {
                         Text("Ailment: \(vm.moveDetails?.meta?.ailment?.name ?? "")")
                         let ailmentChance = vm.moveDetails?.meta?.ailmentChance ?? 0

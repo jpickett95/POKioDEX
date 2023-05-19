@@ -11,10 +11,10 @@ class MachineManager {
     
     // Retrieves list of 'Machines'
     func getMachines(completion:@escaping (MachineResourceList) -> ()) {
-        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/machine?limit=500/", model: MachineResourceList.self) { data in
+        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/machine?limit=100/", model: MachineResourceList.self) { data in
             completion(data)
         } failure: { error in
-            print("\ngetMachines func: \(error)\n")
+            print("\n(MachineManager class) getMachines func: \(error)\n")
         }
     }
     

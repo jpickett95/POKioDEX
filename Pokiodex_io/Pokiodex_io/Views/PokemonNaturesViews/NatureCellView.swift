@@ -21,14 +21,25 @@ struct NatureCellView: View {
                     .truncationMode(.tail)
                 
                 Spacer()
-                
-                Label {
-                    Text("\(vm.switchStatName(stat: vm.natureDetails?.increasedStat?.name ?? "N/A"))")
-                } icon: { Image(systemName: "arrow.up").foregroundColor(Color.green) }
-                Label {
-                    Text("\(vm.switchStatName(stat: vm.natureDetails?.decreasedStat?.name ?? "N/A"))")
-                } icon: { Image(systemName: "arrow.down").foregroundColor(Color.red) }
-                
+                VStack(spacing: 5) {
+                    Label {
+                        Text("\(vm.natureDetails?.likesFlavor?.name ?? "")")
+                    } icon: { Image(systemName: "heart.fill").foregroundColor(Color.green) }
+                    
+                    Label {
+                        Text("\(vm.natureDetails?.hatesFlavor?.name ?? "")")
+                    } icon: { Image(systemName: "x.circle.fill").foregroundColor(Color.red) }
+                }
+                Spacer()
+                VStack(spacing: 5){
+                    Label {
+                        Text("\(vm.switchStatName(stat: vm.natureDetails?.increasedStat?.name ?? ""))")
+                    } icon: { Image(systemName: "arrow.up").foregroundColor(Color.green) }
+                    
+                    Label {
+                        Text("\(vm.switchStatName(stat: vm.natureDetails?.decreasedStat?.name ?? ""))")
+                    } icon: { Image(systemName: "arrow.down").foregroundColor(Color.red) }
+                }
             }
             .padding(.leading, 5)
             .frame(width: 300)
