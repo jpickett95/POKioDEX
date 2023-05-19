@@ -15,13 +15,13 @@ struct TMsdexCellView: View {
         HStack(spacing: 15) {
                 HStack() {
                     Label {
-                        Text("\(machine.item.name.uppercased())").bold()     // Move index #
+                        Text(machine.item.name.uppercased() ).bold()     // Move index #
                             .font(Font.title3)
                     } icon: {
                         Image(systemName: "opticaldisc.fill")
                     }
                     Spacer()
-                    Text(machine.move.name.capitalized.replacingOccurrences(of: "-", with: " "))     // Move name
+                    Text(machine.move.name.capitalized.replacingOccurrences(of: "-", with: " ") )     // Move name
                         .font(Font.title3)
                         .bold()
                         .lineLimit(1)

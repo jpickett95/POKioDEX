@@ -18,12 +18,14 @@ final class MachinesViewModel: ObservableObject {
     @Published var itemDetails: ItemDetails?
     
     // Filtered list of 'Machines for searchbar
-    var filteredMoves: [MachineDetails] {
-        return searchText == "" ? machinesList : machinesList.filter {
-            $0.move.name.contains(searchText.lowercased())
-            //$0.item.name.contains(searchText.lowercased())
-        }
-    }
+//    var filteredMoves: [MachineDetails] {
+//        return searchText == "" ? machinesList : machinesList.filter {
+//            if (($0.move.name?.contains(searchText.lowercased())) != nil) {
+//                $0.move.name?.contains(searchText.lowercased())
+//            }
+//            //$0.item.name.contains(searchText.lowercased())
+//        }
+//    }
     
     // initializer to populate self.machinesList
     init() {

@@ -9,20 +9,21 @@ import Foundation
 
 // MARK: - ItemDetails
 struct ItemDetails: Codable {
-    let attributes: [URLObject]
-    let babyTriggerFor: JSONNull?
+    let attributes: [URLObject]?
+    let babyTriggerFor: EvolutionChain?
     let category: URLObject
-    let cost: Int
-    let effectEntries: [EffectEntry]
-    let flavorTextEntries: [FlavorTextEntry]
-    let flingEffect, flingPower: JSONNull?
+    let cost: Int?
+    let effectEntries: [EffectEntry]?
+    let flavorTextEntries: [VersionGroupFlavorText]
+    let flingPower: Int?
+    let flingEffect: URLObject?
     let gameIndices: [GameIndex]
-    let heldByPokemon: [JSONAny]
-    let id: Int
-    let machines: [JSONAny]
-    let name: String
+    let heldByPokemon: [ItemHolderPokemon]
+    let id: Int?
+    let machines: [MachineVersionDetail]?
+    let name: String?
     let names: [Name]
-    let sprites: ItemSprites
+    let sprites: ItemSprites?
 
     enum CodingKeys: String, CodingKey {
         case attributes
@@ -38,11 +39,44 @@ struct ItemDetails: Codable {
     }
 }
 
-// MARK: - Sprites
+// MARK: - ItemSprites
 struct ItemSprites: Codable {
     let spritesDefault: String
 
     enum CodingKeys: String, CodingKey {
         case spritesDefault = "default"
+    }
+}
+
+// MARK: - ItemHolderPokemon
+struct ItemHolderPokemon: Codable {
+    let pokemon: URLObject
+    let versionDetails: [ItemHolderPokemonVersionDetail]
+
+    enum CodingKeys: String, CodingKey {
+        case pokemon
+        case versionDetails = "version_details"
+    }
+}
+
+// MARK: - ItemHolderPokemonVersionDetail
+struct ItemHolderPokemonVersionDetail: Codable {
+    let rarity: Int
+    let version: Version
+
+    enum CodingKeys: String, CodingKey {
+        case rarity
+        case version
+    }
+}
+
+// MARK: - MachineVersionDetail
+struct MachineVersionDetail: Codable {
+    let machine: LinkOnly
+    let versionGroup: URLObject?
+
+    enum CodingKeys: String, CodingKey {
+        case machine
+        case versionGroup = "version_group"
     }
 }

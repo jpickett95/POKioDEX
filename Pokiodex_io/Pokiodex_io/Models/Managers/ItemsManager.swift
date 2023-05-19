@@ -17,4 +17,13 @@ class ItemsManager {
             print("\n(ItemsManager class) getItems func: \(error)\n")
         }
     }
+    
+    // Retrieves Detailed Information
+    func getDetails(url: String, completion:@escaping (ItemDetails) -> ()) {
+        Bundle.main.fetchData(url: url, model: ItemDetails.self) { data in
+            completion(data)
+        } failure: { error in
+            print("\n(ItemsManager class) getDetails func: \(error)\n")
+        }
+    }
 }

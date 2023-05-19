@@ -14,7 +14,7 @@ struct MachineDetailsView: View {
     var body: some View {
         ScrollView{
             VStack (spacing: 20){
-                Text("\(machine.move.name.capitalized.replacingOccurrences(of: "-", with: " "))").font(.title2).bold()
+                Text("\(machine.move.name.capitalized.replacingOccurrences(of: "-", with: " ") )").font(.title2).bold()
                 
                 TMTypeChips(vm: vm)
                 
@@ -46,7 +46,7 @@ struct MachineDetailsView: View {
                 
             }
             //.onAppear{vm.getDetails(move: move)}
-            .navigationTitle("\(machine.move.name.capitalized) Details")
+            .navigationTitle("\(machine.move.name.capitalized )  Details")
         }
     }
 }

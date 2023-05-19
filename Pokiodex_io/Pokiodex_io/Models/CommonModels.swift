@@ -115,7 +115,7 @@ struct Versions: Codable {
 
 struct FlavorTextEntry: Codable, Identifiable {
     let id = UUID()
-    let flavorText: String
+    let flavorText: String?
     let language, versionGroup: URLObject?
 
     enum CodingKeys: String, CodingKey {
@@ -150,6 +150,10 @@ struct URLObject: Codable, Identifiable {
     let url: String
 }
 
+struct LinkOnly: Codable {
+    let url: String
+}
+
 // MARK: - GameIndex
 struct GameIndex: Codable {
     let gameIndex: Int
@@ -165,10 +169,10 @@ struct GameIndex: Codable {
 
 // MARK: - Language
 struct Language: Codable {
-    let id: Int
-    let iso3166, iso639, name: String
-    let names: [Name]
-    let official: Bool
+    let id: Int?
+    let iso3166, iso639, name: String?
+    let names: [Name]?
+    let official: Bool?
 }
 
 // MARK: - EffectEntry
@@ -194,5 +198,47 @@ struct VersionDetail: Codable, Identifiable {
         case encounterDetails = "encounter_details"
         case maxChance = "max_chance"
         case version
+    }
+}
+
+// MARK: - Version
+struct Version: Codable {
+    let id: Int?
+    let name: String
+    let names: [Name]?
+    let versionGroup: URLObject?
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, names
+        case versionGroup = "version_group"
+    }
+}
+
+// MARK: - VersionGroup
+struct VersionGroup: Codable {
+    let generation: URLObject?
+    let id: Int?
+    let moveLearnMethods: [URLObject]?
+    let name: String?
+    let order: Int?
+    let pokedexes, regions, versions: [URLObject]?
+
+    enum CodingKeys: String, CodingKey {
+        case generation, id
+        case moveLearnMethods = "move_learn_methods"
+        case name, order, pokedexes, regions, versions
+    }
+}
+
+// MARK: - VersionGroupFlavorText
+struct VersionGroupFlavorText: Codable {
+    let text: String
+    let language: Language
+    let versionGroup: VersionGroup
+
+    enum CodingKeys: String, CodingKey {
+        case text, language
+        case versionGroup = "version_group"
+      
     }
 }

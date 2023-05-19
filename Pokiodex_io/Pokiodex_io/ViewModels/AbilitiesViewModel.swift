@@ -51,7 +51,7 @@ final class AbilitiesViewModel: ObservableObject {
         
         for flavorText in flavorTexts {
             if flavorText.language?.name == language {
-                textStrings.append(flavorText.flavorText)
+                textStrings.append(flavorText.flavorText ?? "N/A")
             }
         }
         

@@ -17,7 +17,7 @@ struct MovesLearnedByView: View {
             ForEach(learnedBy) { pokemon in
                 HStack{
                     Text("\(pokemon.name.replacingOccurrences(of: "-", with: " ").capitalized)")
-                    let dimensions = 75
+                    
                     let id  = vm.parseID(url: pokemon.url)
                     Spacer()
                     AsyncImage(url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(id).png"))

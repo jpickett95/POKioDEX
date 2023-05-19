@@ -29,7 +29,7 @@ struct ObjectCellView: View {
   
         }
         .frame(width: 375, height: 70)
-        .background(Color.gray.opacity(0.5))
+        .background(Color.brown.opacity(0.5))
         .cornerRadius(12)
     }
 }
