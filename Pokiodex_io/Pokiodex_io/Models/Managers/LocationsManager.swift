@@ -17,4 +17,22 @@ class LocationsManager {
             print("\n(LocationsManager class) getLocations func: \(error)\n")
         }
     }
+    
+    // Retrieves Detailed Information
+    func getDetails(url: String, completion:@escaping (LocationDetails) -> ()) {
+        Bundle.main.fetchData(url: url, model: LocationDetails.self) { data in
+            completion(data)
+        } failure: { error in
+            print("\n(LocationsManager class) getDetails func: \(error)\n")
+        }
+    }
+    
+    // Retrieves Detailed Information
+    func getAreaDetails(url: String, completion:@escaping (LocationArea) -> ()) {
+        Bundle.main.fetchData(url: url, model: LocationArea.self) { data in
+            completion(data)
+        } failure: { error in
+            print("\n(LocationsManager class) getAreaDetails func: \(error)\n")
+        }
+    }
 }

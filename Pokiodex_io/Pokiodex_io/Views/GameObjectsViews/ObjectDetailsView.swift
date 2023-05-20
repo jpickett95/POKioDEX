@@ -36,8 +36,6 @@ struct ObjectDetailsView: View {
                     Text("**Fling Effect**: \(vm.itemDetails?.flingEffect?.name.replacingOccurrences(of: "-", with: " ").capitalized ?? "N/A")")
                 }
                 
-                
-                
                 if !(vm.itemDetails?.attributes?.isEmpty ?? true){
                     Divider()
                     Text("Attributes").font(.title3).bold()

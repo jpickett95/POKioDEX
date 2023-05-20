@@ -21,6 +21,7 @@ struct LocationsdexView: View {
             }
         }
         .searchable(text: $vm.searchText)
+        .navigationTitle("Locations")
     }
 }
 

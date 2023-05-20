@@ -11,6 +11,8 @@ final class LocationsViewModel: ObservableObject {
     private let manager = LocationsManager()
     @Published var searchText = ""
     @Published var locationsList = [Result]()
+    @Published var locationDetails: LocationDetails?
+    @Published var areaDetails: LocationArea?
     
     // Filtered list of 'Locations' for searchbar
     var filteredItems: [Result] {
@@ -29,5 +31,35 @@ final class LocationsViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func getDetails(url: String) {
+        DispatchQueue.global().async {
+            self.manager.getDetails(url: url) { data in
+                DispatchQueue.main.async {
+                    self.locationDetails = data
+                    //print(self.locationDetails)
+                    //print(data)
+                }
+            }
+        }
+    }
+    
+    func getAreaDetails(url: String) {
+        DispatchQueue.global().async {
+            self.manager.getAreaDetails(url: url) { data in
+                DispatchQueue.main.async {
+                    self.areaDetails = data
+                    //print(self.areaDetails)
+                    //print(data)
+                }
+            }
+        }
+    }
+    
+    func parseID(url: String) -> String {
+        var urlSrting = url.replacingOccurrences(of: "https://pokeapi.co/api/v2/pokemon/", with: "")
+        urlSrting = urlSrting.replacingOccurrences(of: "/", with: "")
+        return urlSrting
     }
 }

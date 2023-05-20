@@ -59,7 +59,8 @@ struct EncounterMethodRateVersionDetail: Codable {
 
 
 // MARK: - PokemonEncounter
-struct PokemonEncounter: Codable {
+struct PokemonEncounter: Codable, Identifiable {
+    let id  = UUID()
     let pokemon: URLObject
     let versionDetails: [PokemonEncounterVersionDetail]
 
@@ -70,7 +71,8 @@ struct PokemonEncounter: Codable {
 }
 
 // MARK: - PokemonEncounterVersionDetail
-struct PokemonEncounterVersionDetail: Codable {
+struct PokemonEncounterVersionDetail: Codable, Identifiable {
+    let id = UUID()
     let encounterDetails: [EncounterDetail]
     let maxChance: Int
     let version: URLObject
