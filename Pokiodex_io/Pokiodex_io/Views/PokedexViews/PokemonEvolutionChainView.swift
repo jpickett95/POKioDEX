@@ -14,17 +14,22 @@ struct PokemonEvolutionChainView: View {
     var body: some View {
         ScrollView{
             ZStack{
+                // Background Color
                 Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")").opacity(0.50)
+                
                 VStack(spacing: 15){
+                    // Base Link
                     Text(vm.evolutionChain?.chain.species.name.capitalized ?? "")
                     AsyncImage(url: URL(string:                 "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(vm.parseID(url: vm.evolutionChain?.chain.species.url ?? "")).png"), scale: 4)
                     
+                    // Second Level
                     ForEach(vm.evolutionChain?.chain.evolvesTo ?? [Chain]()) { chainLink in
                         Text("Level: \(chainLink.evolutionDetails.first?.minLevel ?? 0)")
                         Image(systemName: "arrow.down")
                         Text(chainLink.species.name.capitalized)
                         AsyncImage(url: URL(string:                 "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(vm.parseID(url: chainLink.species.url)).png"), scale: 4)
                         
+                        // Third Level
                         ForEach(chainLink.evolvesTo ) { chainLink in
                             Text("Level: \(chainLink.evolutionDetails.first?.minLevel ?? 0)")
                             Image(systemName: "arrow.down")

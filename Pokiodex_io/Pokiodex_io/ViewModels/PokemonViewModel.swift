@@ -205,8 +205,17 @@ final class PokemonViewModel: ObservableObject {
         return string
     }
     
-    func formatFlavorText(string: String) -> String {
-        return string.replacingOccurrences(of: "\n", with: " ")
+    func filterFlavorTextLanguage(language: String) -> String {
+        var textStrings = [String]()
+        let flavorTexts = self.pokemonSpecies?.flavorTextEntries ?? [FlavorTextEntry]()
+        
+        for flavorText in flavorTexts {
+            if flavorText.language?.name == language {
+                textStrings.append(flavorText.flavorText ?? "N/A")
+            }
+        }
+        
+        return textStrings.last ?? "N/A"
     }
     
     func formatGenderRate(value: Int) -> (female: String, male: String) {

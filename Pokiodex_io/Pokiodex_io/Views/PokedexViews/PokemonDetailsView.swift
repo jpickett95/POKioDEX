@@ -20,9 +20,9 @@ struct PokemonDetailsView: View {
                 AboutSection(vm: vm)
                 
                 // Description
-                let flavorText = vm.formatFlavorText(string: (vm.pokemonSpecies?.flavorTextEntries.first?.flavorText ?? "N/A"))
+                let flavorText = vm.filterFlavorTextLanguage(language: "en")
                 Text(flavorText)
-                    .padding([.leading, .trailing], 15)
+                    .padding(20)
                 
                 StatsSection(vm: vm)
                 
@@ -33,9 +33,7 @@ struct PokemonDetailsView: View {
             .onAppear{
                 vm.getDetails(pokemon: pokemon)
             }
-            .navigationTitle("\(pokemon.name.capitalized)")
         }
-        
     }
 }
 
@@ -44,6 +42,7 @@ struct CharacteristicsView: View {
     
     var body: some View{
         let type = vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal"
+        
         // Characteristics Section
         Text("Characteristics")   // Title
             .font(.title2)
@@ -106,7 +105,11 @@ struct CharacteristicsView: View {
                     Label {
                         Text("Egg Groups:")
                         ForEach(vm.pokemonSpecies?.eggGroups ?? [URLObject]()) { eggGroup in
-                            Text(eggGroup.name.capitalized)
+                            if eggGroup.name != "no-eggs" {
+                                Text(eggGroup.name.capitalized)
+                            } else {
+                                Text("N/A")
+                            }
                         }
                     } icon: {
                         Image(systemName: "stroller.fill").foregroundColor(Color("Type_\(type)"))
@@ -415,7 +418,7 @@ struct ImageView: View{
 
         // Pokemon Image
         ZStack{
-            if(typeCount > 1) {
+            if(typeCount > 1) {     // Dual Type Background
                 let type2 = vm.pokemonDetails?.types.last?.type.name.capitalized ?? "Normal"
                 Rectangle()
                     .fill(LinearGradient(gradient: Gradient(colors: [Color("Type_\(type)").opacity(0.75), Color("Type_\(type2)").opacity(0.75)]), startPoint: .topLeading, endPoint: .bottomTrailing))
@@ -432,7 +435,7 @@ struct ImageView: View{
                             .opacity(0.15)
                     }
                     .ignoresSafeArea()
-            } else {
+            } else {                // Single Type Background
                 Rectangle()
                     .fill(LinearGradient(gradient: Gradient(colors: [Color("Type_\(type)"), Color.white.opacity(0.75)]), startPoint: .topLeading, endPoint: .bottomTrailing))
                     .frame( height: 300)
@@ -485,7 +488,6 @@ struct AboutSection: View {
                 .frame(height: 24)
                 
                 // Type 2 Check & Label
-                //let typeCount = (vm.pokemonDetails?.types.count) ?? 1
                 if(typeCount > 1){
                     let type2 = vm.pokemonDetails?.types.last?.type.name.capitalized ?? "Normal"
                     Label {

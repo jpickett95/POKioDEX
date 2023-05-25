@@ -12,8 +12,6 @@ struct PokemonLocationsView: View {
     let pokemon: Result
     
     var body: some View {
-        
-            
             List{
                 let locations = vm.pokemonLocations ?? [PokemonLocationArea]()
                 
@@ -24,16 +22,54 @@ struct PokemonLocationsView: View {
                 ForEach(locations){ location in
                     let details = location.versionDetails
                     let areaName = location.locationArea.name
+                    
                     Section(areaName.replacingOccurrences(of: "-", with: " ").replacingOccurrences(of: "area", with: "").capitalized) {
                         ForEach(details) { detail in
                             VStack(alignment: .leading){
-                                Text("Method found name: \(detail.encounterDetails.first?.method.name ?? "")")
-                                Text("Method Names found name: \(detail.encounterDetails.first?.method.name ?? "")")
-                                Text("Chance to find: \(detail.encounterDetails.first?.chance ?? 0)%")
-                                Text("Max level to find: \(detail.encounterDetails.first?.maxLevel ?? 0)")
-                                Text("Min level to find: \(detail.encounterDetails.first?.minLevel ?? 0)")
-                                Text("Condition Value name: \(detail.encounterDetails.first?.conditionValues.first?.name ?? "")")
-                                Text("Condition name: \(detail.encounterDetails.first?.conditionValues.first?.name ?? "")")
+                                
+                                HStack {
+                                    Text("**Method**: \(detail.encounterDetails.first?.method.name.capitalized.replacingOccurrences(of: "-", with: " ") ?? "")")
+                                    Spacer()
+                                    Text("**\(detail.encounterDetails.first?.chance ?? 0)%**")  // Chance to find by method
+                                }
+                                
+                                HStack{
+                                    Text("**Min Lvl**: \(detail.encounterDetails.first?.minLevel ?? 0)")
+                                    Spacer()
+                                    Text("**Max Lvl**: \(detail.encounterDetails.first?.maxLevel ?? 0)")
+                                }
+                                
+                                //Conditions
+                                if !((detail.encounterDetails.first?.conditionValues ?? [URLObject]()).isEmpty) {
+                                    Text("**Conditions:**")
+                                    HStack{
+                                        
+                                        // Display Icon depending on condition
+                                        ForEach(detail.encounterDetails.first?.conditionValues ?? [URLObject]()) { condition in
+                                            if condition.name == "time-day" {
+                                                Image(systemName: "sun.max.fill").foregroundColor(Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")"))
+                                            } else if condition.name == "time-morning" {
+                                                Image(systemName: "sunrise.fill").foregroundColor(Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")"))
+                                            } else if condition.name == "time-night" {
+                                                Image(systemName: "moon.stars.fill").foregroundColor(Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")"))
+                                            } else if condition.name == "time-evening" {
+                                                Image(systemName: "sunset.fill").foregroundColor(Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")"))
+                                            } else if condition.name == "swarm-yes"{
+                                                Image(systemName: "ant.fill").foregroundColor(Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")"))
+                                            } else if condition.name == "radio-off"{
+                                                Image(systemName: "antenna.radiowaves.left.and.right.slash").foregroundColor(Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")"))
+                                            } else if condition.name == "swarm-no" {
+                                                // Do Nothing
+                                            } else if condition.name == "radar-on"{
+                                                Image(systemName: "wifi").foregroundColor(Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")"))
+                                            } else if condition.name == "radar-off"{
+                                                Image(systemName: "wifi.slash").foregroundColor(Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")"))
+                                            } else {
+                                                Text(condition.name)
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                         
