@@ -44,6 +44,7 @@ struct AbilityDetailsView: View {
             }
         }.onAppear{vm.getDetails(url: ability.url)}
             .padding(20)
+            .navigationTitle("\(ability.name.replacingOccurrences(of: "-", with: " ").capitalized) Details")
     }
 }
 

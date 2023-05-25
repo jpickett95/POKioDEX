@@ -18,6 +18,7 @@ struct NaturesdexView: View {
             }
         }
         .searchable(text: $vm.searchText)
+        .navigationTitle("Pokemon Natures")
     }
 }
 

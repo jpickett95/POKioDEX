@@ -15,7 +15,7 @@ final class LocationsViewModel: ObservableObject {
     @Published var areaDetails: LocationArea?
     
     // Filtered list of 'Locations' for searchbar
-    var filteredItems: [Result] {
+    var filteredLocations: [Result] {
         return searchText == "" ? locationsList : locationsList.filter {
             $0.name.contains(searchText.lowercased())
         }

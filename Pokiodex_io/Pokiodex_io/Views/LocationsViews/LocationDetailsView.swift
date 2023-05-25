@@ -17,7 +17,8 @@ struct LocationDetailsView: View {
                 Text("\(location.name.replacingOccurrences(of: "-", with: " ").capitalized) Details").font(.title2).bold()
                 
                 Text("**Region**: \(vm.locationDetails?.region.name.replacingOccurrences(of: "-", with: " ").capitalized ?? "N/A")")
-                //Text(vm.locationDetails?.areas.first?.name ?? "")
+
+                // Areas within this Location
                 Divider()
                 Text("Areas").font(.title3).bold()
                 let areas = vm.locationDetails?.areas ?? [URLObject]()

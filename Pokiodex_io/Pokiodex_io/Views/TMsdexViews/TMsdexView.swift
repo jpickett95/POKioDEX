@@ -21,6 +21,7 @@ struct TMsdexView: View {
             }
         }
         .searchable(text: $vm.searchText)
+        .navigationTitle("Technical/Hidden Machines")
     }
 }
 

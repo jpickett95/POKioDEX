@@ -21,6 +21,7 @@ struct AbilitiesdexView: View {
             }
         }
         .searchable(text: $vm.searchText)
+        .navigationTitle("Pokemon Abilities")
     }
 }
 

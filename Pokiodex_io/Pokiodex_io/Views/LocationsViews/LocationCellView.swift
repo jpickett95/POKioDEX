@@ -14,10 +14,11 @@ struct LocationCellView: View {
     var body: some View {
         HStack(spacing: 15) {
             HStack() {
-                Text("")     // Location index #
-                    .font(Font.title3)
+                
                 Spacer()
-                Text(location.name.replacingOccurrences(of: "-", with: " ").capitalized)     // Location name
+                
+                // Location name
+                Text(location.name.replacingOccurrences(of: "-", with: " ").capitalized)
                     .font(Font.title3)
                     .bold()
                     .lineLimit(1)
@@ -29,7 +30,7 @@ struct LocationCellView: View {
   
         }
         .frame(width: 375, height: 70)
-        .background(Color.gray.opacity(0.5))
+        .background(Color.blue.opacity(0.5))
         .cornerRadius(12)
     }
 }

@@ -13,10 +13,10 @@ struct LocationsdexView: View {
     var body: some View {
         ScrollView{
             LazyVStack{
-                ForEach(vm.locationsList){ location in
+                ForEach(vm.filteredLocations){ location in
                     NavigationLink(destination: LocationDetailsView(vm: vm, location: location)) {
                         LocationCellView(vm: vm, location: location)
-                    }//.onAppear{}
+                    }.foregroundColor(Color.white)
                 }
             }
         }

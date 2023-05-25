@@ -21,10 +21,12 @@ struct LocationAreaPokemonView: View {
                 Text("There are no pokemon found in this area...")
             }
             
+            // Potential Pokemon Found
             ForEach(pokemonEncounters){ encounter in
                 let details = encounter.versionDetails
                 let pokemon = encounter.pokemon
                 Section{
+                    // Name & Image
                     HStack{
                         Text(pokemon.name.replacingOccurrences(of: "-", with: " ").capitalized).font(.title2).bold()
                         Spacer()
@@ -32,19 +34,52 @@ struct LocationAreaPokemonView: View {
                         AsyncImage(url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(id).png"))
                     }
                     
+                    // Encounter Details
                     ForEach(details) { detail in
                         VStack(alignment: .leading){
+                            HStack{
+                                Text("**Method**: \(detail.encounterDetails.first?.method.name.replacingOccurrences(of: "-", with: " ").capitalized ?? "")")
+                                Spacer()
+                                Text("**\(detail.encounterDetails.first?.chance ?? 0)%**")
+                            }
                             
-                            Text("**Method Found**: \(detail.encounterDetails.first?.method.name.replacingOccurrences(of: "-", with: " ").capitalized ?? "")")
-                            //Text("Method Names found name: \(detail.encounterDetails.first?.method.name ?? "")")
-                            Text("**Chance to Find**: \(detail.encounterDetails.first?.chance ?? 0)%")
                             HStack{
                                 Text("**Min Lvl**: \(detail.encounterDetails.first?.minLevel ?? 0)")
                                 Spacer()
                                 Text("**Max Lvl**: \(detail.encounterDetails.first?.maxLevel ?? 0)")
                             }
-                            //Text("Condition Value name: \(detail.encounterDetails.first?.conditionValues.first?.name ?? "")")
-                            ///Text("Condition name: \(detail.encounterDetails.first?.conditionValues.first?.name ?? "")")
+                            
+                            //Conditions
+                            if !((detail.encounterDetails.first?.conditionValues ?? [URLObject]()).isEmpty) {
+                                Text("**Conditions:**")
+                                HStack{
+                                    
+                                    // Display Icon depending on condition
+                                    ForEach(detail.encounterDetails.first?.conditionValues ?? [URLObject]()) { condition in
+                                        if condition.name == "time-day" {
+                                            Image(systemName: "sun.max.fill")
+                                        } else if condition.name == "time-morning" {
+                                            Image(systemName: "sunrise.fill")
+                                        } else if condition.name == "time-night" {
+                                            Image(systemName: "moon.stars.fill")
+                                        } else if condition.name == "time-evening" {
+                                            Image(systemName: "sunset.fill")
+                                        } else if condition.name == "swarm-yes"{
+                                            Image(systemName: "ant.fill")
+                                        } else if condition.name == "radio-off"{
+                                            Image(systemName: "antenna.radiowaves.left.and.right.slash")
+                                        } else if condition.name == "swarm-no" {
+                                            // Do Nothing
+                                        } else if condition.name == "radar-on"{
+                                            Image(systemName: "wifi")
+                                        } else if condition.name == "radar-off"{
+                                            Image(systemName: "wifi.slash")
+                                        } else {
+                                            Text(condition.name)
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                     
