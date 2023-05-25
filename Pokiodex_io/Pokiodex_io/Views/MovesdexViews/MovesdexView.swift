@@ -20,12 +20,10 @@ struct MovesdexView: View {
                         
                     }.onAppear{vm.getDetails(move: move)}
                 }
-                
-                
             }
-            
         }
         .searchable(text: $vm.searchText)
+        .navigationTitle("Moves")
     }
 }
 

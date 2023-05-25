@@ -262,8 +262,8 @@
 		CF473F6829CBEF9B001F6934 /* MovesdexViews */ = {
 			isa = PBXGroup;
 			children = (
-				CF473F7629CFA8B2001F6934 /* MovesdexCellView.swift */,
 				CF473F6129CA2029001F6934 /* MovesdexView.swift */,
+				CF473F7629CFA8B2001F6934 /* MovesdexCellView.swift */,
 				CF8926D62A0C7D0000368E7D /* MovesdexTabView.swift */,
 				CF473F6329CBE89D001F6934 /* MoveDetailsView.swift */,
 				CF8926D82A0C7DF900368E7D /* MovesLearnedByView.swift */,

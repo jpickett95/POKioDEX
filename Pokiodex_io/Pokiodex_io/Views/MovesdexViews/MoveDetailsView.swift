@@ -53,12 +53,8 @@ struct MoveDetailsView: View {
                         }
                     }
                 }
-                
-                
-                
             }
             .onAppear{vm.getDetails(move: move)}
-            //.navigationTitle("\(move.name.capitalized) Details")
             .padding(10)
         }
     }
@@ -116,7 +112,7 @@ struct MoveStatsSection: View{
         Text("Stats")   // Title
             .font(.title2).bold()
         
-        // Progress Bar created for each stat
+        // Power
         HStack {
             HStack{
                 Text("POW")
@@ -134,6 +130,7 @@ struct MoveStatsSection: View{
         }
         .padding([.leading, .trailing],30)
         
+        // Accuracy
         HStack {
             HStack{
                 Text("ACC")
@@ -152,6 +149,7 @@ struct MoveStatsSection: View{
         }
         .padding([.leading, .trailing],30)
         
+        // PP
         HStack {
             HStack{
                 Text("PP")
@@ -170,6 +168,7 @@ struct MoveStatsSection: View{
         }
         .padding([.leading, .trailing],30)
         
+        // Priority
         HStack {
             let priority = vm.moveDetails?.priority ?? 0
             HStack{
