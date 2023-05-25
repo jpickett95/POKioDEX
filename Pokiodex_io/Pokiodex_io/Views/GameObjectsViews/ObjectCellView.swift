@@ -14,9 +14,9 @@ struct ObjectCellView: View {
     var body: some View {
         HStack(spacing: 15) {
             HStack() {
-                Text("")     // Ability index #
-                    .font(Font.title3)
+                
                 Spacer()
+                
                 Text(object.name.replacingOccurrences(of: "-", with: " ").capitalized)     // Ability name
                     .font(Font.title3)
                     .bold()
@@ -25,8 +25,6 @@ struct ObjectCellView: View {
             }
             .padding(.leading, 5)
             .frame(width: 300)
-                
-  
         }
         .frame(width: 375, height: 70)
         .background(Color.brown.opacity(0.5))

@@ -47,9 +47,8 @@ struct ObjectDetailsView: View {
                 }
             }.padding(20)
         }.onAppear{vm.getDetails(url: object.url)}
+            .navigationTitle("\(object.name.replacingOccurrences(of: "-", with: " ").capitalized) Details")
     }
-    
-    
 }
 
 struct ItemImage: View {

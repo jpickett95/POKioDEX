@@ -13,14 +13,15 @@ struct ObjectsdexView: View {
     var body: some View {
         ScrollView{
             LazyVStack{
-                ForEach(vm.itemsList){ item in
+                ForEach(vm.filteredItems){ item in
                     NavigationLink(destination: ObjectDetailsView(vm: vm, object: item)) {
                         ObjectCellView(vm: vm, object: item)
-                    }//.onAppear{}
+                    }
                 }
             }
         }
         .searchable(text: $vm.searchText)
+        .navigationTitle("Game Objects")
     }
 }
 
