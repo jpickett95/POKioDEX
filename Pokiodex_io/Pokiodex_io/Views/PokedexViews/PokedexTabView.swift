@@ -12,6 +12,9 @@ struct PokedexTabView: View {
     let pokemon: Result
     
     var body: some View {
+        let pokemonName  = pokemon.name.capitalized.replacingOccurrences(of: "-", with: " ")
+        let type1 = vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal"
+        
         TabView {
             PokemonDetailsView(vm: vm, pokemon: pokemon)
                 .tabItem {
@@ -48,8 +51,8 @@ struct PokedexTabView: View {
                         Image(systemName: "mappin.and.ellipse")
                     }
                 }
-        }.accentColor(Color("Type_\(vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal")"))
-            .navigationTitle("\(pokemon.name.capitalized.replacingOccurrences(of: "-", with: " "))'s Details")
+        }.accentColor(Color("Type_\(type1)"))
+            .navigationTitle("\(pokemonName)'s Details")
     }
 }
 

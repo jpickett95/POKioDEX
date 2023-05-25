@@ -14,6 +14,7 @@ struct PokemonImageView: View {
     let dimensions: Double
     
     var body: some View {
+        // Pokemon Sprite Image
         AsyncImage(url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(vm.getPokemonID(pokemon: pokemon)).png")) { image in
             
                 image

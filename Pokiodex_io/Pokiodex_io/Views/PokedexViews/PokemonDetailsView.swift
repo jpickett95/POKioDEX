@@ -14,8 +14,6 @@ struct PokemonDetailsView: View {
     var body: some View {
         ScrollView{
             VStack(spacing: 20) {
-                //let type = vm.pokemonDetails?.types.first?.type.name.capitalized ?? "Normal"
-                //let typeCount = (vm.pokemonDetails?.types.count) ?? 1
                 
                 ImageView(vm: vm)
                 
@@ -24,7 +22,7 @@ struct PokemonDetailsView: View {
                 // Description
                 let flavorText = vm.formatFlavorText(string: (vm.pokemonSpecies?.flavorTextEntries.first?.flavorText ?? "N/A"))
                 Text(flavorText)
-                    .padding([.leading, .trailing], 5)
+                    .padding([.leading, .trailing], 15)
                 
                 StatsSection(vm: vm)
                 

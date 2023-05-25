@@ -16,6 +16,7 @@ struct PokedexCellView: View {
         ZStack {
             HStack {
                 VStack (alignment: .center, spacing: 20) {
+                    
                     // Pokemon Name
                     Text(pokemon.name.capitalized)
                         .font(.headline)
@@ -36,18 +37,14 @@ struct PokedexCellView: View {
 //                        )
 //                        .frame(width: 200, height: 24)
                 }
-                //.onAppear{vm.getCellDetails(pokemon: pokemon)}
                 
                 Spacer()
                 
                 PokemonImageView(vm:vm, pokemon: pokemon, dimensions: 75)
                     .padding([.bottom, .trailing, .top], 10)
-                
             }
             .padding(20)
-            
         }
-        
         .frame(width: 350, height: 100)
         .background(Color.red.opacity(0.5))
         .cornerRadius(12)
