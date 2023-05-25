@@ -20,7 +20,9 @@ struct TMsdexCellView: View {
                     } icon: {
                         Image(systemName: "opticaldisc.fill")
                     }
+                    
                     Spacer()
+                    
                     Text(machine.move.name.capitalized.replacingOccurrences(of: "-", with: " ") )     // Move name
                         .font(Font.title3)
                         .bold()
@@ -29,8 +31,6 @@ struct TMsdexCellView: View {
                 }
                 .padding(.leading, 5)
                 .frame(width: 300)
-                
-  
             }
             .frame(width: 375, height: 70)
             .background(Color.green.opacity(0.5))

@@ -13,7 +13,7 @@ struct TMsdexView: View {
     var body: some View {
         ScrollView{
             LazyVStack{
-                ForEach(vm.machinesList){ machine in
+                ForEach(vm.filteredMoves){ machine in
                     NavigationLink(destination: TMsdexTabView(vm: vm, machine: machine)) {
                         TMsdexCellView(vm: vm, machine: machine)
                     }.onAppear{}

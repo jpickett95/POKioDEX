@@ -16,7 +16,10 @@ struct MachineLearnedByView: View {
             let learnedBy = vm.moveDetails?.learnedByPokemon ?? [URLObject]()
             ForEach(learnedBy) { pokemon in
                 HStack{
+                    // Name
                     Text("\((pokemon.name.replacingOccurrences(of: "-", with: " ").capitalized))")
+                    
+                    // Image
                     let id  = vm.parseID(url: pokemon.url)
                     Spacer()
                     AsyncImage(url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(id).png"))
