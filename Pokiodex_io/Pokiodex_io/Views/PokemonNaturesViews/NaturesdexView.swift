@@ -12,7 +12,7 @@ struct NaturesdexView: View {
     var body: some View {
         ScrollView{
             LazyVStack{
-                ForEach(vm.naturesList){ nature in
+                ForEach(vm.filteredNatures){ nature in
                     NatureCellView(vm: vm, nature: nature)
                 }
             }

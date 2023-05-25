@@ -14,7 +14,7 @@ final class NaturesViewModel: ObservableObject {
     /*@Published*/ var natureDetails: PokemonNature?
     
     // Filtered list of 'Natures' for searchbar
-    var filteredItems: [Result] {
+    var filteredNatures: [Result] {
         return searchText == "" ? naturesList : naturesList.filter {
             $0.name.contains(searchText.lowercased())
         }
