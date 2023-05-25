@@ -13,10 +13,10 @@ struct AbilitiesdexView: View {
     var body: some View {
         ScrollView{
             LazyVStack{
-                ForEach(vm.abilitiesList){ ability in
+                ForEach(vm.filteredAbilities){ ability in
                     NavigationLink(destination: AbilityDetailsView(vm: vm, ability: ability)) {
                         AbilityCellView(vm: vm, ability: ability)
-                    }//.onAppear{}
+                    }
                 }
             }
         }

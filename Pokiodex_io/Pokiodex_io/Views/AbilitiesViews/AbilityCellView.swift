@@ -22,9 +22,7 @@ struct AbilityCellView: View {
                     .lineLimit(1)
                     .truncationMode(.tail)
                 
-           Spacer()
-                
-  
+           Spacer()     // To format (left - aligned)
         }
         .padding(20)
         .frame(width: 375, height: 70)

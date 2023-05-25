@@ -14,17 +14,19 @@ struct AbilityDetailsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 15) {
-                Text("Ability Effect").font(.title2).bold()
-                
+                Text("Ability Effect").font(.title2).bold() // Effect Title
                 Text(vm.filterFlavorTextLanguage(language: "en"))
                 
                 Spacer()
                 Divider()
                     .scaleEffect(10)
                 
-                Text("Pokemon with \"\(ability.name.capitalized.replacingOccurrences(of: "-", with: " "))\"").font(.title2).bold()
+                Text("Pokemon with \"\(ability.name.capitalized.replacingOccurrences(of: "-", with: " "))\"").font(.title2).bold()  // Pokemon with Ability Title
+                
+                // Icon Key
                 Label("- Indicates a hidden ability.", systemImage: "eye.fill").font(.caption)
                 
+                // Pokemon List
                 let pokemonList = vm.abilityDetails?.pokemon ?? [Pokemon]()
                 ForEach(pokemonList) { pokemon in
                     HStack{
