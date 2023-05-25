@@ -32,6 +32,7 @@ final class ItemsViewModel: ObservableObject {
         }
     }
     
+    // Get Item details from API
     func getDetails(url: String) {
         DispatchQueue.global().async {
             self.manager.getDetails(url: url) { data in
@@ -44,16 +45,15 @@ final class ItemsViewModel: ObservableObject {
         }
     }
     
+    // Returns the last entry of an array of flavor text string, filtered by language parameter
     func filterFlavorTextLanguage(language: String) -> String {
         var textStrings = [String]()
         let flavorTexts = self.itemDetails?.flavorTextEntries ?? [VersionGroupFlavorText]()
-        
         for flavorText in flavorTexts {
             if flavorText.language.name == language {
                 textStrings.append(flavorText.text)
             }
         }
-        
         return textStrings.last ?? "N/A"
     }
 }

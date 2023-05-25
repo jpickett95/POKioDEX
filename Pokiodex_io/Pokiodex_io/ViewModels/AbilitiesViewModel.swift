@@ -33,6 +33,7 @@ final class AbilitiesViewModel: ObservableObject {
         }
     }
     
+    // Gets Pokemon Ability details from API
     func getDetails(url: String) {
         DispatchQueue.global().async {
             self.manager.getDetails(url: url) { data in
@@ -45,19 +46,19 @@ final class AbilitiesViewModel: ObservableObject {
         }
     }
     
+    // Returns the last entry of an array of flavor text string, filtered by language parameter
     func filterFlavorTextLanguage(language: String) -> String {
         var textStrings = [String]()
         let flavorTexts = self.abilityDetails?.flavorTextEntries ?? [FlavorTextEntry]()
-        
         for flavorText in flavorTexts {
             if flavorText.language?.name == language {
                 textStrings.append(flavorText.flavorText ?? "N/A")
             }
         }
-        
         return textStrings.last ?? "N/A"
     }
     
+    // Parses Pokemon id# from 'Pokemon' url
     func parseID(url: String) -> String {
         var urlSrting = url.replacingOccurrences(of: "https://pokeapi.co/api/v2/pokemon/", with: "")
         urlSrting = urlSrting.replacingOccurrences(of: "/", with: "")

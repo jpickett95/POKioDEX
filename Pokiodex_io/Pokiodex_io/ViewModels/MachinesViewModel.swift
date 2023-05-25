@@ -38,6 +38,7 @@ final class MachinesViewModel: ObservableObject {
         }
     }
     
+    // Gets Machine details from API
     func getMachinesList() {
         DispatchQueue.global().async {
             for machine in self.machineElementList {
@@ -52,6 +53,7 @@ final class MachinesViewModel: ObservableObject {
         }
     }
 
+    // Gets Move details from API
     func getMoveDetails(url: String) {
         DispatchQueue.global().async {
             self.machineManager.getMoveDetails(url: url) { data in
@@ -64,6 +66,7 @@ final class MachinesViewModel: ObservableObject {
         }
     }
     
+    // Gets Item details from API
     func getItemDetails(url: String) {
         DispatchQueue.global().async {
             self.machineManager.getItemDetails(url: url) { data in
@@ -76,6 +79,7 @@ final class MachinesViewModel: ObservableObject {
         }
     }
     
+    // Parses Pokemon id# from 'Pokemon' url
     func parseID(url: String) -> String {
         var urlSrting = url.replacingOccurrences(of: "https://pokeapi.co/api/v2/pokemon/", with: "")
         urlSrting = urlSrting.replacingOccurrences(of: "/", with: "")

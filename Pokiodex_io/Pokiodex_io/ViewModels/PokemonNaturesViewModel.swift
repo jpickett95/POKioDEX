@@ -32,6 +32,7 @@ final class NaturesViewModel: ObservableObject {
         }
     }
     
+    // Gets Pokemon Nature details from API
     func getNatureDetails(url: String) {
         DispatchQueue.global().async {
             self.manager.getNatureDetails(url: url) { data in
@@ -44,6 +45,7 @@ final class NaturesViewModel: ObservableObject {
         }
     }
     
+    // Switches API full stat name, and returns an abbreviation
     func switchStatName(stat: String) -> String {
         switch(stat){
         case "hp":

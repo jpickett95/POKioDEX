@@ -33,6 +33,7 @@ final class LocationsViewModel: ObservableObject {
         }
     }
     
+    // Gets Location details from API
     func getDetails(url: String) {
         DispatchQueue.global().async {
             self.manager.getDetails(url: url) { data in
@@ -45,6 +46,7 @@ final class LocationsViewModel: ObservableObject {
         }
     }
     
+    // Gets Area details from API
     func getAreaDetails(url: String) {
         DispatchQueue.global().async {
             self.manager.getAreaDetails(url: url) { data in
@@ -57,6 +59,7 @@ final class LocationsViewModel: ObservableObject {
         }
     }
     
+    // Parses Pokemon id# from 'Pokemon' url
     func parseID(url: String) -> String {
         var urlSrting = url.replacingOccurrences(of: "https://pokeapi.co/api/v2/pokemon/", with: "")
         urlSrting = urlSrting.replacingOccurrences(of: "/", with: "")

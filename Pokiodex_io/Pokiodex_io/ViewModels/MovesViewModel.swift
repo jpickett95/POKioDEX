@@ -43,6 +43,7 @@ final class MovesViewModel: ObservableObject {
         return 0
     }
     
+    // Gets move detailed information from API
     func getDetails(move: Result) {
         let id = getMoveID(move: move)  // get id#
         
@@ -57,12 +58,14 @@ final class MovesViewModel: ObservableObject {
         }
     }
     
+    // Parses Pokemon id# from 'Pokemon' url
     func parseID(url: String) -> String {
         var urlSrting = url.replacingOccurrences(of: "https://pokeapi.co/api/v2/pokemon/", with: "")
         urlSrting = urlSrting.replacingOccurrences(of: "/", with: "")
         return urlSrting
     }
     
+    // Switches move ailment name, and returns an Image System Name for a label icon
     func switchAilment(ailment: String) -> String {
         switch ailment {
         case  "freeze":

@@ -10,11 +10,9 @@ import SwiftUI
 
 final class PokemonViewModel: ObservableObject {
     private let pokemonManager = PokemonManager()
-    
     @Published var pokemonList = [Result]()
     @Published var pokemonDetails: PokemonDetails?
     var cellPokemonDetails: PokemonDetails?
-    //@Published var pokemonStats: PokemonStat?
     @Published var pokemonTypes: [TypeDetails]?
     @Published var evolutionChain: EvolutionChain?
     @Published var pokemonSpecies: PokemonSpecies?
@@ -46,7 +44,6 @@ final class PokemonViewModel: ObservableObject {
             return id + 1
         }
         return 0
-        
     }
     
     // Uses manager to populate self.pokemonDetails with 'PokemonDetails' from PokeAPI
@@ -61,13 +58,14 @@ final class PokemonViewModel: ObservableObject {
                     //print(self.pokemonDetails)
                     
                     self.getSpecies(url: data.species.url)
-                    self.returnResistances(types: data.types)
+                    self.getResistances(types: data.types)
                     self.getPokemonLocations(url: data.locationAreaEncounters)
                 }
             }
         }
     }
     
+    // NOT IN USE
     func getCellDetails(pokemon: Result) {
         let id = getPokemonID(pokemon: pokemon) // get id#
         
@@ -75,12 +73,13 @@ final class PokemonViewModel: ObservableObject {
             self.pokemonManager.getDetailedPokemon(id: id) { data in
                 DispatchQueue.main.async {
                     self.cellPokemonDetails = data
-                    print(self.cellPokemonDetails)
+                    //print(self.cellPokemonDetails)
                 }
             }
         }
     }
     
+    // Uses manager to populate self.pokemonSpecies with 'PokemonSpecies' from PokeAPI
     func getSpecies(url: String) {
         DispatchQueue.global().async {
             // get 'PokemonSpecies'
@@ -95,7 +94,7 @@ final class PokemonViewModel: ObservableObject {
         }
     }
     
-    func returnResistances(types: [TypeElement]) {
+    func getResistances(types: [TypeElement]) {
         self.pokemonTypes = [TypeDetails]()
         
         DispatchQueue.global().async {
@@ -205,19 +204,19 @@ final class PokemonViewModel: ObservableObject {
         return string
     }
     
+    // Returns the last entry of an array of flavor text string, filtered by language parameter
     func filterFlavorTextLanguage(language: String) -> String {
         var textStrings = [String]()
         let flavorTexts = self.pokemonSpecies?.flavorTextEntries ?? [FlavorTextEntry]()
-        
         for flavorText in flavorTexts {
             if flavorText.language?.name == language {
                 textStrings.append(flavorText.flavorText ?? "N/A")
             }
         }
-        
         return textStrings.last ?? "N/A"
     }
     
+    // Formats Gender Rates into percentage-value strings
     func formatGenderRate(value: Int) -> (female: String, male: String) {
         let dValue = Double(value)
         let femaleString = String(format: "%.2f", (dValue * (1/8)) * 100)
@@ -226,47 +225,7 @@ final class PokemonViewModel: ObservableObject {
 
     }
     
-    func switchType() -> String {
-        switch self.pokemonDetails?.types.first?.type.name.uppercased() {
-        case "WATER":
-            return "water"
-        case "GRASS":
-            return "grass"
-        case "FIRE":
-            return "fire"
-        case "ROCK":
-            return "rock"
-        case "GROUND":
-            return "ground"
-        case "STEEL":
-            return "steel"
-        case "BUG":
-            return "bug"
-        case "PSYCHIC":
-            return "psychic"
-        case "DARK":
-            return "dark"
-        case "FIGHTING":
-            return "fighting"
-        case "ICE":
-            return "ice"
-        case "DRAGON":
-            return "dragon"
-        case "FAIRY":
-            return "fairy"
-        case "FLYING":
-            return "flying"
-        case "ELECTRIC":
-            return "electric"
-        case "GHOST":
-            return "ghost"
-        case "NORMAL":
-            return "normal"
-        default:
-            return ""
-        }
-    }
-    
+    // Switches API full stat name, and returns an abbreviation
     func switchStatName(stat: String) -> String {
         switch(stat){
         case "hp":
@@ -286,6 +245,7 @@ final class PokemonViewModel: ObservableObject {
         }
     }
     
+    // Gets Pokemon possible moves, and filters them by learn method
     func getMovesLists() -> (egg: [Move], level: [Move], machine: [Move], tutor: [Move]) {
         var eggMoves = [Move]()
         var levelMoves = [Move]()
@@ -312,6 +272,7 @@ final class PokemonViewModel: ObservableObject {
         return(egg: eggMoves, level: levelMoves, machine: machineMoves, tutor: tutorMoves)
     }
     
+    // Gets possible locations Pokemon can be found from API
     func getPokemonLocations(url: String) {
         DispatchQueue.global().async {
             self.pokemonManager.getPokemonLocations(url: url) { data in
@@ -324,6 +285,7 @@ final class PokemonViewModel: ObservableObject {
         }
     }
     
+    // Parses Pokemon id# from 'Pokemon Species' url
     func parseID(url: String) -> String {
         var urlSrting = url.replacingOccurrences(of: "https://pokeapi.co/api/v2/pokemon-species/", with: "")
         urlSrting = urlSrting.replacingOccurrences(of: "/", with: "")

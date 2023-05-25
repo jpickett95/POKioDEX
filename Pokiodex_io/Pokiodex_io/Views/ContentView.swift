@@ -13,11 +13,14 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
+                // Pokedex Feature
                 NavigationLink(destination: PokedexView()) {
                     Image("PokedexImage")
                         .resizable()
                         .scaledToFit()
                 }
+                
+                // Moves & TMs Feature
                 HStack{
                     NavigationLink(destination: MovesdexView()) {
                         Image("MovesImage")
@@ -30,10 +33,10 @@ struct ContentView: View {
                             .resizable()
                             .scaledToFit()
                     }
-                    
                 }
                 .padding(5)
                 
+                // Pokemon Abilities Feature
                 NavigationLink(destination: AbilitiesdexView()) {
                     ZStack{
                         HStack{
@@ -57,6 +60,7 @@ struct ContentView: View {
                     .cornerRadius(15)
                 }
                 
+                // Type Matchups Feature
                 NavigationLink(destination: TypeMatchupsView()) {
                     ZStack{
                         HStack{
@@ -80,6 +84,7 @@ struct ContentView: View {
                     .cornerRadius(15)
                 }
                 
+                // Pokemon Natures Feature
                 NavigationLink(destination: NaturesdexView()) {
                     ZStack{
                         HStack{
@@ -103,6 +108,7 @@ struct ContentView: View {
                     .cornerRadius(15)
                 }
                 
+                // Game Objects Feature
                 NavigationLink(destination: ObjectsdexView()) {
                     ZStack{
                         HStack{
@@ -126,6 +132,7 @@ struct ContentView: View {
                     .cornerRadius(15)
                 }
                 
+                // Locations Feature
                 NavigationLink(destination: LocationsdexView()) {
                     ZStack{
                         HStack{
