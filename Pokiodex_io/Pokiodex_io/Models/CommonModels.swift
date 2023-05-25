@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - ResourceList Model
 struct ResourceList: Codable {
     let count: Int
     let next: String?
@@ -14,6 +15,7 @@ struct ResourceList: Codable {
     let results: [Result]
 }
 
+// MARK: - Result Model
 struct Result: Codable, Identifiable, Equatable {
     let id = UUID()
     let name: String
@@ -22,6 +24,7 @@ struct Result: Codable, Identifiable, Equatable {
     static var sample = Result(name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/1/")
 }
 
+// MARK: - GenerationI Model
 struct GenerationI: Codable {
     let redBlue, yellow: RedBlue
 
@@ -31,11 +34,13 @@ struct GenerationI: Codable {
     }
 }
 
+// MARK: - GenerationII Model
 struct GenerationII: Codable {
     let crystal: Crystal
     let gold, silver: Gold
 }
 
+// MARK: - GenerationIII Model
 struct GenerationIII: Codable {
     let emerald: OfficialArtwork
     let fireredLeafgreen, rubySapphire: Gold
@@ -47,6 +52,7 @@ struct GenerationIII: Codable {
     }
 }
 
+// MARK: - GenerationIV Model
 struct GenerationIV: Codable {
     let diamondPearl, heartgoldSoulsilver, platinum: Sprites
 
@@ -57,6 +63,7 @@ struct GenerationIV: Codable {
     }
 }
 
+// MARK: - GenerationV Model
 struct GenerationV: Codable {
     let blackWhite: Sprites
 
@@ -65,6 +72,7 @@ struct GenerationV: Codable {
     }
 }
 
+// MARK: - GenerationVII Model
 struct GenerationVII: Codable {
     let icons: DreamWorld
     let ultraSunUltraMoon: Home
@@ -75,10 +83,12 @@ struct GenerationVII: Codable {
     }
 }
 
+// MARK: - GenerationVIII Model
 struct GenerationVIII: Codable {
     let icons: DreamWorld
 }
 
+// MARK: - VersionGroupDetail Model
 struct VersionGroupDetail: Codable, Identifiable {
     let id = UUID()
     let levelLearnedAt: Int
@@ -91,6 +101,7 @@ struct VersionGroupDetail: Codable, Identifiable {
     }
 }
 
+// MARK: - Versions Model
 struct Versions: Codable {
     let generationI: GenerationI
     let generationII: GenerationII
@@ -113,6 +124,7 @@ struct Versions: Codable {
     }
 }
 
+// MARK: - FlavorTextEntry Model
 struct FlavorTextEntry: Codable, Identifiable {
     let id = UUID()
     let flavorText: String?
@@ -125,13 +137,13 @@ struct FlavorTextEntry: Codable, Identifiable {
     }
 }
 
-// MARK: - Name
+// MARK: - Name Model
 struct Name: Codable {
     let language: URLObject
     let name: String
 }
 
-// MARK: - Pokemon
+// MARK: - Pokemon Model
 struct Pokemon: Codable, Identifiable {
     let id = UUID()
     let isHidden: Bool?
@@ -144,17 +156,19 @@ struct Pokemon: Codable, Identifiable {
     }
 }
 
+// MARK: - URLObject Model
 struct URLObject: Codable, Identifiable {
     let id = UUID()
     let name: String
     let url: String
 }
 
+// MARK: - LinkOnly Model
 struct LinkOnly: Codable {
     let url: String
 }
 
-// MARK: - GameIndex
+// MARK: - GameIndex Model
 struct GameIndex: Codable {
     let gameIndex: Int
     let generation: URLObject?
@@ -167,7 +181,7 @@ struct GameIndex: Codable {
     }
 }
 
-// MARK: - Language
+// MARK: - Language Model
 struct Language: Codable {
     let id: Int?
     let iso3166, iso639, name: String?
@@ -175,7 +189,7 @@ struct Language: Codable {
     let official: Bool?
 }
 
-// MARK: - EffectEntry
+// MARK: - EffectEntry Model
 struct EffectEntry: Codable {
     let effect: String
     let language: URLObject
@@ -187,7 +201,7 @@ struct EffectEntry: Codable {
     }
 }
 
-// MARK: - VersionDetail
+// MARK: - VersionDetail Model
 struct VersionDetail: Codable, Identifiable {
     let id = UUID()
     let encounterDetails: [EncounterDetail]
@@ -201,7 +215,7 @@ struct VersionDetail: Codable, Identifiable {
     }
 }
 
-// MARK: - Version
+// MARK: - Version Model
 struct Version: Codable {
     let id: Int?
     let name: String
@@ -214,7 +228,7 @@ struct Version: Codable {
     }
 }
 
-// MARK: - VersionGroup
+// MARK: - VersionGroup Model
 struct VersionGroup: Codable {
     let generation: URLObject?
     let id: Int?
@@ -230,7 +244,7 @@ struct VersionGroup: Codable {
     }
 }
 
-// MARK: - VersionGroupFlavorText
+// MARK: - VersionGroupFlavorText Model
 struct VersionGroupFlavorText: Codable {
     let text: String
     let language: Language

@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - ItemDetails
+// MARK: - ItemDetails Model
 struct ItemDetails: Codable {
     let attributes: [URLObject]?
     let babyTriggerFor: EvolutionChain?
@@ -39,7 +39,7 @@ struct ItemDetails: Codable {
     }
 }
 
-// MARK: - ItemSprites
+// MARK: - ItemSprites Model
 struct ItemSprites: Codable {
     let spritesDefault: String
 
@@ -48,7 +48,7 @@ struct ItemSprites: Codable {
     }
 }
 
-// MARK: - ItemHolderPokemon
+// MARK: - ItemHolderPokemon Model
 struct ItemHolderPokemon: Codable {
     let pokemon: URLObject
     let versionDetails: [ItemHolderPokemonVersionDetail]
@@ -59,7 +59,7 @@ struct ItemHolderPokemon: Codable {
     }
 }
 
-// MARK: - ItemHolderPokemonVersionDetail
+// MARK: - ItemHolderPokemonVersionDetail Model
 struct ItemHolderPokemonVersionDetail: Codable {
     let rarity: Int
     let version: Version
@@ -70,7 +70,7 @@ struct ItemHolderPokemonVersionDetail: Codable {
     }
 }
 
-// MARK: - MachineVersionDetail
+// MARK: - MachineVersionDetail Model
 struct MachineVersionDetail: Codable {
     let machine: LinkOnly
     let versionGroup: URLObject?

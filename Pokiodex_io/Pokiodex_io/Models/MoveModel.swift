@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - MoveDetails
+// MARK: - MoveDetails Model
 struct MoveDetails: Codable {
     let accuracy: Int?
     let contestCombos: ContestCombos?
@@ -51,7 +51,7 @@ struct MoveDetails: Codable {
     }
 }
 
-// MARK: - ContestCombos
+// MARK: - ContestCombos Model
 struct ContestCombos: Codable {
     let normal, contestCombosSuper: Normal?
 
@@ -61,7 +61,7 @@ struct ContestCombos: Codable {
     }
 }
 
-// MARK: - Normal
+// MARK: - Normal Model
 struct Normal: Codable {
     let useAfter: [URLObject]?
     let useBefore: [URLObject]?
@@ -72,15 +72,12 @@ struct Normal: Codable {
     }
 }
 
-
-// MARK: - ContestEffect
+// MARK: - ContestEffect Model
 struct ContestEffect: Codable {
     let url: String
 }
 
-
-
-// MARK: - Meta
+// MARK: - Meta Model
 struct Meta: Codable {
     let ailment: URLObject?
     let ailmentChance: Int?

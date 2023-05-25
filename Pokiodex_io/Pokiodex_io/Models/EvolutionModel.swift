@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - EvolutionChain
+// MARK: - EvolutionChain Model
 struct EvolutionChain: Codable {
     let babyTriggerItem: JSONAny?
     let chain: Chain
@@ -19,7 +19,7 @@ struct EvolutionChain: Codable {
     }
 }
 
-// MARK: - Chain
+// MARK: - Chain Model
 struct Chain: Codable, Identifiable {
     let id = UUID()
     let evolutionDetails: [EvolutionDetail]
@@ -35,7 +35,7 @@ struct Chain: Codable, Identifiable {
     }
 }
 
-// MARK: - EvolutionDetail
+// MARK: - EvolutionDetail Model
 struct EvolutionDetail: Codable {
     let gender, heldItem, item, knownMove: JSONAny?
     let knownMoveType, location, minAffection, minBeauty: JSONAny?
@@ -71,7 +71,7 @@ struct EvolutionDetail: Codable {
 }
 
 
-// MARK: - EvolutionTrigger
+// MARK: - EvolutionTrigger Model
 struct EvolutionTrigger: Codable {
     let id: Int
     let name: String

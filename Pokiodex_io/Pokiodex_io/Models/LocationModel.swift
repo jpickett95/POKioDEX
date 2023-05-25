@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - LocationDetails
+// MARK: - LocationDetails Model
 struct LocationDetails: Codable {
     let areas: [URLObject]
     let gameIndices: [GameIndex]
@@ -23,7 +23,7 @@ struct LocationDetails: Codable {
     }
 }
 
-// MARK: - LocationArea
+// MARK: - LocationArea Model
 struct LocationArea: Codable {
     let encounterMethodRates: [EncounterMethodRate]
     let gameIndex, id: Int
@@ -40,7 +40,7 @@ struct LocationArea: Codable {
     }
 }
 
-// MARK: - EncounterMethodRate
+// MARK: - EncounterMethodRate Model
 struct EncounterMethodRate: Codable {
     let encounterMethod: URLObject
     let versionDetails: [EncounterMethodRateVersionDetail]
@@ -51,14 +51,14 @@ struct EncounterMethodRate: Codable {
     }
 }
 
-// MARK: - EncounterMethodRateVersionDetail
+// MARK: - EncounterMethodRateVersionDetail Model
 struct EncounterMethodRateVersionDetail: Codable {
     let rate: Int
     let version: URLObject
 }
 
 
-// MARK: - PokemonEncounter
+// MARK: - PokemonEncounter Model
 struct PokemonEncounter: Codable, Identifiable {
     let id  = UUID()
     let pokemon: URLObject
@@ -70,7 +70,7 @@ struct PokemonEncounter: Codable, Identifiable {
     }
 }
 
-// MARK: - PokemonEncounterVersionDetail
+// MARK: - PokemonEncounterVersionDetail Model
 struct PokemonEncounterVersionDetail: Codable, Identifiable {
     let id = UUID()
     let encounterDetails: [EncounterDetail]
@@ -84,7 +84,7 @@ struct PokemonEncounterVersionDetail: Codable, Identifiable {
     }
 }
 
-// MARK: - EncounterDetail
+// MARK: - EncounterDetail Model
 struct EncounterDetail: Codable {
     let chance: Int
     let conditionValues: [URLObject]
@@ -101,7 +101,7 @@ struct EncounterDetail: Codable {
     }
 }
 
-// MARK: - PokemonLocationArea
+// MARK: - PokemonLocationArea Model
 struct PokemonLocationArea: Codable, Identifiable {
     let id = UUID()
     let locationArea: URLObject

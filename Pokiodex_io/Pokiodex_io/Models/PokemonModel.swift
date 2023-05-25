@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - PokemonDetails Model
 struct PokemonDetails: Codable {
     let abilities: [Ability]
     let baseExperience: Int
@@ -43,7 +44,7 @@ struct PokemonDetails: Codable {
     }
 }
 
-
+// MARK: - Ability Model
 struct Ability: Codable, Identifiable {
     let id = UUID()
     let ability: URLObject
@@ -57,10 +58,7 @@ struct Ability: Codable, Identifiable {
     }
 }
 
-
-
-
-
+// MARK: - Move Model
 struct Move: Codable, Identifiable {
     let id = UUID()
     let move: URLObject
@@ -72,10 +70,7 @@ struct Move: Codable, Identifiable {
     }
 }
 
-
-
-
-
+// MARK: - Sprites Model
 class Sprites: Codable {
     let backDefault: String
     let backFemale: String?
@@ -116,6 +111,7 @@ class Sprites: Codable {
     }
 }
 
+// MARK: - RedBlue Model
 struct RedBlue: Codable {
     let backDefault, backGray, backTransparent, frontDefault: String
     let frontGray, frontTransparent: String
@@ -130,10 +126,7 @@ struct RedBlue: Codable {
     }
 }
 
-
-
-
-
+// MARK: - Crystal Model
 struct Crystal: Codable {
     let backDefault, backShiny, backShinyTransparent, backTransparent: String
     let frontDefault, frontShiny, frontShinyTransparent, frontTransparent: String
@@ -150,7 +143,7 @@ struct Crystal: Codable {
     }
 }
 
-
+// MARK: - Gold Model
 struct Gold: Codable {
     let backDefault, backShiny, frontDefault, frontShiny: String
     let frontTransparent: String?
@@ -164,6 +157,7 @@ struct Gold: Codable {
     }
 }
 
+// MARK: - OfficialArtwork Model
 struct OfficialArtwork: Codable {
     let frontDefault, frontShiny: String
 
@@ -175,6 +169,7 @@ struct OfficialArtwork: Codable {
     static var sample = OfficialArtwork(frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png", frontShiny: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/1.png")
 }
 
+// MARK: - Home Model
 struct Home: Codable {
     let frontDefault: String
     let frontFemale: String?
@@ -189,8 +184,7 @@ struct Home: Codable {
     }
 }
 
-
-
+// MARK: - DreamWorld Model
 struct DreamWorld: Codable {
     let frontDefault: String
     let frontFemale: String?
@@ -201,6 +195,7 @@ struct DreamWorld: Codable {
     }
 }
 
+// MARK: - Other Model
 struct Other: Codable {
     let dreamWorld: DreamWorld
     let home: Home
@@ -213,6 +208,7 @@ struct Other: Codable {
     }
 }
 
+// MARK: - Stat Model
 struct Stat: Codable, Identifiable {
     let id = UUID()
     let baseStat, effort: Int
@@ -224,12 +220,13 @@ struct Stat: Codable, Identifiable {
     }
 }
 
+// MARK: - TypeElement Model
 struct TypeElement: Codable {
     let slot: Int
     let type: URLObject
 }
 
-// MARK: - PokemonSpecies
+// MARK: - PokemonSpecies Model
 struct PokemonSpecies: Codable {
     let baseHappiness, captureRate: Int
     let color: URLObject
@@ -281,23 +278,19 @@ struct PokemonSpecies: Codable {
 }
 
 
-// MARK: - EvolutionChain
+// MARK: - EvolutionChainLink Model
 struct EvolutionChainLink: Codable {
     let url: String
 }
 
-
-
-// MARK: - Genus
+// MARK: - Genus Model
 struct Genus: Codable, Identifiable {
     let id = UUID()
     let genus: String
     let language: URLObject
 }
 
-
-
-// MARK: - PalParkEncounter
+// MARK: - PalParkEncounter Model
 struct PalParkEncounter: Codable {
     let area: URLObject
     let baseScore, rate: Int
@@ -309,7 +302,7 @@ struct PalParkEncounter: Codable {
     }
 }
 
-// MARK: - PokedexNumber
+// MARK: - PokedexNumber Model
 struct PokedexNumber: Codable {
     let entryNumber: Int
     let pokedex: URLObject
@@ -320,7 +313,7 @@ struct PokedexNumber: Codable {
     }
 }
 
-// MARK: - Variety
+// MARK: - Variety Model
 struct Variety: Codable {
     let isDefault: Bool
     let pokemon: URLObject
@@ -331,7 +324,7 @@ struct Variety: Codable {
     }
 }
 
-// MARK: - Characteristic
+// MARK: - Characteristic Model
 struct Characteristic: Codable {
     let descriptions: [Description]
     let geneModulo: Int
@@ -348,13 +341,13 @@ struct Characteristic: Codable {
     }
 }
 
-// MARK: - Description
+// MARK: - Description Model
 struct Description: Codable {
     let description: String
     let language: URLObject
 }
 
-// MARK: - EggGroup
+// MARK: - EggGroup Model
 struct EggGroup: Codable {
     let id: Int
     let name: String
@@ -367,7 +360,7 @@ struct EggGroup: Codable {
     }
 }
 
-// MARK: - GrowthRate
+// MARK: - GrowthRate Model
 struct GrowthRate: Codable {
     let descriptions: [Description]
     let formula: String
@@ -382,12 +375,12 @@ struct GrowthRate: Codable {
     }
 }
 
-// MARK: - Level
+// MARK: - Level Model
 struct Level: Codable {
     let experience, level: Int
 }
 
-// MARK: - PokemonNature
+// MARK: - PokemonNature Model
 struct PokemonNature: Codable {
     let decreasedStat, hatesFlavor: URLObject?
     let id: Int
@@ -409,7 +402,7 @@ struct PokemonNature: Codable {
     }
 }
 
-// MARK: - MoveBattleStylePreference
+// MARK: - MoveBattleStylePreference Model
 struct MoveBattleStylePreference: Codable {
     let highHPPreference, lowHPPreference: Int
     let moveBattleStyle: URLObject
@@ -422,7 +415,7 @@ struct MoveBattleStylePreference: Codable {
 }
 
 
-// MARK: - PokeathlonStatChange
+// MARK: - PokeathlonStatChange Model
 struct PokeathlonStatChange: Codable {
     let maxChange: Int
     let pokeathlonStat: URLObject

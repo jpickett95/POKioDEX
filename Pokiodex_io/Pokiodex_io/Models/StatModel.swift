@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - PokemonStat
+// MARK: - PokemonStat Model
 struct PokemonStat: Codable {
     let affectingMoves, affectingNatures: Affecting
     let characteristics: [CharacteristicLink]
@@ -29,12 +29,12 @@ struct PokemonStat: Codable {
     }
 }
 
-// MARK: - Affecting
+// MARK: - Affecting Model
 struct Affecting: Codable {
     let decrease, increase: [JSONAny]
 }
 
-// MARK: - Characteristic
+// MARK: - CharacteristicLink Model
 struct CharacteristicLink: Codable {
     let url: String
 }

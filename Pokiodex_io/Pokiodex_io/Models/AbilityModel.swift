@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - AbilityDetails
+// MARK: - AbilityDetails Model
 struct AbilityDetails: Codable {
     let effectChanges: [EffectChange]
     let effectEntries: [AbilityDetailsEffectEntry]
@@ -29,7 +29,7 @@ struct AbilityDetails: Codable {
     }
 }
 
-// MARK: - EffectChange
+// MARK: - EffectChange Model
 struct EffectChange: Codable {
     let effectEntries: [EffectChangeEffectEntry]
     let versionGroup: URLObject
@@ -40,7 +40,7 @@ struct EffectChange: Codable {
     }
 }
 
-// MARK: - EffectChangeEffectEntry
+// MARK: - EffectChangeEffectEntry Model
 struct EffectChangeEffectEntry: Codable {
     let effect: String
     let language: URLObject
@@ -48,7 +48,7 @@ struct EffectChangeEffectEntry: Codable {
 
 
 
-// MARK: - AbilityDetailsEffectEntry
+// MARK: - AbilityDetailsEffectEntry Model
 struct AbilityDetailsEffectEntry: Codable {
     let effect: String
     let language: URLObject

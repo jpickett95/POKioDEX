@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - TypeDetails
+// MARK: - TypeDetails Model
 struct TypeDetails: Codable, Identifiable {
     let damageRelations: DamageRelations
     let gameIndices: [GameIndex]
@@ -31,7 +31,7 @@ struct TypeDetails: Codable, Identifiable {
     }
 }
 
-// MARK: - DamageRelations
+// MARK: - DamageRelations Model
 struct DamageRelations: Codable {
     let doubleDamageFrom: [URLObject]
     let doubleDamageTo, halfDamageFrom: [URLObject]
