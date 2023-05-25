@@ -18,7 +18,7 @@ class LocationsManager {
         }
     }
     
-    // Retrieves Detailed Information
+    // Retrieves Detailed Information on Location
     func getDetails(url: String, completion:@escaping (LocationDetails) -> ()) {
         Bundle.main.fetchData(url: url, model: LocationDetails.self) { data in
             completion(data)
@@ -27,7 +27,7 @@ class LocationsManager {
         }
     }
     
-    // Retrieves Detailed Information
+    // Retrieves Detailed Information on Location Area
     func getAreaDetails(url: String, completion:@escaping (LocationArea) -> ()) {
         Bundle.main.fetchData(url: url, model: LocationArea.self) { data in
             completion(data)

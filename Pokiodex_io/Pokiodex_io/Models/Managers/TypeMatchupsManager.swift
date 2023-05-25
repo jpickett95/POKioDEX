@@ -9,7 +9,7 @@ import Foundation
 
 class TypeMatchupsManager {
     
-    
+    // Gets JSON data from PokeAPI and populates 'TypeDetails' object
     func getTypeDetails(typeName: String, completion:@escaping (TypeDetails) -> ()) {
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/type/\(typeName.lowercased())/", model: TypeDetails.self) { data in
             completion(data)

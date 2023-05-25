@@ -11,23 +11,13 @@
 import Foundation
 
 class PokemonManager{
-    
-    // Retrieves list of 'Pokemon' from internal .json
-    func getPokemon(completion:@escaping (ResourceList) -> ()) {
-        Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon?limit=151/", model: ResourceList.self) { data in
-            completion(data)
-        } failure: { error in
-            print("getPokemon func: \(error)")
-        }
-    }
-    
-    
+
     // Retrieves paginated list of 'Pokemon' from PokeAPI
     func getPokemonAPI(completion:@escaping (ResourceList) -> ()) {
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/pokemon?limit=151/", model: ResourceList.self) { data in
             completion(data)
         } failure: { error in
-            print("getPokemonAPI func: \(error)")
+            print("\n(PokemonManager class) getPokemonAPI func: \(error)\n")
         }
     }
     
@@ -45,7 +35,7 @@ class PokemonManager{
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/stat/\(id)/", model: PokemonStat.self) { data in
             completion(data)
         } failure: { error in
-            print("getPokemonStats func: \(error)")
+            print("\n(PokemonManager class) getPokemonStats func: \(error)\n")
         }
     }
     
@@ -54,7 +44,7 @@ class PokemonManager{
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/type/\(typeName)/", model: TypeDetails.self) { data in
             completion(data)
         } failure: { error in
-            print("getTypeDetails func: \(error)")
+            print("\n(PokemonManager class) getTypeDetails func: \(error)\n")
         }
     }
     
@@ -63,7 +53,7 @@ class PokemonManager{
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/ability/\(id)/", model: AbilityDetails.self) { data in
             completion(data)
         } failure: { error in
-            print("getPokemonAbilities func: \(error)")
+            print("\n(PokemonManager class) getPokemonAbilities func: \(error)\n")
         }
     }
     
@@ -72,7 +62,7 @@ class PokemonManager{
         Bundle.main.fetchData(url: url, model: PokemonSpecies.self) { data in
             completion(data)
         } failure: { error in
-            print("getPokemonSpecies func: \(error)")
+            print("\n(PokemonManager class) getPokemonSpecies func: \(error)\n")
         }
     }
     
@@ -81,15 +71,16 @@ class PokemonManager{
         Bundle.main.fetchData(url: url, model: EvolutionChain.self) { data in
             completion(data)
         } failure: { error in
-            print("getEvolutionChain func: \(error)")
+            print("\n(PokemonManager class) getEvolutionChain func: \(error)\n")
         }
     }
     
+    // Retrieves 'PokemonLocationArea' data from PokeAPI
     func getPokemonLocations(url: String, completion:@escaping ([PokemonLocationArea]) -> ()) {
         Bundle.main.fetchData(url: url, model: [PokemonLocationArea].self) { data in
             completion(data)
         } failure: { error in
-            print("getPokemonLocations func: \(error)")
+            print("\n(PokemonManager class) getPokemonLocations func: \(error)\n")
         }
     }
     

@@ -14,7 +14,7 @@ class MoveManager {
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/move?limit=500/", model: ResourceList.self) { data in
             completion(data)
         } failure: { error in
-            print("getMoves func: \(error)")
+            print("\n(MoveManager class) getMoves func: \(error)\n")
         }
     }
     
@@ -23,7 +23,7 @@ class MoveManager {
         Bundle.main.fetchData(url: "https://pokeapi.co/api/v2/move/\(id)/", model: MoveDetails.self) { data in
             completion(data)
         } failure: { error in
-            print("getMoveDetails func: \(error)")
+            print("\n(MoveManager class) getMoveDetails func: \(error)\n")
         }
     }
     

@@ -23,7 +23,7 @@ class MachineManager {
         Bundle.main.fetchData(url: url, model: MachineDetails.self) { data in
             completion(data)
         } failure: { error in
-            print("\ngetMachineDetails func: \(error)\n")
+            print("\n(MachineManager class) getMachineDetails func: \(error)\n")
         }
     }
     
@@ -32,16 +32,16 @@ class MachineManager {
         Bundle.main.fetchData(url: url, model: MoveDetails.self) { data in
             completion(data)
         } failure: { error in
-            print("\nMachineManager:\ngetMoveDetails func: \(error)\n")
+            print("\n(MachineManager class) getMoveDetails func: \(error)\n")
         }
     }
     
-    // Retrieves 'MachineItemDetails' from PokeAPI
+    // Retrieves 'ItemDetails' from PokeAPI
     func getItemDetails(url: String, completion:@escaping (ItemDetails) -> ()) {
         Bundle.main.fetchData(url: url, model: ItemDetails.self) { data in
             completion(data)
         } failure: { error in
-            print("\nMachineManager:\ngetItemDetails func: \(error)\n")
+            print("\n(MachineManager class) getItemDetails func: \(error)\n")
         }
     }
 }

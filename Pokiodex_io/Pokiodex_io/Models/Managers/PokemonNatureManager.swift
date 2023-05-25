@@ -23,7 +23,7 @@ class NaturesManager{
         Bundle.main.fetchData(url: url, model: PokemonNature.self) { data in
             completion(data)
         } failure: { error in
-            print("\ngetNatureDetails func: \(error)\n")
+            print("\n(NaturesManager class) getNatureDetails func: \(error)\n")
         }
     }
     

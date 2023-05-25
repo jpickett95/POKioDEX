@@ -9,14 +9,12 @@
 /* Begin PBXBuildFile section */
 		CF473F4429C8C644001F6934 /* PokemonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F4329C8C644001F6934 /* PokemonModel.swift */; };
 		CF473F4629C8C658001F6934 /* PokemonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F4529C8C658001F6934 /* PokemonViewModel.swift */; };
-		CF473F4829C8C76D001F6934 /* pokemon.json in Resources */ = {isa = PBXBuildFile; fileRef = CF473F4729C8C76D001F6934 /* pokemon.json */; };
 		CF473F4D29C8C849001F6934 /* APIHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F4C29C8C849001F6934 /* APIHelpers.swift */; };
 		CF473F5029C8CC7E001F6934 /* PokemonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F4F29C8CC7E001F6934 /* PokemonManager.swift */; };
 		CF473F5229C8CE9F001F6934 /* PokedexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F5129C8CE9F001F6934 /* PokedexView.swift */; };
 		CF473F5429C8D108001F6934 /* PokemonDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F5329C8D108001F6934 /* PokemonDetailsView.swift */; };
 		CF473F5629C8D952001F6934 /* PokemonImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F5529C8D952001F6934 /* PokemonImageView.swift */; };
 		CF473F5A29C99993001F6934 /* MoveModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F5929C99993001F6934 /* MoveModel.swift */; };
-		CF473F5C29C99BF3001F6934 /* moves.json in Resources */ = {isa = PBXBuildFile; fileRef = CF473F5B29C99BF3001F6934 /* moves.json */; };
 		CF473F5E29CA1B45001F6934 /* MoveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F5D29CA1B45001F6934 /* MoveManager.swift */; };
 		CF473F6029CA1C0E001F6934 /* MovesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F5F29CA1C0E001F6934 /* MovesViewModel.swift */; };
 		CF473F6229CA2029001F6934 /* MovesdexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF473F6129CA2029001F6934 /* MovesdexView.swift */; };
@@ -79,14 +77,12 @@
 /* Begin PBXFileReference section */
 		CF473F4329C8C644001F6934 /* PokemonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonModel.swift; sourceTree = "<group>"; };
 		CF473F4529C8C658001F6934 /* PokemonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonViewModel.swift; sourceTree = "<group>"; };
-		CF473F4729C8C76D001F6934 /* pokemon.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pokemon.json; sourceTree = "<group>"; };
 		CF473F4C29C8C849001F6934 /* APIHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHelpers.swift; sourceTree = "<group>"; };
 		CF473F4F29C8CC7E001F6934 /* PokemonManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonManager.swift; sourceTree = "<group>"; };
 		CF473F5129C8CE9F001F6934 /* PokedexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexView.swift; sourceTree = "<group>"; };
 		CF473F5329C8D108001F6934 /* PokemonDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailsView.swift; sourceTree = "<group>"; };
 		CF473F5529C8D952001F6934 /* PokemonImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonImageView.swift; sourceTree = "<group>"; };
 		CF473F5929C99993001F6934 /* MoveModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveModel.swift; sourceTree = "<group>"; };
-		CF473F5B29C99BF3001F6934 /* moves.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = moves.json; sourceTree = "<group>"; };
 		CF473F5D29CA1B45001F6934 /* MoveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveManager.swift; sourceTree = "<group>"; };
 		CF473F5F29CA1C0E001F6934 /* MovesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovesViewModel.swift; sourceTree = "<group>"; };
 		CF473F6129CA2029001F6934 /* MovesdexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovesdexView.swift; sourceTree = "<group>"; };
@@ -214,8 +210,6 @@
 		CF473F4929C8C809001F6934 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				CF473F4729C8C76D001F6934 /* pokemon.json */,
-				CF473F5B29C99BF3001F6934 /* moves.json */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -428,9 +422,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF473F5C29C99BF3001F6934 /* moves.json in Resources */,
 				CFEF8ED329C8221900C8F134 /* Preview Assets.xcassets in Resources */,
-				CF473F4829C8C76D001F6934 /* pokemon.json in Resources */,
 				CFEF8ED029C8221900C8F134 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

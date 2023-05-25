@@ -18,7 +18,7 @@ class AbilitiesManager {
         }
     }
     
-    // Retrieves Detailed Information
+    // Retrieves Detailed Information on Ability
     func getDetails(url: String, completion:@escaping (AbilityDetails) -> ()) {
         Bundle.main.fetchData(url: url, model: AbilityDetails.self) { data in
             completion(data)

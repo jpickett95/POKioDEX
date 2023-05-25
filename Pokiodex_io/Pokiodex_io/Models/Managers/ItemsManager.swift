@@ -18,7 +18,7 @@ class ItemsManager {
         }
     }
     
-    // Retrieves Detailed Information
+    // Retrieves Detailed Information on Game Object
     func getDetails(url: String, completion:@escaping (ItemDetails) -> ()) {
         Bundle.main.fetchData(url: url, model: ItemDetails.self) { data in
             completion(data)
